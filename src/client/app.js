@@ -8,6 +8,7 @@
 
 import * as React from "react";
 import ReactDOM from "react-dom";
+import "./../style.scss";
 
 import HelloWorld from "./components/hello";
 
