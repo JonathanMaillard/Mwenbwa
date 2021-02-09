@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "mongodb": "^3.6.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
