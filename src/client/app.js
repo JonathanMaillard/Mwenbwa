@@ -10,6 +10,6 @@ import * as React from "react";
 import ReactDOM from "react-dom";
 import "./../style.scss";
 
-import HelloWorld from "./components/hello";
+import Rules from "./components/rules";
 
-ReactDOM.render(<HelloWorld />, document.querySelector("#app"));
+ReactDOM.render(<Rules />, document.querySelector("#app"));
