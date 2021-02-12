@@ -6,21 +6,6 @@
  * started at 18/05/2020
  */
 
-const MongoClient = require("mongodb").MongoClient;
-const uri =
-    "mongodb+srv://dev:shrek55@smaragdencluster.jzsi8.mongodb.net/mwenbwa?retryWrites=true&w=majority";
-// let collection;
-const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
-
-
-client.connect(err => {
-    console.log(err);
-    const collection = client.db("mwenbwa");
-    // perform actions on the collection object
-    // console.log(collection.collection("mwenbwa").find());
-    // const test = collection.collection("mwenbwa").insertOne({test: "test"});
-    client.close();
-});
 
 // EXPRESS DECLARATION
 import express from "express";
