@@ -113,7 +113,7 @@ app.listen(APP_PORT, () =>
 
 
 
-//GET trees infos
+/* //GET trees infos
 app.get("/get-trees", (req, res) => {
     console.log(`ℹ️  (${req.method.toUpperCase()}) ${req.url}`);
     let resultArray = [];
@@ -141,5 +141,5 @@ app.get("/get-trees", (req, res) => {
     
 
     //res.send("yo");
-});
+}); */
 
