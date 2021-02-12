@@ -44,6 +44,8 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.0",
     "express": "^4.17.1",
     "mongodb": "^3.6.4",
     "react": "^16.13.1",

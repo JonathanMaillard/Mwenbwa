@@ -8,11 +8,12 @@
 
 import * as React from "react";
 
-const HelloWorld = () => (
+const HelloWorld = ({onClick: handleClick}) => (
     <div>
         <h1>{"Hello, branquignole ultime!"}</h1>
         <hr />
         <small>{"becode/mwenbwa"}</small>
+        <button onClick={handleClick}>test</button>
     </div>
 );
 
