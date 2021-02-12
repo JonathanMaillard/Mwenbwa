@@ -10,6 +10,6 @@ import * as React from "react";
 import ReactDOM from "react-dom";
 import "./../style.scss";
 
-import HelloWorld from "./components/hello";
+import Map from "./components/map";
 
-ReactDOM.render(<HelloWorld />, document.querySelector("#app"));
+ReactDOM.render(<Map />, document.querySelector("#app"));
