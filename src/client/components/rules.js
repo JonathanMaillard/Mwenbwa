@@ -38,6 +38,9 @@ const Rules = () => (
                     }
                 </p>
             </div>
+
+            <p className={"rules__content__title"}>{"Ressources"}</p>
+            <div className={"rules__content__text"} />
         </div>
     </div>
 );

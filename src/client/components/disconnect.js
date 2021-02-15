@@ -9,7 +9,7 @@ const Disconnect = () => (
                 <img
                     className={"disconnect__content__text__svg"}
                     src={DisconnectSvg}
-                    alt={""}
+                    alt={"Trough the park, leaving"}
                     width={"475"}
                 />
                 <div className={"disconnect__content__text__confirm"}>

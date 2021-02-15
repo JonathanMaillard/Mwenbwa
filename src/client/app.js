@@ -11,7 +11,9 @@ import ReactDOM from "react-dom";
 import "./../style.scss";
 
 import Map from "./components/map";
-// import Rules from "./components/rules";
+import Rules from "./components/rules";
+import Disconnect from "./components/disconnect";
+import Leaderboard from "./components/leaderboard";
 import Profile from "./components/profile";
 import Button from "./components/button";
 
@@ -26,6 +28,10 @@ const App = () => (
         <div id={"app"}>
             <Profile />
         </div>
+
+        <Rules />
+        <Disconnect />
+        <Leaderboard />
     </div>
 );
 

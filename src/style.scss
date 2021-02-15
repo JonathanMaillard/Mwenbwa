@@ -1,5 +1,6 @@
 // ----------------------VARIABLES-----------------
 $blue: #183C45;
+$green: greenyellow;
 $bg-modal: rgba(255, 255, 255, 0.75);
 
 
@@ -12,6 +13,11 @@ $bg-modal: rgba(255, 255, 255, 0.75);
   padding: 0.5em;
   padding-top: 0;
 }
+@mixin subtitle($size) {
+  font-style: italic;
+  font-weight: 300;
+  font-size: $size;
+}
 @mixin flex($direction, $justify, $align) {
   display: flex;
   flex-direction: $direction;
@@ -22,14 +28,15 @@ $bg-modal: rgba(255, 255, 255, 0.75);
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background-color: #183c4580;
+  background-color: #183c45b2;
 }
 @mixin modal-content-background() {
-  margin: 7em;
-  padding: 7em;
+  height: 88%;
+  margin: 3em;
+  padding: 4em;
   border-radius: 25px;
   background: $bg-modal;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
 }
 
 
@@ -160,7 +167,7 @@ body {
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         &:hover {
-          color: greenyellow;
+          color: $green;
         }
       }
     }
@@ -235,7 +242,7 @@ body {
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     &:hover {
-      color: greenyellow;
+      color: $green;
     }
   }
 
@@ -252,19 +259,22 @@ body {
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     &:hover {
-      color: greenyellow;
+      color: $green;
     }
   }
 }
 
 
 //------------------------ RULES -----------------------
+.rules, .disconnect, .leaderboard {
+  z-index: 1000;
+}
 .rules {
+  display: none;
   @include modal-dark-background();
   &__content {
-    height: 72%;
     @include modal-content-background();
-    @include flex(column, space-between, center);
+    @include flex(column, flex-start, center);
     &__title {
       @include title(3.3rem);
     }
@@ -272,13 +282,11 @@ body {
       width: 100%;
     }
     &__subtitle {
-      font-style: italic;
-      font-weight: 300;
-      font-size: 2rem;
+      @include subtitle(2rem);
     }
     &__text {
       font-size: 1.6rem;
-      padding-bottom: 0.5em;
+      padding: 0.5em 0 1em 0;
     }
   }
 }
@@ -286,9 +294,9 @@ body {
 
 //----------------------DISCONNECT -----------------------
 .disconnect {
+  display: none;
   @include modal-dark-background();
   &__content {
-    height: 72%;
     @include modal-content-background();
     @include flex(column, space-between, center);
     &__title {
@@ -298,7 +306,7 @@ body {
       @include flex(row, center, center);
       width: 100%;
       &__confirm {
-        font-size: 1.6rem;
+        font-size: 2rem;
         margin: 4em;
         line-height: 1.6em;
         & .bold-txt {
@@ -322,6 +330,40 @@ body {
         -webkit-appearance: none;
         &:hover {background-color: darken($bg-modal, 5);}
         &:focus {outline: none;}
+      }
+    }
+  }
+}
+
+// ------------------- LEADERBOARD --------------------
+.leaderboard {
+  // display: none;
+  @include modal-dark-background();
+  &__content {
+    @include modal-content-background();
+    @include flex(column, flex-start, center);
+    &__title {
+      @include title(3.3rem);
+    }
+    &__subtitle {
+      @include subtitle(2rem);
+      padding: 2em;
+    }
+    &__ranking {
+      width: 100%;
+      @include flex(row, space-between, center);
+      &__list {
+        width: 60%;
+        padding: 2em;
+        &__item, &__title {
+          list-style-type: none;
+          @include flex(row, space-between, flex-start);
+        }
+        &__title {
+          font-size: 1.2rem;
+          font-weight: 500;
+          padding-bottom: 1em;
+        }
       }
     }
   }
