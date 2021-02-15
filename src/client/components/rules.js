@@ -1,4 +1,5 @@
 import * as React from "react";
+import CloseSvg from "../../ressources/images/cancel.svg";
 
 const Rules = () => (
     <div className={"rules"}>
@@ -41,6 +42,13 @@ const Rules = () => (
 
             <p className={"rules__content__title"}>{"Ressources"}</p>
             <div className={"rules__content__text"} />
+
+            <img //CLOSE BTN
+                className={"close-btn"}
+                src={CloseSvg}
+                alt={"Close"}
+                width={"40"}
+            />
         </div>
     </div>
 );

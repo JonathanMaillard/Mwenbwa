@@ -1,5 +1,6 @@
 import * as React from "react";
 import LeaderboardSvg from "../../ressources/images/undraw_destination.svg";
+import CloseSvg from "../../ressources/images/cancel.svg";
 
 const Leaderboard = () => (
     <div className={"leaderboard"}>
@@ -25,7 +26,7 @@ const Leaderboard = () => (
                     </li>
                     <li className={"leaderboard__content__ranking__list__item"}>
                         <p className={"name"}>{"Bertrand DoZogne"}</p>
-                        <p className={"score"}>{"infiniy"}</p>
+                        <p className={"score"}>{"infinity"}</p>
                     </li>
                     <li className={"leaderboard__content__ranking__list__item"}>
                         <p className={"name"}>{"Baztien Lafalisse"}</p>
@@ -37,6 +38,13 @@ const Leaderboard = () => (
                     </li>
                 </ul>
             </div>
+
+            <img //CLOSE BTN
+                className={"close-btn"}
+                src={CloseSvg}
+                alt={"Close"}
+                width={"40"}
+            />
         </div>
     </div>
 );

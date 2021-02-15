@@ -15,7 +15,7 @@ $bg-modal: rgba(255, 255, 255, 0.75);
 }
 @mixin subtitle($size) {
   font-style: italic;
-  font-weight: 300;
+  font-weight: 200;
   font-size: $size;
 }
 @mixin flex($direction, $justify, $align) {
@@ -41,6 +41,11 @@ $bg-modal: rgba(255, 255, 255, 0.75);
 
 
 //-------------------------GENERALS-----------------------
+@font-face {
+  font-family: "Roboto";
+  src: url("./ressources/font/Roboto-Regular.ttf");
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -52,6 +57,8 @@ body {
   height: 100vh;
   width: 100vw;
   max-width: 100%;
+  font-family: "Roboto", sans-serif;
+  color: $blue;
 }
 
 
@@ -356,17 +363,28 @@ body {
         width: 60%;
         padding: 2em;
         &__item, &__title {
+          font-size: 1.4rem;
+          font-weight: 100;
+          line-height: 1.6em;
           list-style-type: none;
-          @include flex(row, space-between, flex-start);
+          @include flex(row, flex-start, flex-start);
         }
         &__title {
-          font-size: 1.2rem;
+          font-size: 1.8rem;
           font-weight: 500;
           padding-bottom: 1em;
         }
+        & .name {width: 50%;}
       }
     }
   }
 }
 
 // POUR MODALES RULES & DISCONNECT, SOLLUTION RESPONSIVE: MODIFIER LES TAILLES DE POLICES À PARTIR DE 1250PX RÉSOUDRAIS DÉJÀ BEAUCOUP
+
+// ----------------- CLOSE BTN ----------------
+.close-btn {
+  position: absolute;
+  right: 4em;
+  cursor: pointer;
+}

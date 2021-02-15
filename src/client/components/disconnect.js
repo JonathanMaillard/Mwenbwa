@@ -1,5 +1,6 @@
 import * as React from "react";
 import DisconnectSvg from "../../ressources/images/undraw_through_the_park.svg";
+import CloseSvg from "../../ressources/images/cancel.svg";
 
 const Disconnect = () => (
     <div className={"disconnect"}>
@@ -33,6 +34,13 @@ const Disconnect = () => (
                     {"Go back"}
                 </button>
             </div>
+
+            <img //CLOSE BTN
+                className={"close-btn"}
+                src={CloseSvg}
+                alt={"Close"}
+                width={"40"}
+            />
         </div>
     </div>
 );
