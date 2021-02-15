@@ -26,7 +26,7 @@ const Rules = () => (
                 </p>
                 <p>
                     {
-                        "Every 15 minutes, you earn new leaves. The more you posses trees, the more leaves you get. In the same way, every hour, helf of your leaves die."
+                        "Every 15 minutes, you earn new leaves. The more trees you posses, the more leaves you get. In the same way, every hour, half of your leaves die."
                     }
                 </p>
             </div>

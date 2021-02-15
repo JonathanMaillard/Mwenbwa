@@ -1,0 +1,40 @@
+import * as React from "react";
+import DisconnectSvg from "../../ressources/images/undraw_through_the_park.svg";
+
+const Disconnect = () => (
+    <div className={"disconnect"}>
+        <div className={"disconnect__content"}>
+            <p className={"disconnect__content__title"}>{"Disconnect ?"}</p>
+            <div className={"disconnect__content__text"}>
+                <img
+                    className={"disconnect__content__text__svg"}
+                    src={DisconnectSvg}
+                    alt={""}
+                    width={"475"}
+                />
+                <div className={"disconnect__content__text__confirm"}>
+                    <p>{"Hey, Nick Banken,"}</p>
+                    <p>
+                        {"you're sure you want to "}
+                        <span className={"bold-txt"}>{"leaf"}</span>
+                        {" ?"}
+                    </p>
+                </div>
+            </div>
+            <div className={"disconnect__content__btns"}>
+                <button
+                    type={"button"}
+                    className={"disconnect__content__btns__button"}>
+                    {"Disconnect"}
+                </button>
+                <button
+                    type={"button"}
+                    className={"disconnect__content__btns__button"}>
+                    {"Go back"}
+                </button>
+            </div>
+        </div>
+    </div>
+);
+
+export default Disconnect;
