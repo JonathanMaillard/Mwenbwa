@@ -6,24 +6,19 @@
  * started at 18/05/2020
  */
 
-// EXPRESS DECLARATION
+// EXPRESS AND DEPENDENCIES DECLARATION
 import express from "express";
 import path from "path";
+import bodyParser from "body-parser";
 const {APP_PORT} = process.env;
 const app = express();
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
+const jsonParser = bodyParser.json();
+// const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 // BCRYPT DECLARATION
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const saltRounds = 10;
-
-const hash = pwd => {
-    bcrypt.genSalt(saltRounds, (err, salt) => {
-        bcrypt.hash(myPlaintextPassword, salt, (err, hash) => {
-            // Store hash in your password DB.
-        });
-    });
-};
 
 // DATABASE CONNEXION
 import {MongoClient, uri} from "./db-connexion";
@@ -39,69 +34,136 @@ const client = new MongoClient(uri, {useNewUrlParser: true});
 //     console.log(`ℹ️  (${req.method.toUpperCase()}) ${req.url}`);
 //     res.send("Hello, World!");
 // });
-app.post("/test", (req, res) => {
-    console.log(req);
-    res.statusCode = 512;
-    res.json({test: 1});
+app.post("/test", jsonParser, (req, res) => {
+    console.log(req.body);
+    console.log("===============================");
+    res.statusCode = 201;
+    res.json([{test: 1}]);
 });
 
 // GET REQUESTS
 app.get("/trees", (req, res) => {
-    console.log(req);
-    // res.send( dbGetTrees() );
+    const request = JSON.parse(dbGetTrees());
+    res.send(request);
 });
-app.get("/user", (req, res) => {
-    const userId = req.param("id");
-    // res.send( dbGetUser(userId) );
+app.get("/user/:userid", (req, res) => {
+    const userId = req.param("userid");
+    const request = JSON.parse(dbGetUser(userId));
+    res.send(request);
 });
 app.get("/leaderboard", (req, res) => {
-    // res.send( dbGetLeaderboard() );
+    const request = JSON.parse(dbGetLeaderboard());
+    res.send(request);
 });
 app.get("/logs", (req, res) => {
-    const userId = req.param("id");
-    // res.send( dbGetLogs() );
+    const request = JSON.parse(dbGetLogs());
+    res.send(request);
 });
 
 // CONNEXION
-app.post("/login", (req, res) => {
-    const user = req.param("user");
-    const pwd = req.param("pwd");
-    // res.send( dbLogin(user, pwd) );
+app.post("/login", jsonParser, (req, res) => {
+    const userInfo = req.body.userInfo;
+    const pwd = req.body.password;
+    try {
+        const request = JSON.parse(dbGetPassword(userInfo));
+        if (request) {
+            bcrypt.compare(pwd, request, (err, result) => {
+                res.send(result ? "correct" : "invalidPwd");
+            });
+        } else {
+            res.send("invalidInfo");
+        }
+    } catch (e) {
+        console.log(e);
+        res.send("error");
+    }
 });
-app.post("/register", (req, res) => {
-    const userId = req.param("user");
-    const userPassword = req.param("password");
-    const userEmail = req.param("email");
-    const userColor = req.param("color");
-    // res.send( dbGetLogs() );
+app.post("/register", jsonParser, (req, res) => {
+    const username = req.body.username;
+    const userPwd = req.body.password;
+    const userEmail = req.body.email;
+    const userColor = req.body.color;
+    let request;
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+        bcrypt.hash(userPwd, salt, (error, hash) => {
+            request = JSON.parse(
+                dbRegister(username, hash, userEmail, userColor),
+            );
+        });
+    });
+    res.send(request);
 });
 
 // GAME ACTIONS COMMANDS
-app.post("/buyTree", (req, res) => {
-    // res.send( );
+app.post("/buyTree", jsonParser, (req, res) => {
+    const userId = req.body.userId;
+    const treeId = req.body.treeId;
+    const treePrice = req.body.treePrice;
+    const request = JSON.parse(dbBuyTree(treeId, userId, treePrice));
+    res.send(request);
 });
-app.post("/lockTree", (req, res) => {
-    // res.send( );
+app.post("/lockTree", jsonParser, (req, res) => {
+    const treeId = req.body.treeId;
+    const treeLockPrice = req.body.treeLockPrice;
+    const request = JSON.parse(dbLockTree(treeId, treeLockPrice));
+    res.send(request);
 });
-app.post("/comment", (req, res) => {
-    // res.send( );
+app.post("/comment", jsonParser, (req, res) => {
+    const userId = req.body.userId;
+    const treeId = req.body.treeId;
+    const comment = req.body.comment;
+    const request = JSON.parse(dbAddComment(treeId, userId, comment));
+    res.send(request);
 });
 
 // CHANGE SETTINGS COMMANDS
-app.post("/changeColor", (req, res) => {
-    // res.send( );
+app.post("/changeColor", jsonParser, (req, res) => {
+    const userId = req.body.userId;
+    const color = req.body.color;
+    const request = JSON.parse(dbChangeColor(userId, color));
+    res.send(request);
 });
-app.post("/changeMailAdress", (req, res) => {
-    // res.send( );
+app.post("/changeMailAdress", jsonParser, (req, res) => {
+    const userId = req.body.userId;
+    const userEmail = req.body.userEmail;
+    const request = JSON.parse(dbModifyMail(userId, userEmail));
+    res.send(request);
 });
-app.post("/changeUsername", (req, res) => {
-    // res.send( );
+app.post("/changeUsername", jsonParser, (req, res) => {
+    const userId = req.body.userId;
+    const username = req.body.username;
+    const request = JSON.parse(dbModifyUsername(userId, username));
+    res.send(request);
 });
-app.post("/changePassword", (req, res) => {
-    // res.send( );
+app.post("/changePassword", jsonParser, (req, res) => {
+    const userId = req.body.userId;
+    const newPwd = req.body.newPwd;
+    const oldPwd = req.body.oldPwd;
+    try {
+        const request = JSON.parse(dbGetUser(userId));
+        if (request) {
+            bcrypt.compare(oldPwd, request, (errComp, result) => {
+                result &&
+                    bcrypt.genSalt(saltRounds, (errSalt, salt) => {
+                        bcrypt.hash(newPwd, salt, (errHash, hash) => {
+                            result && dbModifyPassword(userId, hash);
+                        });
+                    });
+                res.send(result ? "correct" : "invalidPwd");
+            });
+        } else {
+            res.send("invalidId");
+        }
+    } catch (e) {
+        console.log(e);
+        res.send("error");
+    }
 });
-app.post("/changeProfilePic", (req, res) => {
-    // res.send( );
+app.post("/changeProfilePic", jsonParser, (req, res) => {
+    const userId = req.body.userId;
+    const newPic = req.body.newPic;
+    const request = JSON.parse(dbModifyPics(userId, newPic));
+    res.send(request);
 });
 
 // START SERVER
