@@ -6,7 +6,9 @@
  * started at 18/05/2020
  */
 
-// EXPRESS AND DEPENDENCIES DECLARATION
+import dbCalls from "./dbCalls"
+
+// EXPRESS DECLARATION
 import express from "express";
 import path from "path";
 import bodyParser from "body-parser";
@@ -21,8 +23,8 @@ const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
 // DATABASE CONNEXION
-import {MongoClient, uri} from "./db-connexion";
-const client = new MongoClient(uri, {useNewUrlParser: true});
+//import {MongoClient, uri} from "./db-connexion";
+//const client = new MongoClient(uri, {useNewUrlParser: true});
 // client.connect(err => {
 //     console.log(err);
 //     const collection = client.db("mwenbwa");
@@ -170,3 +172,37 @@ app.post("/changeProfilePic", jsonParser, (req, res) => {
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
 );
+
+
+
+
+/* //GET trees infos
+app.get("/get-trees", (req, res) => {
+    console.log(`ℹ️  (${req.method.toUpperCase()}) ${req.url}`);
+    let resultArray = [];
+
+    client.connect(err => {
+        console.log(err);
+        
+        const collection = client.db("mwenbwa");
+        // perform actions on the collection object
+        let cursor = collection.collection("trees").find();
+        console.log(cursor);
+        cursor.forEach(function(doc, err){
+            console.error("error : " + err);
+            console.log("doc : " + doc);
+            resultArray.push(doc);
+
+        }, function(){
+            res.send(resultArray);
+            client.close();
+            
+        })
+        // const test = collection.collection("mwenbwa").insertOne({test: "test"});
+        //client.close();
+    });
+    
+
+    //res.send("yo");
+}); */
+
