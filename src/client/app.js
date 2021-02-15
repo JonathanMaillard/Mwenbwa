@@ -11,5 +11,22 @@ import ReactDOM from "react-dom";
 import "./../style.scss";
 
 import Map from "./components/map";
+// import Rules from "./components/rules";
+import Profile from "./components/profile";
+import Button from "./components/button";
 
-ReactDOM.render(<Map />, document.querySelector("#app"));
+const App = () => (
+    <div id={"container"}>
+        <div id={"mapid"}>
+            <Map />
+        </div>
+
+        <Button />
+
+        <div id={"app"}>
+            <Profile />
+        </div>
+    </div>
+);
+
+ReactDOM.render(<App />, document.querySelector("#root"));
