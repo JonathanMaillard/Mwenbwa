@@ -1,5 +1,9 @@
+// ----------------------VARIABLES-----------------
 $blue: #183C45;
+$bg-modal: rgba(255, 255, 255, 0.75);
 
+
+//------------------------MIXIN-------------------
 @mixin title($size) {
   display: inline-block;
   font-size: $size;
@@ -14,7 +18,22 @@ $blue: #183C45;
   justify-content: $justify;
   align-items: $align;
 }
+@mixin modal-dark-background() {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #183c4580;
+}
+@mixin modal-content-background() {
+  margin: 7em;
+  padding: 7em;
+  border-radius: 25px;
+  background: $bg-modal;
+  backdrop-filter: blur(20px);
+}
 
+
+//-------------------------GENERALS-----------------------
 * {
   padding: 0;
   margin: 0;
@@ -239,26 +258,15 @@ body {
 }
 
 
-
-
-
-
-/*------------------------ RULES -----------------------*/
+//------------------------ RULES -----------------------
 .rules {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background-color: #183c4580;
+  @include modal-dark-background();
   &__content {
-    margin: 7em;
-    padding: 7em;
     height: 72%;
-    border-radius: 25px;
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(20px);
+    @include modal-content-background();
     @include flex(column, space-between, center);
     &__title {
-      @include title(4rem);
+      @include title(3.3rem);
     }
     &__subtitle, &__text {
       width: 100%;
@@ -266,11 +274,57 @@ body {
     &__subtitle {
       font-style: italic;
       font-weight: 300;
-      font-size: 2.5rem;
+      font-size: 2rem;
     }
     &__text {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       padding-bottom: 0.5em;
     }
   }
 }
+
+
+//----------------------DISCONNECT -----------------------
+.disconnect {
+  @include modal-dark-background();
+  &__content {
+    height: 72%;
+    @include modal-content-background();
+    @include flex(column, space-between, center);
+    &__title {
+      @include title(3.3rem);
+    }
+    &__text {
+      @include flex(row, center, center);
+      width: 100%;
+      &__confirm {
+        font-size: 1.6rem;
+        margin: 4em;
+        line-height: 1.6em;
+        & .bold-txt {
+          font-weight: 700;
+          font-style: italic;
+        }
+      }
+    }
+    &__btns {
+      @include flex(row, center, center);
+      width: 100%;
+      &__button {
+        font-weight: 300;
+        font-size: 1.6rem;
+        margin: 0 1em;
+        padding: 0.5em;
+        color: $blue;
+        border: 1px solid $blue;
+        border-radius: 12px;
+        background-color: transparent;
+        -webkit-appearance: none;
+        &:hover {background-color: darken($bg-modal, 5);}
+        &:focus {outline: none;}
+      }
+    }
+  }
+}
+
+// POUR MODALES RULES & DISCONNECT, SOLLUTION RESPONSIVE: MODIFIER LES TAILLES DE POLICES À PARTIR DE 1250PX RÉSOUDRAIS DÉJÀ BEAUCOUP
