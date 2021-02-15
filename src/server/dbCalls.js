@@ -3,13 +3,20 @@
 //Connexion
 // DATABASE CONNEXION
 import {MongoClient, uri} from "./db-connexion";
-const client = new MongoClient(uri, {useNewUrlParser: true});
-
+//const client = new MongoClient(uri, {useNewUrlParser: true});
+//const db = client.db(mwenbwa);
 
 //GET
 
 //Get all trees
 const dbGetTrees = () =>{
+    const client = new MongoClient(uri, {useNewUrlParser: true});
+    const db = client.db("mwenbwa");
+
+    const trees = db.collection("trees").find();
+    
+
+    return trees;
 
 }
 

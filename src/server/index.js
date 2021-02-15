@@ -6,6 +6,7 @@
  * started at 18/05/2020
  */
 
+import dbCalls from "./dbCalls"
 
 // EXPRESS DECLARATION
 import express from "express";
@@ -27,8 +28,8 @@ const hash = pwd => {
 };
 
 // DATABASE CONNEXION
-import {MongoClient, uri} from "./db-connexion";
-const client = new MongoClient(uri, {useNewUrlParser: true});
+//import {MongoClient, uri} from "./db-connexion";
+//const client = new MongoClient(uri, {useNewUrlParser: true});
 // client.connect(err => {
 //     console.log(err);
 //     const collection = client.db("mwenbwa");
@@ -49,7 +50,7 @@ app.post("/test", (req, res) => {
 // GET REQUESTS
 app.get("/trees", (req, res) => {
     console.log(req);
-    // res.send( dbGetTrees() );
+    //res.send( dbCalls.dbGetTrees );
 });
 app.get("/user", (req, res) => {
     const userId = req.param("id");
