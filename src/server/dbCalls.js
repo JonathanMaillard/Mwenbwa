@@ -77,8 +77,38 @@ const dbGetUser = async (userId) =>{
 }
 
 //Get the leaderboard
-const dbGetLeaderboard = () =>{
+const dbGetLeaderboard = async () =>{
 
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+    async function run() {
+        try {
+          await client.connect();
+          const database = client.db('mwenbwa');
+          const collection = database.collection('playersTest');
+
+          const query = {};
+          const options = {
+            // sort returned documents in descending order by score
+            sort: { score: -1 },
+            // Include only the username, color and score fields in each returned document
+            projection: { _id: 0, username: 1, color: 1, score: 1 },
+          };
+          const cursor = await collection.find(query, options);
+          const result = await cursor.toArray();
+
+          //console.log(result);
+          return result;
+
+         
+
+        } finally {
+          // Ensures that the client will close when you finish/error
+          await client.close();
+        }
+      }
+      //run().catch(console.dir);
+      return (await run());
 }
 
 
@@ -153,5 +183,5 @@ const dbModifyPics = (userId, newPics) => {
 }
 
 module.exports ={
-    dbGetTrees, dbGetUser
+    dbGetTrees, dbGetUser, dbGetLeaderboard
 }

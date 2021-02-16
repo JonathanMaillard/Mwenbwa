@@ -59,8 +59,9 @@ app.get("/user/:userid", async (req, res) => {
     const request = await dbCalls.dbGetUser(userId);
     res.send(request);
 });   
-app.get("/leaderboard", (req, res) => {
-    const request = JSON.parse(dbGetLeaderboard());
+app.get("/leaderboard", async (req, res) => {
+    //const request = JSON.parse(dbGetLeaderboard());
+    const request = await dbCalls.dbGetLeaderboard();
     res.send(request);
 });
 app.get("/logs", (req, res) => {
