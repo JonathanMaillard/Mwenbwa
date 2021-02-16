@@ -15,9 +15,12 @@ import HelloWorld from "./components/hello";
 const test = () => {
     const id = 5;
     axios
-        .post("/test", {content: 5})
-        .then(() => {
-            console.log("yay");
+        .post("/test", {
+            voituredecourse: 5,
+            kachow: "FLASH MC QUEEN !!!",
+        })
+        .then(response => {
+            console.log(response.data[0]);
         })
         .catch(e => {
             console.log("sad because :", e);

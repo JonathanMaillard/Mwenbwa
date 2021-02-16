@@ -3,7 +3,7 @@
 
 // DATABASE CONNEXION
 import {MongoClient, uri} from "./db-connexion";
-const client = new MongoClient(uri, { useUnifiedTopology: true });
+//const client = new MongoClient(uri, { useUnifiedTopology: true });
 
 
 //GET
@@ -11,7 +11,7 @@ const client = new MongoClient(uri, { useUnifiedTopology: true });
 //Get all trees
 const dbGetTrees = async () =>{
      
-    
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
 
     async function run() {
         try {
@@ -50,13 +50,15 @@ const dbGetTree = (tree) => {
 //Get a user
 const dbGetUser = async (userId) =>{
 
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+
     async function run() {
         try {
           await client.connect();
           const database = client.db('mwenbwa');
           const collection = database.collection('players');
 
-          const cursor = await collection.find({player : });
+          const cursor = await collection.find({ playerId: userId });
           const result = await cursor.toArray();
 
           //console.log(result);
@@ -151,5 +153,5 @@ const dbModifyPics = (userId, newPics) => {
 }
 
 module.exports ={
-    dbGetTrees
+    dbGetTrees, dbGetUser
 }
