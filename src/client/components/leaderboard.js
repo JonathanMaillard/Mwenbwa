@@ -9,30 +9,55 @@ const Leaderboard = () => (
             <div className={"leaderboard__content__subtitle"}>
                 <p>{"Here are a top ten of the best players in the game."}</p>
             </div>
-            <div className={"leaderboard__content__ranking"}>
+            <div className={"leaderboard-ranking"}>
                 <img
                     src={LeaderboardSvg}
                     alt={"destination"}
-                    className={"leaderboard__content__ranking__img"}
+                    className={"leaderboard-ranking__img"}
                     width={"550"}
                 />
-                <ul className={"leaderboard__content__ranking__list"}>
-                    <li
-                        className={
-                            "leaderboard__content__ranking__list__title"
-                        }>
+                <ul className={"leaderboard-ranking__list"}>
+                    <li className={"leaderboard-ranking__list__title"}>
                         <p className={"name"}>{"Player's Name"}</p>
                         <p className={"score"}>{"Score"}</p>
                     </li>
-                    <li className={"leaderboard__content__ranking__list__item"}>
+                    <li className={"leaderboard-ranking__list__item"}>
                         <p className={"name"}>{"Bertrand DoZogne"}</p>
                         <p className={"score"}>{"infinity"}</p>
                     </li>
-                    <li className={"leaderboard__content__ranking__list__item"}>
+                    <li className={"leaderboard-ranking__list__item"}>
                         <p className={"name"}>{"Baztien Lafalisse"}</p>
                         <p className={"score"}>{"105 222"}</p>
                     </li>
-                    <li className={"leaderboard__content__ranking__list__item"}>
+                    <li className={"leaderboard-ranking__list__item"}>
+                        <p className={"name"}>{"Johnhathan Mayard"}</p>
+                        <p className={"score"}>{"105 221"}</p>
+                    </li>
+                    <li className={"leaderboard-ranking__list__item"}>
+                        <p className={"name"}>{"Johnhathan Mayard"}</p>
+                        <p className={"score"}>{"105 221"}</p>
+                    </li>
+                    <li className={"leaderboard-ranking__list__item"}>
+                        <p className={"name"}>{"Johnhathan Mayard"}</p>
+                        <p className={"score"}>{"105 221"}</p>
+                    </li>
+                    <li className={"leaderboard-ranking__list__item"}>
+                        <p className={"name"}>{"Johnhathan Mayard"}</p>
+                        <p className={"score"}>{"105 221"}</p>
+                    </li>
+                    <li className={"leaderboard-ranking__list__item"}>
+                        <p className={"name"}>{"Johnhathan Mayard"}</p>
+                        <p className={"score"}>{"105 221"}</p>
+                    </li>
+                    <li className={"leaderboard-ranking__list__item"}>
+                        <p className={"name"}>{"Johnhathan Mayard"}</p>
+                        <p className={"score"}>{"105 221"}</p>
+                    </li>
+                    <li className={"leaderboard-ranking__list__item"}>
+                        <p className={"name"}>{"Johnhathan Mayard"}</p>
+                        <p className={"score"}>{"105 221"}</p>
+                    </li>
+                    <li className={"leaderboard-ranking__list__item"}>
                         <p className={"name"}>{"Johnhathan Mayard"}</p>
                         <p className={"score"}>{"105 221"}</p>
                     </li>

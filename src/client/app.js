@@ -14,6 +14,7 @@ import Map from "./components/map";
 import Rules from "./components/rules";
 import Disconnect from "./components/disconnect";
 import Leaderboard from "./components/leaderboard";
+import Gamelog from "./components/gamelog";
 import Profile from "./components/profile";
 import Button from "./components/button";
 
@@ -32,6 +33,7 @@ const App = () => (
         <Rules />
         <Disconnect />
         <Leaderboard />
+        <Gamelog />
     </div>
 );
 

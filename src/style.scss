@@ -33,7 +33,7 @@ $bg-modal: rgba(255, 255, 255, 0.75);
 @mixin modal-content-background() {
   height: 88%;
   margin: 3em;
-  padding: 4em;
+  padding: 3em;
   border-radius: 25px;
   background: $bg-modal;
   backdrop-filter: blur(8px);
@@ -273,7 +273,7 @@ body {
 
 
 //------------------------ RULES -----------------------
-.rules, .disconnect, .leaderboard {
+.rules, .disconnect, .leaderboard, .gamelog {
   z-index: 1000;
 }
 .rules {
@@ -316,28 +316,28 @@ body {
         font-size: 2rem;
         margin: 4em;
         line-height: 1.6em;
-        & .bold-txt {
-          font-weight: 700;
-          font-style: italic;
-        }
+      }  
+      & .bold-txt {
+        font-weight: 700;
+        font-style: italic;
       }
     }
-    &__btns {
-      @include flex(row, center, center);
-      width: 100%;
-      &__button {
-        font-weight: 300;
-        font-size: 1.6rem;
-        margin: 0 1em;
-        padding: 0.5em;
-        color: $blue;
-        border: 1px solid $blue;
-        border-radius: 12px;
-        background-color: transparent;
-        -webkit-appearance: none;
-        &:hover {background-color: darken($bg-modal, 5);}
-        &:focus {outline: none;}
-      }
+  }  
+  &__btns {
+    @include flex(row, center, center);
+    width: 100%;
+    &__button {
+      font-weight: 300;
+      font-size: 1.6rem;
+      margin: 0 1em;
+      padding: 0.5em;
+      color: $blue;
+      border: 1px solid $blue;
+      border-radius: 12px;
+      background-color: transparent;
+      -webkit-appearance: none;
+      &:hover {background-color: darken($bg-modal, 5);}
+      &:focus {outline: none;}
     }
   }
 }
@@ -354,32 +354,68 @@ body {
     }
     &__subtitle {
       @include subtitle(2rem);
-      padding: 2em;
+      padding: 1em;
+      text-align: center;
     }
-    &__ranking {
-      width: 100%;
-      @include flex(row, space-between, center);
-      &__list {
-        width: 60%;
-        padding: 2em;
-        &__item, &__title {
-          font-size: 1.4rem;
-          font-weight: 100;
-          line-height: 1.6em;
-          list-style-type: none;
-          @include flex(row, flex-start, flex-start);
-        }
-        &__title {
-          font-size: 1.8rem;
-          font-weight: 500;
-          padding-bottom: 1em;
-        }
-        & .name {width: 50%;}
-      }
+  }
+  
+}
+.leaderboard-ranking {
+  width: 100%;
+  @include flex(row, center, center);
+  &__list {
+    width: 60%;
+    padding: 2em;
+    &__item, &__title {
+      font-size: 1.4rem;
+      font-weight: 100;
+      padding: 0.3em;
+      list-style-type: none;
+      @include flex(row, flex-start, flex-start);
     }
+    &__title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      padding-bottom: 1em;
+    }
+    & .name {width: 50%;}
   }
 }
 
+
+// --------------------- GAMELOG ------------------
+.gamelog {
+  display: none;
+  @include modal-dark-background();
+  &__content {
+    @include modal-content-background();
+    @include flex(column, flex-start, center);
+    &__title {
+      @include title(3rem);
+    }
+    &__subtitle {
+      @include subtitle(2rem);
+      padding: 1em;
+      text-align: center;
+    }
+  }
+}
+.gamelog-history {
+  @include flex(row, center, center);
+  &__list {
+    padding-left: 5em;
+    &__item {
+      font-size: 1.3rem;
+      font-weight: 100;
+      list-style-type: none;
+      @include flex(row, flex-start, flex-start);
+      padding: 0.5em;
+    }
+    & .italic {
+      font-weight: 900;
+    }
+  }
+}
 // POUR MODALES RULES & DISCONNECT, SOLLUTION RESPONSIVE: MODIFIER LES TAILLES DE POLICES À PARTIR DE 1250PX RÉSOUDRAIS DÉJÀ BEAUCOUP
 
 // ----------------- CLOSE BTN ----------------
@@ -387,4 +423,110 @@ body {
   position: absolute;
   right: 4em;
   cursor: pointer;
+  width: 35px;
+}
+
+// -------------------- RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE -----------------------
+@media only screen and (max-width: 1250px) {
+  .leaderboard__content__title, .gamelog__content__title  {
+    font-size: 2.5rem;
+  }
+  .gamelog__content__subtitle, .leaderboard__content__subtitle {
+    font-size: 1.3rem;
+    padding: 1em;
+  }
+
+  // --------------------leaderboard
+  .leaderboard-ranking {
+    &__img {
+      width: 280px;
+    }
+    &__list {
+      width: 50%;
+      padding: 2em 0;
+      &__title {
+        font-size: 1.4rem;
+      }
+      &__item, &__title {
+        font-size: 1.2rem;
+        justify-content: space-between;
+      }
+      .name {
+        width: auto;
+      }
+    }
+  }
+  
+  // ------------------------gamelog
+  .gamelog-history {
+    @include flex(column, space-between, center);
+    &__img {
+      width: 200px;
+    }
+    &__list{
+      padding-left: 0;
+      padding-top: 1em;
+      &__item {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .leaderboard__content, .gamelog__content {
+    margin: 0.5em;
+    padding: 1.5em;
+    height: 98%;
+    &__title {
+      font-size: 2rem;
+      padding-bottom: 0.2em;
+    }
+    &__subtitle{
+      font-size: 1.1rem;
+    }
+  }
+
+  // ---------------------leaderboard
+  .leaderboard-ranking {
+    @include flex(column, space-between, center);
+  }
+
+  // ----------------------gamelog
+  .gamelog-history__img {
+    width: 150px;
+  }
+  .gamelog-history__list__item {
+    font-size: 1rem;
+    padding: 0.3em;
+  }
+
+  .close-btn{
+    width: 25px;
+    right: 2em;
+    top: 2em;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .gamelog__content {
+    margin: 0;
+    padding: 1em;
+    height: 100%;
+    border-radius: 0;
+    &__title {
+      font-size: 1.8rem;
+    }
+  }
+  .gamelog-history__img {
+    display: none;
+  }
+  .gamelog-history__list__item {
+    font-size: 0.9rem;
+    padding: 0.1em;
+  }
+
+  .close-btn{
+    width: 15px;
+  }
 }

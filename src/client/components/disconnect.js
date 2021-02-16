@@ -8,10 +8,10 @@ const Disconnect = () => (
             <p className={"disconnect__content__title"}>{"Disconnect ?"}</p>
             <div className={"disconnect__content__text"}>
                 <img
-                    className={"disconnect__content__text__svg"}
+                    className={"disconnect__content__svg"}
                     src={DisconnectSvg}
                     alt={"Trough the park, leaving"}
-                    width={"475"}
+                    width={"550"}
                 />
                 <div className={"disconnect__content__text__confirm"}>
                     <p>{"Hey, Nick Banken,"}</p>
@@ -22,15 +22,11 @@ const Disconnect = () => (
                     </p>
                 </div>
             </div>
-            <div className={"disconnect__content__btns"}>
-                <button
-                    type={"button"}
-                    className={"disconnect__content__btns__button"}>
+            <div className={"disconnect__btns"}>
+                <button type={"button"} className={"disconnect__btns__button"}>
                     {"Disconnect"}
                 </button>
-                <button
-                    type={"button"}
-                    className={"disconnect__content__btns__button"}>
+                <button type={"button"} className={"disconnect__btns__button"}>
                     {"Go back"}
                 </button>
             </div>
