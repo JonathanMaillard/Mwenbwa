@@ -6,7 +6,7 @@
  * started at 18/05/2020
  */
 
-import dbCalls from "./dbCalls"
+
 
 // EXPRESS DECLARATION
 import express from "express";
@@ -31,6 +31,9 @@ const saltRounds = 10;
 //     client.close();
 // });
 
+ //Importer fichier dbCalls
+ const dbCalls = require('./dbCalls');
+
 // app.get("/hello", (req, res) => {
 //     console.log("salut les potes");
 //     console.log(`ℹ️  (${req.method.toUpperCase()}) ${req.url}`);
@@ -44,17 +47,21 @@ app.post("/test", jsonParser, (req, res) => {
 });
 
 // GET REQUESTS
-app.get("/trees", (req, res) => {
-    const request = JSON.parse(dbGetTrees());
+app.get("/trees", async (req, res) => {
+    //console.log(req);
+    const request = await dbCalls.dbGetTrees();
+    //const data = JSON.parse(request);
     res.send(request);
 });
-app.get("/user/:userid", (req, res) => {
-    const userId = req.param("userid");
-    const request = JSON.parse(dbGetUser(userId));
+app.get("/user/:userid", async (req, res) => {
+    const userId = req.params["userid"];
+    //const request = JSON.parse(await dbCalls.dbGetUser(userId));
+    const request = await dbCalls.dbGetUser(userId);
     res.send(request);
-});
-app.get("/leaderboard", (req, res) => {
-    const request = JSON.parse(dbGetLeaderboard());
+});   
+app.get("/leaderboard", async (req, res) => {
+    //const request = JSON.parse(dbGetLeaderboard());
+    const request = await dbCalls.dbGetLeaderboard();
     res.send(request);
 });
 app.get("/logs", (req, res) => {
