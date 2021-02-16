@@ -14,7 +14,6 @@ const Leaderboard = () => (
                     src={LeaderboardSvg}
                     alt={"destination"}
                     className={"leaderboard-ranking__img"}
-                    width={"550"}
                 />
                 <ul className={"leaderboard-ranking__list"}>
                     <li className={"leaderboard-ranking__list__title"}>

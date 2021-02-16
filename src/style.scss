@@ -25,13 +25,15 @@ $bg-modal: rgba(255, 255, 255, 0.75);
   align-items: $align;
 }
 @mixin modal-dark-background() {
+  justify-content: center;
+  align-items: center;
   position: absolute;
   width: 100vw;
   height: 100vh;
   background-color: #183c45b2;
 }
 @mixin modal-content-background() {
-  height: 88%;
+  height: 85%;
   margin: 3em;
   padding: 3em;
   border-radius: 25px;
@@ -350,10 +352,10 @@ body {
     @include modal-content-background();
     @include flex(column, flex-start, center);
     &__title {
-      @include title(3.3rem);
+      @include title(2.2rem);
     }
     &__subtitle {
-      @include subtitle(2rem);
+      @include subtitle(1.6rem);
       padding: 1em;
       text-align: center;
     }
@@ -363,22 +365,25 @@ body {
 .leaderboard-ranking {
   width: 100%;
   @include flex(row, center, center);
+  &__img {
+    width: 35%;
+  }
   &__list {
-    width: 60%;
+    width: 65%;
     padding: 2em;
     &__item, &__title {
-      font-size: 1.4rem;
+      font-size: 1rem;
       font-weight: 100;
       padding: 0.3em;
       list-style-type: none;
       @include flex(row, flex-start, flex-start);
     }
     &__title {
-      font-size: 1.8rem;
+      font-size: 1.2rem;
       font-weight: 700;
       padding-bottom: 1em;
     }
-    & .name {width: 50%;}
+    & .name {width: 80%;}
   }
 }
 
@@ -391,10 +396,10 @@ body {
     @include modal-content-background();
     @include flex(column, flex-start, center);
     &__title {
-      @include title(3rem);
+      @include title(2.2rem);
     }
     &__subtitle {
-      @include subtitle(2rem);
+      @include subtitle(1.4rem);
       padding: 1em;
       text-align: center;
     }
@@ -402,21 +407,23 @@ body {
 }
 .gamelog-history {
   @include flex(row, center, center);
+  &__img {
+    width: 35%;
+  }
   &__list {
-    padding-left: 5em;
+    padding-left: 3em;
     &__item {
-      font-size: 1.3rem;
+      font-size: 1rem;
       font-weight: 100;
       list-style-type: none;
       @include flex(row, flex-start, flex-start);
-      padding: 0.5em;
+      padding: 0.3em;
     }
     & .italic {
       font-weight: 900;
     }
   }
 }
-// POUR MODALES RULES & DISCONNECT, SOLLUTION RESPONSIVE: MODIFIER LES TAILLES DE POLICES À PARTIR DE 1250PX RÉSOUDRAIS DÉJÀ BEAUCOUP
 
 // ----------------- CLOSE BTN ----------------
 .close-btn {
@@ -427,59 +434,13 @@ body {
 }
 
 // -------------------- RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE -----------------------
-@media only screen and (max-width: 1250px) {
-  .leaderboard__content__title, .gamelog__content__title  {
-    font-size: 2.5rem;
-  }
-  .gamelog__content__subtitle, .leaderboard__content__subtitle {
-    font-size: 1.3rem;
-    padding: 1em;
-  }
-
-  // --------------------leaderboard
-  .leaderboard-ranking {
-    &__img {
-      width: 280px;
-    }
-    &__list {
-      width: 50%;
-      padding: 2em 0;
-      &__title {
-        font-size: 1.4rem;
-      }
-      &__item, &__title {
-        font-size: 1.2rem;
-        justify-content: space-between;
-      }
-      .name {
-        width: auto;
-      }
-    }
-  }
-  
-  // ------------------------gamelog
-  .gamelog-history {
-    @include flex(column, space-between, center);
-    &__img {
-      width: 200px;
-    }
-    &__list{
-      padding-left: 0;
-      padding-top: 1em;
-      &__item {
-        font-size: 1.1rem;
-      }
-    }
-  }
-}
 
 @media only screen and (max-width: 768px) {
   .leaderboard__content, .gamelog__content {
-    margin: 0.5em;
+    margin: 1em;
     padding: 1.5em;
-    height: 98%;
     &__title {
-      font-size: 2rem;
+      font-size: 1.8rem;
       padding-bottom: 0.2em;
     }
     &__subtitle{
@@ -489,16 +450,30 @@ body {
 
   // ---------------------leaderboard
   .leaderboard-ranking {
+    width: 100%;
     @include flex(column, space-between, center);
+    &__list {
+      width: 100%;
+      &__title {
+        font-size: 1.1rem
+      }
+      &__item {
+        font-size: 0.9rem
+      }
+    }
   }
 
   // ----------------------gamelog
-  .gamelog-history__img {
-    width: 150px;
-  }
-  .gamelog-history__list__item {
-    font-size: 1rem;
-    padding: 0.3em;
+  .gamelog-history{
+    @include flex(column, center, center);
+    &__list{
+      padding-left: 0;
+      padding-top: 1em;
+      &__item {
+        font-size: 0.9rem;
+        padding: 0.1em;
+      }
+    }
   }
 
   .close-btn{
@@ -508,16 +483,28 @@ body {
   }
 }
 
+
+
 @media only screen and (max-width: 320px) {
-  .gamelog__content {
+  .gamelog__content, .leaderboard__content {
     margin: 0;
-    padding: 1em;
+    padding: 0.5em;
     height: 100%;
     border-radius: 0;
     &__title {
       font-size: 1.8rem;
     }
   }
+
+  // ---------------------leaderboard
+  .leaderboard-ranking__list__title {
+        font-size: 0.9rem
+  }
+  .leaderboard-ranking__list__item {
+    font-size: 0.7rem
+  }
+
+  // ----------------------gamelog
   .gamelog-history__img {
     display: none;
   }
@@ -528,5 +515,7 @@ body {
 
   .close-btn{
     width: 15px;
+    right: 1.3em;
+    top: 1.3em;
   }
 }

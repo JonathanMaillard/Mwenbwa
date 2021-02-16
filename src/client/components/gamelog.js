@@ -14,7 +14,6 @@ const Gamelog = () => (
                     src={GamelogSvg}
                     alt={"destination"}
                     className={"gamelog-history__img"}
-                    width={"400"}
                 />
                 <ul className={"gamelog-history__list"}>
                     <li className={"gamelog-history__list__item"}>
