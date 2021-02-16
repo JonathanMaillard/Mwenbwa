@@ -168,6 +168,26 @@ app.post("/changeProfilePic", jsonParser, (req, res) => {
     res.send(request);
 });
 
+/*===================
+SERVER LAUNCH
+===================*/
+
+// INITIATE DATABASE
+const arbustum = require("../../data/arbustum.json");
+arbustum.forEach((tree)=>{
+    const radius = tree.circonf/(200*Math.PI);
+    if(tree.arbotag && !dbGetTree(tree.arbotag)) {
+        dbAddTree(
+            tree.arbotag,
+            tree.nom_complet,
+            tree.geoloc.lat,
+            tree.geoloc.lon,
+            2*radius,
+            tree.hauteur_totale,
+            Math.ceil(tree.circonf*tree.height)
+        );
+    }
+});
 // START SERVER
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
