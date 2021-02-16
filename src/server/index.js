@@ -6,7 +6,7 @@
  * started at 18/05/2020
  */
 
-import dbCalls from "./dbCalls"
+
 
 // EXPRESS DECLARATION
 import express from "express";
@@ -36,6 +36,9 @@ const hash = pwd => {
 //     client.close();
 // });
 
+ //Importer fichier dbCalls
+ const dbCalls = require('./dbCalls');
+
 // app.get("/hello", (req, res) => {
 //     console.log("salut les potes");
 //     console.log(`ℹ️  (${req.method.toUpperCase()}) ${req.url}`);
@@ -48,13 +51,13 @@ app.post("/test", (req, res) => {
 });
 
 // GET REQUESTS
-app.get("/trees", (req, res) => {
-    console.log(req);
-    //res.send( dbCalls.dbGetTrees );
+app.get("/trees", async (req, res) => {
+    //console.log(req);
+    res.send( await dbCalls.dbGetTrees() );
 });
-app.get("/user", (req, res) => {
-    const userId = req.param("id");
-    // res.send( dbGetUser(userId) );
+app.get("/user", async (req, res) => {
+    const userId = req.params("id");
+    res.send( await dbCalls.dbGetUser(userId) );
 });
 app.get("/leaderboard", (req, res) => {
     // res.send( dbGetLeaderboard() );

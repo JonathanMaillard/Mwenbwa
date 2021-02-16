@@ -1,23 +1,45 @@
 //File for managing DB manipulation
 
-//Connexion
+
 // DATABASE CONNEXION
 import {MongoClient, uri} from "./db-connexion";
-//const client = new MongoClient(uri, {useNewUrlParser: true});
-//const db = client.db(mwenbwa);
+const client = new MongoClient(uri, { useUnifiedTopology: true });
+
 
 //GET
 
 //Get all trees
-const dbGetTrees = () =>{
-    const client = new MongoClient(uri, {useNewUrlParser: true});
-    const db = client.db("mwenbwa");
-
-    const trees = db.collection("trees").find();
+const dbGetTrees = async () =>{
+     
     
 
-    return trees;
+    async function run() {
+        try {
+          await client.connect();
+          const database = client.db('mwenbwa');
+          const collection = database.collection('trees');
+          
+          //const query = { arbotag: 1770 };
+          //const tree = await collection.findOne(query);
+          //console.log(tree);
 
+          const cursor = await collection.find();
+          const result = await cursor.toArray();
+
+          //console.log(result);
+          return result;
+
+         
+
+        } finally {
+          // Ensures that the client will close when you finish/error
+          await client.close();
+        }
+      }
+      //run().catch(console.dir);
+      return (await run());
+      
+      
 }
 
 //Get a specific tree
@@ -26,7 +48,29 @@ const dbGetTree = (tree) => {
 }
 
 //Get a user
-const dbGetUser = (userId) =>{
+const dbGetUser = async (userId) =>{
+
+    async function run() {
+        try {
+          await client.connect();
+          const database = client.db('mwenbwa');
+          const collection = database.collection('players');
+
+          const cursor = await collection.find({player : });
+          const result = await cursor.toArray();
+
+          //console.log(result);
+          return result;
+
+         
+
+        } finally {
+          // Ensures that the client will close when you finish/error
+          await client.close();
+        }
+      }
+      //run().catch(console.dir);
+      return (await run());
 
 }
 
@@ -104,4 +148,8 @@ const dbModifyPassword = (userId, newPassword) => {
 //Modify Profile Pics
 const dbModifyPics = (userId, newPics) => {
 
+}
+
+module.exports ={
+    dbGetTrees
 }
