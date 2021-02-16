@@ -64,8 +64,8 @@ app.get("/leaderboard", async (req, res) => {
     const request = await dbCalls.dbGetLeaderboard();
     res.send(request);
 });
-app.get("/logs", (req, res) => {
-    const request = JSON.parse(dbGetLogs());
+app.get("/logs", async (req, res) => {
+    const request = await dbCalls.dbGetLogs();
     res.send(request);
 });
 
