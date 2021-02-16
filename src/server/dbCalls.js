@@ -9,7 +9,7 @@ import {MongoClient, uri} from "./db-connexion";
 //GET
 
 //Get all trees
-const dbGetTrees = async () =>{
+const dbGetTrees = () =>{
      
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 
@@ -37,7 +37,7 @@ const dbGetTrees = async () =>{
         }
       }
       //run().catch(console.dir);
-      return (await run());
+      return (run());
       
       
 }
@@ -48,7 +48,7 @@ const dbGetTree = (tree) => {
 }
 
 //Get a user
-const dbGetUser = async (userId) =>{
+const dbGetUser = (userId) =>{
 
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 
@@ -72,12 +72,12 @@ const dbGetUser = async (userId) =>{
         }
       }
       //run().catch(console.dir);
-      return (await run());
+      return (run());
 
 }
 
 //Get the leaderboard
-const dbGetLeaderboard = async () =>{
+const dbGetLeaderboard = () =>{
 
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 
@@ -108,12 +108,43 @@ const dbGetLeaderboard = async () =>{
         }
       }
       //run().catch(console.dir);
-      return (await run());
+      return (run());
 }
 
 
 //Get the logs
 const dbGetLogs = () =>{
+
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+    async function run() {
+        try {
+          await client.connect();
+          const database = client.db('mwenbwa');
+          const collection = database.collection('logs');
+
+          const query = {};
+          const options = {
+            // sort returned documents in descending order by score
+            sort: {_id: -1 },
+            // Include only the username, color and score fields in each returned document
+            projection: { _id: 0, content: 1 },
+          };
+          const cursor = await collection.find(query, options);
+          const result = await cursor.toArray();
+
+          //console.log(result);
+          return result;
+
+         
+
+        } finally {
+          // Ensures that the client will close when you finish/error
+          await client.close();
+        }
+      }
+      //run().catch(console.dir);
+      return (run());
 
 }
 
@@ -183,5 +214,5 @@ const dbModifyPics = (userId, newPics) => {
 }
 
 module.exports ={
-    dbGetTrees, dbGetUser, dbGetLeaderboard
+    dbGetTrees, dbGetUser, dbGetLeaderboard, dbGetLogs
 }
