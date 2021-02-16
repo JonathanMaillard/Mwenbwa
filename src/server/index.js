@@ -74,7 +74,7 @@ app.post("/login", jsonParser, (req, res) => {
     const userInfo = req.body.userInfo;
     const pwd = req.body.password;
     try {
-        const request = JSON.parse(dbGetPassword(userInfo));
+        const request = dbGetPassword(userInfo);
         if (request) {
             bcrypt.compare(pwd, request, (err, result) => {
                 res.send(result ? "correct" : "invalidPwd");
@@ -95,9 +95,7 @@ app.post("/register", jsonParser, (req, res) => {
     let request;
     bcrypt.genSalt(saltRounds, (err, salt) => {
         bcrypt.hash(userPwd, salt, (error, hash) => {
-            request = JSON.parse(
-                dbRegister(username, hash, userEmail, userColor),
-            );
+            request = dbRegister(username, hash, userEmail, userColor);
         });
     });
     res.send(request);
@@ -108,20 +106,20 @@ app.post("/buyTree", jsonParser, (req, res) => {
     const userId = req.body.userId;
     const treeId = req.body.treeId;
     const treePrice = req.body.treePrice;
-    const request = JSON.parse(dbBuyTree(treeId, userId, treePrice));
+    const request = dbBuyTree(treeId, userId, treePrice);
     res.send(request);
 });
 app.post("/lockTree", jsonParser, (req, res) => {
     const treeId = req.body.treeId;
     const treeLockPrice = req.body.treeLockPrice;
-    const request = JSON.parse(dbLockTree(treeId, treeLockPrice));
+    const request = dbLockTree(treeId, treeLockPrice);
     res.send(request);
 });
 app.post("/comment", jsonParser, (req, res) => {
     const userId = req.body.userId;
     const treeId = req.body.treeId;
     const comment = req.body.comment;
-    const request = JSON.parse(dbAddComment(treeId, userId, comment));
+    const request = dbAddComment(treeId, userId, comment);
     res.send(request);
 });
 
@@ -129,19 +127,19 @@ app.post("/comment", jsonParser, (req, res) => {
 app.post("/changeColor", jsonParser, (req, res) => {
     const userId = req.body.userId;
     const color = req.body.color;
-    const request = JSON.parse(dbChangeColor(userId, color));
+    const request = dbChangeColor(userId, color);
     res.send(request);
 });
 app.post("/changeMailAdress", jsonParser, (req, res) => {
     const userId = req.body.userId;
     const userEmail = req.body.userEmail;
-    const request = JSON.parse(dbModifyMail(userId, userEmail));
+    const request = dbModifyMail(userId, userEmail);
     res.send(request);
 });
 app.post("/changeUsername", jsonParser, (req, res) => {
     const userId = req.body.userId;
     const username = req.body.username;
-    const request = JSON.parse(dbModifyUsername(userId, username));
+    const request = dbModifyUsername(userId, username);
     res.send(request);
 });
 app.post("/changePassword", jsonParser, (req, res) => {
@@ -149,7 +147,7 @@ app.post("/changePassword", jsonParser, (req, res) => {
     const newPwd = req.body.newPwd;
     const oldPwd = req.body.oldPwd;
     try {
-        const request = JSON.parse(dbGetUser(userId));
+        const request = dbGetUser(userId);
         if (request) {
             bcrypt.compare(oldPwd, request, (errComp, result) => {
                 result &&
@@ -171,7 +169,7 @@ app.post("/changePassword", jsonParser, (req, res) => {
 app.post("/changeProfilePic", jsonParser, (req, res) => {
     const userId = req.body.userId;
     const newPic = req.body.newPic;
-    const request = JSON.parse(dbModifyPics(userId, newPic));
+    const request = dbModifyPics(userId, newPic);
     res.send(request);
 });
 
