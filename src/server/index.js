@@ -70,11 +70,11 @@ app.get("/logs", async (req, res) => {
 });
 
 // CONNEXION
-app.post("/login", jsonParser, (req, res) => {
+app.post("/login", jsonParser, async (req, res) => {
     const userInfo = req.body.userInfo;
     const pwd = req.body.password;
     try {
-        const request = dbGetPassword(userInfo);
+        const request = await dbCalls.dbLogin(userInfo);
         if (request) {
             bcrypt.compare(pwd, request, (err, result) => {
                 res.send(result ? "correct" : "invalidPwd");
@@ -176,7 +176,7 @@ app.post("/changeProfilePic", jsonParser, (req, res) => {
 /*===================
 SERVER LAUNCH
 ===================*/
-
+/*
 // INITIATE DATABASE
 const arbustum = require("../../data/arbustum.json");
 arbustum.forEach((tree)=>{
@@ -192,7 +192,7 @@ arbustum.forEach((tree)=>{
             Math.ceil(tree.circonf*tree.height)
         );
     }
-});
+});*/
 // START SERVER
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
