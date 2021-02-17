@@ -1,5 +1,6 @@
 import * as React from "react";
 import CloseSvg from "../../ressources/images/cancel.svg";
+import {hideRulesModal} from "../display/hide-modal";
 
 const Rules = () => (
     <div className={"rules"}>
@@ -47,7 +48,7 @@ const Rules = () => (
                 className={"close-btn"}
                 src={CloseSvg}
                 alt={"Close"}
-                width={"40"}
+                onClick={hideRulesModal}
             />
         </div>
     </div>

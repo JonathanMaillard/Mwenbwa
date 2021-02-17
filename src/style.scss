@@ -346,7 +346,7 @@ body {
 
 // ------------------- LEADERBOARD --------------------
 .leaderboard {
-  // display: none;
+  display: none;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
@@ -431,6 +431,11 @@ body {
   right: 4em;
   cursor: pointer;
   width: 35px;
+}
+
+// ---------------- SHOWING MODALS ---------------
+.show-modal {
+  display: flex;
 }
 
 // -------------------- RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE -----------------------

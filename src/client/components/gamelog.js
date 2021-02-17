@@ -1,9 +1,10 @@
 import * as React from "react";
 import GamelogSvg from "../../ressources/images/undraw_history.svg";
 import CloseSvg from "../../ressources/images/cancel.svg";
+import {hideGamelogModal} from "../display/hide-modal";
 
 const Gamelog = () => (
-    <div className={"gamelog"}>
+    <div className={"modal gamelog"}>
         <div className={"gamelog__content"}>
             <p className={"gamelog__content__title"}>{"Gamelog"}</p>
             <div className={"gamelog__content__subtitle"}>
@@ -89,6 +90,7 @@ const Gamelog = () => (
                 className={"close-btn"}
                 src={CloseSvg}
                 alt={"Close"}
+                onClick={hideGamelogModal}
             />
         </div>
     </div>

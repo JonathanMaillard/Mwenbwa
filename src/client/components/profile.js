@@ -1,4 +1,5 @@
 import * as React from "react";
+import {showRulesModal, showDisconnectModal} from "../display/show-modal";
 
 const Profile = () => (
     <div className={"containerProfile"}>
@@ -17,10 +18,10 @@ const Profile = () => (
                     <button type={"button"}>
                         <i className={"fas fa-user"} />
                     </button>
-                    <button type={"button"}>
+                    <button type={"button"} onClick={showRulesModal}>
                         <i className={"fas fa-cogs"} />
                     </button>
-                    <button type={"button"}>
+                    <button type={"button"} onClick={showDisconnectModal}>
                         <i className={"fas fa-sign-out-alt"} />
                     </button>
                 </div>

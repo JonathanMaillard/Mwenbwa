@@ -1,9 +1,10 @@
 import * as React from "react";
 import LeaderboardSvg from "../../ressources/images/undraw_destination.svg";
 import CloseSvg from "../../ressources/images/cancel.svg";
+import {hideLeaderboardModal} from "../display/hide-modal";
 
 const Leaderboard = () => (
-    <div className={"leaderboard"}>
+    <div className={"modal leaderboard"}>
         <div className={"leaderboard__content"}>
             <p className={"leaderboard__content__title"}>{"Leaderboard"}</p>
             <div className={"leaderboard__content__subtitle"}>
@@ -67,7 +68,7 @@ const Leaderboard = () => (
                 className={"close-btn"}
                 src={CloseSvg}
                 alt={"Close"}
-                width={"40"}
+                onClick={hideLeaderboardModal}
             />
         </div>
     </div>
