@@ -20,15 +20,6 @@ const jsonParser = bodyParser.json();
 const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
-// DATABASE CONNEXION
-//import {MongoClient, uri} from "./db-connexion";
-//const client = new MongoClient(uri, {useNewUrlParser: true});
-// client.connect(err => {
-//     console.log(err);
-//     const collection = client.db("mwenbwa");
-//     client.close();
-// });
-
 //Importer fichier dbCalls
 import {
     dbGetTrees,
@@ -47,18 +38,6 @@ import {
     dbModifyPassword,
     dbModifyPics,
 } from "./dbCalls";
-
-// app.get("/hello", (req, res) => {
-//     console.log("salut les potes");
-//     console.log(`ℹ️  (${req.method.toUpperCase()}) ${req.url}`);
-//     res.send("Hello, World!");
-// });
-app.post("/test", jsonParser, (req, res) => {
-    console.log(req.body);
-    console.log("===============================");
-    res.statusCode = 201;
-    res.json([{test: 1}]);
-});
 
 // GET REQUESTS
 app.get("/trees", async (req, res) => {
@@ -89,7 +68,7 @@ app.post("/login", jsonParser, async (req, res) => {
     const userInfo = req.body.userInfo;
     const pwd = req.body.userPwd;
     try {
-        const request = dbGetUserFromInfo(userInfo);
+        const request = await dbGetUserFromInfo(userInfo);
         if (request) {
             bcrypt.compare(pwd, request, (err, result) => {
                 res.send(result ? "correct" : "invalidPwd");
@@ -191,7 +170,6 @@ app.post("/changePic", jsonParser, (req, res) => {
 /*===================
 SERVER LAUNCH
 ===================*/
-/*
 // INITIATE DATABASE
 console.time("dataset");
 const axios = require("axios");
@@ -200,77 +178,33 @@ const dataSetUrl =
 axios
     .get(dataSetUrl)
     .then(response => {
-        console.log(response.data[0], response.data.length);
         // response.data.forEach((tree)=>{
-        //     // if(
-        //     //     tree.arbotag
-        //     //     && tree.hauteur_totale
-        //     //     && tree.circonf
-        //     //     // && !dbGetTree(tree.arbotag)
-        //     // ) {
-        //     //     // dbAddTree({
-        //     //     //     "arbotag": tree.arbotag,
-        //     //     //     "name": tree.nom_complet ? tree.nom_complet : "",
-        //     //     //     "latitude": tree.x_lambda,
-        //     //     //     "longitude": tree.y_phi,
-        //     //     //     "height": tree.hauteur_totale,
-        //     //     //     "circonf": tree.circonf,
-        //     //     //     "basePrice": Math.ceil(tree.circonf*tree.height)
-        //     //     // });
-        //     // }
-        //     console.log(tree.arbotag);
+        //     if(
+        //         tree.fields.arbotag
+        //         && tree.fields.hauteur_totale
+        //         && tree.fields.circonf
+        //         // && await !dbGetTree(tree.arbotag)
+        //     ) {
+        //         // dbAddTree({
+        //         //     "arbotag": tree.fields.arbotag,
+        //         //     "name": tree.fields.nom_complet ? tree.fields.nom_complet : "",
+        //         //     "latitude": tree.fields.x_lambda,
+        //         //     "longitude": tree.fields.y_phi,
+        //         //     "height": tree.fields.hauteur_totale,
+        //         //     "circonf": tree.fields.circonf,
+        //         //     "basePrice": Math.ceil(tree.fields.circonf*tree.fields.hauteur_totale)
+        //         // });
+        //         // console.log("New tree inserted :", tree.fields.arbotag);
+        //     }
         // });
+        console.log(response.data[0], response.data.length);
     })
     .catch(e => {
         console.log("sad because :", e);
     })
     .finally(() => console.timeEnd("dataset"));
-// console.log(arbustum.find(x => x.arbotag === 317));
-// arbustum.forEach((tree)=>{
-//     const radius = tree.circonf/(200*Math.PI);
-//     if(tree.arbotag && !dbGetTree(tree.arbotag)) {
-//         dbAddTree({
-//             "arbotag": tree.arbotag,
-//             "name": tree.nom_complet,
-//             "latitude": tree.geoloc.lat,
-//             "longitude": tree.geoloc.lon,
-//             "diameter": 2*radius,
-//             "height": tree.hauteur_totale,
-//             "basePrice": Math.ceil(tree.circonf*tree.height)
-//         });
-//     }
-// });
+
 // START SERVER
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
 );
-
-/* //GET trees infos
-app.get("/get-trees", (req, res) => {
-    console.log(`ℹ️  (${req.method.toUpperCase()}) ${req.url}`);
-    let resultArray = [];
-
-    client.connect(err => {
-        console.log(err);
-        
-        const collection = client.db("mwenbwa");
-        // perform actions on the collection object
-        let cursor = collection.collection("trees").find();
-        console.log(cursor);
-        cursor.forEach(function(doc, err){
-            console.error("error : " + err);
-            console.log("doc : " + doc);
-            resultArray.push(doc);
-
-        }, function(){
-            res.send(resultArray);
-            client.close();
-            
-        })
-        // const test = collection.collection("mwenbwa").insertOne({test: "test"});
-        //client.close();
-    });
-    
-
-    //res.send("yo");
-}); */
