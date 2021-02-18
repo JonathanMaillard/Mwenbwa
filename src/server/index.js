@@ -6,8 +6,6 @@
  * started at 18/05/2020
  */
 
-
-
 // EXPRESS DECLARATION
 import express from "express";
 import path from "path";
@@ -31,8 +29,24 @@ const saltRounds = 10;
 //     client.close();
 // });
 
- //Importer fichier dbCalls
- const dbCalls = require('./dbCalls');
+//Importer fichier dbCalls
+import {
+    dbGetTrees,
+    dbGetTree,
+    dbGetUser,
+    dbGetLeaderboard,
+    dbGetLogs,
+    dbGetUserFromInfo,
+    dbRegister,
+    dbBuyTree,
+    dbLockTree,
+    dbAddComment,
+    dbChangeColor,
+    dbModifyMail,
+    dbModifyUsername,
+    dbModifyPassword,
+    dbModifyPics,
+} from "./dbCalls";
 
 // app.get("/hello", (req, res) => {
 //     console.log("salut les potes");
@@ -48,33 +62,34 @@ app.post("/test", jsonParser, (req, res) => {
 
 // GET REQUESTS
 app.get("/trees", async (req, res) => {
-    //console.log(req);
-    const request = await dbCalls.dbGetTrees();
-    //const data = JSON.parse(request);
+    const request = await dbGetTrees();
+    res.send(request);
+});
+app.get("/tree/:treeid", async (req, res) => {
+    const treeId = req.params.treeid;
+    const request = await dbGetTree(treeId);
     res.send(request);
 });
 app.get("/user/:userid", async (req, res) => {
-    const userId = req.params["userid"];
-    //const request = JSON.parse(await dbCalls.dbGetUser(userId));
-    const request = await dbCalls.dbGetUser(userId);
+    const userId = req.params.userid;
+    const request = await dbGetUser(userId);
     res.send(request);
-});   
+});
 app.get("/leaderboard", async (req, res) => {
-    //const request = JSON.parse(dbGetLeaderboard());
-    const request = await dbCalls.dbGetLeaderboard();
+    const request = await dbGetLeaderboard();
     res.send(request);
 });
 app.get("/logs", async (req, res) => {
-    const request = await dbCalls.dbGetLogs();
+    const request = await dbGetLogs();
     res.send(request);
 });
 
 // CONNEXION
 app.post("/login", jsonParser, (req, res) => {
     const userInfo = req.body.userInfo;
-    const pwd = req.body.password;
+    const pwd = req.body.userPwd;
     try {
-        const request = dbGetPassword(userInfo);
+        const request = dbGetUserFromInfo(userInfo);
         if (request) {
             bcrypt.compare(pwd, request, (err, result) => {
                 res.send(result ? "correct" : "invalidPwd");
@@ -89,9 +104,9 @@ app.post("/login", jsonParser, (req, res) => {
 });
 app.post("/register", jsonParser, (req, res) => {
     const username = req.body.username;
-    const userPwd = req.body.password;
-    const userEmail = req.body.email;
-    const userColor = req.body.color;
+    const userEmail = req.body.userEmail;
+    const userPwd = req.body.userPwd;
+    const userColor = req.body.userColor;
     let request;
     bcrypt.genSalt(saltRounds, (err, salt) => {
         bcrypt.hash(userPwd, salt, (error, hash) => {
@@ -130,7 +145,7 @@ app.post("/changeColor", jsonParser, (req, res) => {
     const request = dbChangeColor(userId, color);
     res.send(request);
 });
-app.post("/changeMailAdress", jsonParser, (req, res) => {
+app.post("/changeEmail", jsonParser, (req, res) => {
     const userId = req.body.userId;
     const userEmail = req.body.userEmail;
     const request = dbModifyMail(userId, userEmail);
@@ -142,7 +157,7 @@ app.post("/changeUsername", jsonParser, (req, res) => {
     const request = dbModifyUsername(userId, username);
     res.send(request);
 });
-app.post("/changePassword", jsonParser, (req, res) => {
+app.post("/changePwd", jsonParser, (req, res) => {
     const userId = req.body.userId;
     const newPwd = req.body.newPwd;
     const oldPwd = req.body.oldPwd;
@@ -166,10 +181,10 @@ app.post("/changePassword", jsonParser, (req, res) => {
         res.send("error");
     }
 });
-app.post("/changeProfilePic", jsonParser, (req, res) => {
+app.post("/changePic", jsonParser, (req, res) => {
     const userId = req.body.userId;
-    const newPic = req.body.newPic;
-    const request = dbModifyPics(userId, newPic);
+    const userPic = req.body.userPic;
+    const request = dbModifyPics(userId, userPic);
     res.send(request);
 });
 
@@ -178,28 +193,57 @@ SERVER LAUNCH
 ===================*/
 
 // INITIATE DATABASE
-const arbustum = require("../../data/arbustum.json");
-arbustum.forEach((tree)=>{
-    const radius = tree.circonf/(200*Math.PI);
-    if(tree.arbotag && !dbGetTree(tree.arbotag)) {
-        dbAddTree(
-            tree.arbotag,
-            tree.nom_complet,
-            tree.geoloc.lat,
-            tree.geoloc.lon,
-            2*radius,
-            tree.hauteur_totale,
-            Math.ceil(tree.circonf*tree.height)
-        );
-    }
-});
+console.time("dataset");
+const axios = require("axios");
+const dataSetUrl =
+    "https://opendata.liege.be/explore/dataset/arbustum/download/?format=json&timezone=Europe/Berlin&lang=fr";
+axios
+    .get(dataSetUrl)
+    .then(response => {
+        console.log(response.data[0], response.data.length);
+        // response.data.forEach((tree)=>{
+        //     // if(
+        //     //     tree.arbotag
+        //     //     && tree.hauteur_totale
+        //     //     && tree.circonf
+        //     //     // && !dbGetTree(tree.arbotag)
+        //     // ) {
+        //     //     // dbAddTree({
+        //     //     //     "arbotag": tree.arbotag,
+        //     //     //     "name": tree.nom_complet ? tree.nom_complet : "",
+        //     //     //     "latitude": tree.x_lambda,
+        //     //     //     "longitude": tree.y_phi,
+        //     //     //     "height": tree.hauteur_totale,
+        //     //     //     "circonf": tree.circonf,
+        //     //     //     "basePrice": Math.ceil(tree.circonf*tree.height)
+        //     //     // });
+        //     // }
+        //     console.log(tree.arbotag);
+        // });
+    })
+    .catch(e => {
+        console.log("sad because :", e);
+    })
+    .finally(() => console.timeEnd("dataset"));
+// console.log(arbustum.find(x => x.arbotag === 317));
+// arbustum.forEach((tree)=>{
+//     const radius = tree.circonf/(200*Math.PI);
+//     if(tree.arbotag && !dbGetTree(tree.arbotag)) {
+//         dbAddTree({
+//             "arbotag": tree.arbotag,
+//             "name": tree.nom_complet,
+//             "latitude": tree.geoloc.lat,
+//             "longitude": tree.geoloc.lon,
+//             "diameter": 2*radius,
+//             "height": tree.hauteur_totale,
+//             "basePrice": Math.ceil(tree.circonf*tree.height)
+//         });
+//     }
+// });
 // START SERVER
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
 );
-
-
-
 
 /* //GET trees infos
 app.get("/get-trees", (req, res) => {
@@ -230,4 +274,3 @@ app.get("/get-trees", (req, res) => {
 
     //res.send("yo");
 }); */
-
