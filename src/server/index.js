@@ -45,11 +45,17 @@ app.post("/test", jsonParser, (req, res) => {
     res.statusCode = 201;
     res.json([{test: 1}]);
 });
-
 // GET REQUESTS
 app.get("/trees", async (req, res) => {
     //console.log(req);
     const request = await dbCalls.dbGetTrees();
+    //const data = JSON.parse(request);
+    res.send(request);
+});
+app.get("/tree/:arbotag", async (req, res) => {
+    //console.log(req);
+    const tree = req.params['arbotag'];
+    const request = await dbCalls.dbGetTree(tree);
     //const data = JSON.parse(request);
     res.send(request);
 });
