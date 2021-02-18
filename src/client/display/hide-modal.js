@@ -22,4 +22,4 @@ function hideDisconnectModal() {
 export {hideGamelogModal};
 export {hideLeaderboardModal};
 export {hideRulesModal};
-export {hideDisconnectModal};
+export default {hideDisconnectModal};
