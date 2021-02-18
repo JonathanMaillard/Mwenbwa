@@ -85,7 +85,7 @@ app.get("/logs", async (req, res) => {
 });
 
 // CONNEXION
-app.post("/login", jsonParser, (req, res) => {
+app.post("/login", jsonParser, async (req, res) => {
     const userInfo = req.body.userInfo;
     const pwd = req.body.userPwd;
     try {
@@ -191,7 +191,7 @@ app.post("/changePic", jsonParser, (req, res) => {
 /*===================
 SERVER LAUNCH
 ===================*/
-
+/*
 // INITIATE DATABASE
 console.time("dataset");
 const axios = require("axios");

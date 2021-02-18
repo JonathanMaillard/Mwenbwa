@@ -12,9 +12,20 @@ const dbGetTrees = () => {
 
     async function run() {
         try {
-            await client.connect();
-            const database = client.db("mwenbwa");
-            const collection = database.collection("trees");
+          await client.connect();
+          const database = client.db('mwenbwa');
+          const collection = database.collection('trees');
+          
+          //const query = { arbotag: 1770 };
+          //const tree = await collection.findOne(query);
+          //console.log(tree);
+
+          const cursor = await collection.find({
+              arbotag: { $ne: null },
+              circonf: { $ne: null },
+              hauteur_totale: { $ne: null }
+            });
+          const result = await cursor.toArray();
 
             //const query = { arbotag: 1770 };
             //const tree = await collection.findOne(query);
@@ -126,7 +137,36 @@ const dbGetLogs = () => {
 // POST
 
 //Login
-const dbLogin = (user, password) => {};
+const dbLogin = (userInfo) =>{
+
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+    async function run() {
+        try {
+          await client.connect();
+          const database = client.db('mwenbwa');
+          const collection = database.collection('playersTest');
+
+          const query = {username: userInfo};
+          const options = {};
+          const cursor = await collection.find(query, options);
+          const result = await cursor.toArray();
+
+          //console.log(result);
+          return result;
+
+         
+
+        } finally {
+          // Ensures that the client will close when you finish/error
+          await client.close();
+        }
+      }
+      //run().catch(console.dir);
+      return (run());
+
+}
+
 
 //Register
 const dbRegister = (userId, userPassword, userEmail, userColor) => {};
