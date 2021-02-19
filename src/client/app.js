@@ -31,10 +31,10 @@ const App = () => (
             <Profile />
         </div>
 
-        {/* <Rules />
+        <Rules />
         <Disconnect />
         <Leaderboard />
-        <Gamelog /> */}
+        <Gamelog />
 
         <Dashboard />
     </div>

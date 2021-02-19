@@ -1,10 +1,15 @@
 import * as React from "react";
+import {showRulesModal, showDisconnectModal, showDashboardModal, toggleProfile} from "../display/show-modal";
 
 const Profile = () => (
     <div className={"containerProfile"}>
-        <button type={"button"} className={"boxProfile__button"}>
-            {"Hide profile"}
+        <button type={"button"} className={"boxProfile__button"} onClick={toggleProfile}>
+            <div>
+            <span className={"containerToggleWord"}></span>
+            {" profile"}
+            </div>
             <i className={"fas fa-chevron-down"} />
+            
         </button>
         <div className={"boxProfile"}>
             <div className={"boxProfile__photo"} />
@@ -14,13 +19,13 @@ const Profile = () => (
                     {"La Babase (El Crackito)"}
                 </div>
                 <div className={"boxProfile__Info--button"}>
-                    <button type={"button"}>
+                    <button type={"button"} onClick={showDashboardModal}>
                         <i className={"fas fa-user"} />
                     </button>
-                    <button type={"button"}>
+                    <button type={"button"} onClick={showRulesModal}>
                         <i className={"far fa-question-circle"}></i>
                     </button>
-                    <button type={"button"}>
+                    <button type={"button"} onClick={showDisconnectModal}>
                         <i className={"fas fa-sign-out-alt"} />
                     </button>
                 </div>

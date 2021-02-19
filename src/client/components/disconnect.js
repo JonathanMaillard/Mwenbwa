@@ -1,6 +1,7 @@
 import * as React from "react";
 import DisconnectSvg from "../../ressources/images/undraw_through_the_park.svg";
 import CloseSvg from "../../ressources/images/cancel.svg";
+import hideDisconnectModal from "../display/hide-modal";
 
 const Disconnect = () => (
     <div className={"disconnect"}>
@@ -35,7 +36,7 @@ const Disconnect = () => (
                 className={"close-btn"}
                 src={CloseSvg}
                 alt={"Close"}
-                width={"40"}
+                onClick={hideDisconnectModal}
             />
         </div>
     </div>

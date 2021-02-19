@@ -25,13 +25,15 @@ $bg-modal: rgba(255, 255, 255, 0.75);
   align-items: $align;
 }
 @mixin modal-dark-background() {
+  justify-content: center;
+  align-items: center;
   position: absolute;
   width: 100vw;
   height: 100vh;
   background-color: #183c45b2;
 }
 @mixin modal-content-background() {
-  height: 88%;
+  height: 85%;
   margin: 3em;
   padding: 3em;
   border-radius: 25px;
@@ -99,6 +101,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  bottom: -9.4rem;
+  transition: all 0.3s ease-in-out;
+
 }
 
 .boxProfile {
@@ -117,6 +123,7 @@ body {
   &__button {
     position: relative;
     z-index: 1;
+    width: 10rem;
     margin-bottom: 0.3rem;
     background-color: $blue;
     padding: 0.5rem 0.8rem;
@@ -126,6 +133,7 @@ body {
     border: none;
     border-radius: 0.25rem;
     display: flex;
+    justify-content: space-between;
     cursor: pointer;
     outline: none;
     transition: all 0.3s ease-in-out;
@@ -214,8 +222,15 @@ body {
   }
 }
 
+.containerToggleWord::before {
+  content: "Show ";
+  margin-right: 5px;
+}
+
 .fa-chevron-down {
+  transform: rotate(180deg);
   margin-left: 0.5rem;
+  transition: all 0.3s ease-in-out;
 }
 
 
@@ -379,16 +394,16 @@ body {
 
 // ------------------- LEADERBOARD ----------------------------------------------
 .leaderboard {
-  // display: none;
+  display: none;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
     @include flex(column, flex-start, center);
     &__title {
-      @include title(3.3rem);
+      @include title(2.2rem);
     }
     &__subtitle {
-      @include subtitle(2rem);
+      @include subtitle(1.6rem);
       padding: 1em;
       text-align: center;
     }
@@ -398,22 +413,25 @@ body {
 .leaderboard-ranking {
   width: 100%;
   @include flex(row, center, center);
+  &__img {
+    width: 35%;
+  }
   &__list {
-    width: 60%;
+    width: 65%;
     padding: 2em;
     &__item, &__title {
-      font-size: 1.4rem;
+      font-size: 1rem;
       font-weight: 100;
       padding: 0.3em;
       list-style-type: none;
       @include flex(row, flex-start, flex-start);
     }
     &__title {
-      font-size: 1.8rem;
+      font-size: 1.2rem;
       font-weight: 700;
       padding-bottom: 1em;
     }
-    & .name {width: 50%;}
+    & .name {width: 80%;}
   }
 }
 
@@ -426,10 +444,10 @@ body {
     @include modal-content-background();
     @include flex(column, flex-start, center);
     &__title {
-      @include title(3rem);
+      @include title(2.2rem);
     }
     &__subtitle {
-      @include subtitle(2rem);
+      @include subtitle(1.4rem);
       padding: 1em;
       text-align: center;
     }
@@ -437,21 +455,23 @@ body {
 }
 .gamelog-history {
   @include flex(row, center, center);
+  &__img {
+    width: 35%;
+  }
   &__list {
-    padding-left: 5em;
+    padding-left: 3em;
     &__item {
-      font-size: 1.3rem;
+      font-size: 1rem;
       font-weight: 100;
       list-style-type: none;
       @include flex(row, flex-start, flex-start);
-      padding: 0.5em;
+      padding: 0.3em;
     }
     & .italic {
       font-weight: 900;
     }
   }
 }
-// POUR MODALES RULES & DISCONNECT, SOLLUTION RESPONSIVE: MODIFIER LES TAILLES DE POLICES À PARTIR DE 1250PX RÉSOUDRAIS DÉJÀ BEAUCOUP
 
 // ----------------- CLOSE BTN ----------------
 .close-btn {
@@ -470,7 +490,7 @@ body {
     font-size: 1.3rem;
     padding: 1em;
   }
-
+}
   // --------------------LEADERBOARD---------------------------------------------
   .leaderboard-ranking {
     &__img {
@@ -506,15 +526,16 @@ body {
       }
     }
   }
-}
+
+
+// -------------------- RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE -----------------------
 
 @media only screen and (max-width: 768px) {
   .leaderboard__content, .gamelog__content {
-    margin: 0.5em;
+    margin: 1em;
     padding: 1.5em;
-    height: 98%;
     &__title {
-      font-size: 2rem;
+      font-size: 1.8rem;
       padding-bottom: 0.2em;
     }
     &__subtitle{
@@ -524,16 +545,30 @@ body {
 
   // ---------------------leaderboard
   .leaderboard-ranking {
+    width: 100%;
     @include flex(column, space-between, center);
+    &__list {
+      width: 100%;
+      &__title {
+        font-size: 1.1rem
+      }
+      &__item {
+        font-size: 0.9rem
+      }
+    }
   }
 
   // ----------------------gamelog
-  .gamelog-history__img {
-    width: 150px;
-  }
-  .gamelog-history__list__item {
-    font-size: 1rem;
-    padding: 0.3em;
+  .gamelog-history{
+    @include flex(column, center, center);
+    &__list{
+      padding-left: 0;
+      padding-top: 1em;
+      &__item {
+        font-size: 0.9rem;
+        padding: 0.1em;
+      }
+    }
   }
 
   .close-btn{
@@ -543,16 +578,28 @@ body {
   }
 }
 
+
+
 @media only screen and (max-width: 320px) {
-  .gamelog__content {
+  .gamelog__content, .leaderboard__content {
     margin: 0;
-    padding: 1em;
+    padding: 0.5em;
     height: 100%;
     border-radius: 0;
     &__title {
       font-size: 1.8rem;
     }
   }
+
+  // ---------------------leaderboard
+  .leaderboard-ranking__list__title {
+        font-size: 0.9rem
+  }
+  .leaderboard-ranking__list__item {
+    font-size: 0.7rem
+  }
+
+  // ----------------------gamelog
   .gamelog-history__img {
     display: none;
   }
@@ -563,6 +610,8 @@ body {
 
   .close-btn{
     width: 15px;
+    right: 1.3em;
+    top: 1.3em;
   }
 }
 
@@ -574,8 +623,11 @@ body {
 .dashContainer {
   position: relative;
   z-index: 80;
+  display: flex;
   @include modal-dark-background();
-  @include flex(row, center, center);
+  opacity: 0%;
+  pointer-events: none;
+  transition: all 0.15s ease-in-out;
 }
 .dash__Box {
   @include modal-content-background();
@@ -664,5 +716,35 @@ body {
   .dash__NameAndBtn, .dash__MailAndBtn, .dash__Radio {
     font-weight: 300;
     font-size: 0.8rem;
+  }
+}
+
+
+
+
+
+
+.navigation__button {
+  background-color: chartreuse;
+  width: 2rem;
+  height: 2rem;
+}
+
+
+
+// ---------------- SHOWING MODALS ---------------
+.show-modal {
+  display: flex;
+  opacity: 100%;
+  pointer-events: all;
+}
+
+.show-profile {
+  transform: translate(0, -150px);
+  .containerToggleWord::before {
+    content: "Hide ";
+  }
+  .fa-chevron-down {
+    transform: rotate(0deg);
   }
 }
