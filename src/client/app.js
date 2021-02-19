@@ -22,7 +22,7 @@ import Button from "./components/button";
 const App = () => (
     <div id={"container"}>
         <div id={"mapid"}>
-            <Map />
+            {/* <Map /> */}
         </div>
 
         <Button />
@@ -39,23 +39,35 @@ const App = () => (
 );
 
 ReactDOM.render(<App />, document.querySelector("#root"));
-const test = () => {
-    const id = 5;
-    axios
-        .post("/test", {
-            voituredecourse: 5,
-            kachow: "FLASH MC QUEEN !!!",
-        })
-        .then(response => {
-            console.log(response.data[0]);
-        })
-        .catch(e => {
-            console.log("sad because :", e);
-        });
-    // var xmlHttp = new XMLHttpRequest();
-    // xmlHttp.open( "POST", `/`, false ); // false for synchronous request
-    // xmlHttp.send();
-    // console.log( xmlHttp.responseText );
-};
+
+axios
+    .get("/trees")
+    .then(response => {
+        ReactDOM.render(<Map trees={response.data} />, document.getElementById("mapid"))
+    })
+    .catch(e => {
+        console.log("sad because :", e);
+    });
+
+
+
+// const test = () => {
+//     const id = 5;
+//     axios
+//         .post("/test", {
+//             voituredecourse: 5,
+//             kachow: "FLASH MC QUEEN !!!",
+//         })
+//         .then(response => {
+//             console.log(response.data[0]);
+//         })
+//         .catch(e => {
+//             console.log("sad because :", e);
+//         });
+//     // var xmlHttp = new XMLHttpRequest();
+//     // xmlHttp.open( "POST", `/`, false ); // false for synchronous request
+//     // xmlHttp.send();
+//     // console.log( xmlHttp.responseText );
+// };
 
 // ReactDOM.render(<HelloWorld onClick={test} />, document.querySelector("#app"));

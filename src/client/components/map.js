@@ -1,11 +1,10 @@
 import * as React from "react";
 import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
-import TreeMarker from "./marker";
 // import {divIcon} from "leaflet";
 // import ReactDOMServer from "react-dom/server";
 // import MySVG from "../../ressources/images/cancel.svg";
 
-const Map = () => {
+const Map = ({trees:trees}) => {
     // const treesIcon = () => {
     //     divIcon(
     //         {
@@ -23,12 +22,25 @@ const Map = () => {
     // });
 
     return (
+
         <MapContainer center={[50.62571, 5.56878]} zoom={15}>
             <TileLayer
                 url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
             />
-            <TreeMarker />
+
+            {
+                trees.map(tree => ( 
+                    <Marker position={[tree.y_phi, tree.x_lambda]}>
+                        <Popup>
+                            {"A pretty CSS3 popup."} <br /> {"Easily customizable."}
+                        </Popup>
+                    </Marker>
+                ))
+            } 
+            
         </MapContainer>
+
+        
     );
 };
 
