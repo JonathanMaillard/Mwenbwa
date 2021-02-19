@@ -9,6 +9,7 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
 import "./../style.scss";
+const axios = require("axios");
 
 import Map from "./components/map";
 import Rules from "./components/rules";
@@ -38,3 +39,23 @@ const App = () => (
 );
 
 ReactDOM.render(<App />, document.querySelector("#root"));
+const test = () => {
+    const id = 5;
+    axios
+        .post("/test", {
+            voituredecourse: 5,
+            kachow: "FLASH MC QUEEN !!!",
+        })
+        .then(response => {
+            console.log(response.data[0]);
+        })
+        .catch(e => {
+            console.log("sad because :", e);
+        });
+    // var xmlHttp = new XMLHttpRequest();
+    // xmlHttp.open( "POST", `/`, false ); // false for synchronous request
+    // xmlHttp.send();
+    // console.log( xmlHttp.responseText );
+};
+
+// ReactDOM.render(<HelloWorld onClick={test} />, document.querySelector("#app"));

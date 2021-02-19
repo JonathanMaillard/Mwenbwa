@@ -32,6 +32,7 @@ bower_components
 # Compiled binary
 build/Release
 bin
+bin/
 
 # Dependency directories
 node_modules/
@@ -60,4 +61,41 @@ typings/
 .env
 
 # parcel-bundler cache (https://parceljs.org/)
+<<<<<<< HEAD
 .cache
+=======
+.cache
+<<<<<<< HEAD
+=======
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+# Comment in the public line in if your project uses Gatsby and *not* Next.js
+# https://nextjs.org/blog/next-9-1#public-directory-support
+# public
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+bin
+>>>>>>> e19d67d01389cd10f4078320e90c3eb21eeef8e5
+>>>>>>> origin/devbdo

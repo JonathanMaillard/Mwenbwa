@@ -1,6 +1,6 @@
 import * as React from "react";
 import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
-import axios from "axios";
+import TreeMarker from "./marker";
 // import {divIcon} from "leaflet";
 // import ReactDOMServer from "react-dom/server";
 // import MySVG from "../../ressources/images/cancel.svg";
@@ -22,25 +22,12 @@ const Map = () => {
     //     ),
     // });
 
-    axios
-        .get("/trees")
-        .then(response => {
-            console.log(response);
-        })
-        .catch(e => {
-            console.log("sad because :", e);
-        });
-
     return (
         <MapContainer center={[50.62571, 5.56878]} zoom={15}>
             <TileLayer
                 url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
             />
-            <Marker position={[50.62571, 5.56878]}>
-                <Popup>
-                    {"A pretty CSS3 popup."} <br /> {"Easily customizable."}
-                </Popup>
-            </Marker>
+            <TreeMarker />
         </MapContainer>
     );
 };
