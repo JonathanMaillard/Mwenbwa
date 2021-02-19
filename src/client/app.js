@@ -17,6 +17,7 @@ import Leaderboard from "./components/leaderboard";
 import Gamelog from "./components/gamelog";
 import Profile from "./components/profile";
 import Button from "./components/button";
+import Dashboard from "./components/dashboard";
 
 const App = () => (
     <div id={"container"}>
@@ -30,10 +31,12 @@ const App = () => (
             <Profile />
         </div>
 
-        <Rules />
+        {/* <Rules />
         <Disconnect />
         <Leaderboard />
-        <Gamelog />
+        <Gamelog /> */}
+
+        <Dashboard />
     </div>
 );
 

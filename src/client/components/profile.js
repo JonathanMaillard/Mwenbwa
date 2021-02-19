@@ -18,7 +18,7 @@ const Profile = () => (
                         <i className={"fas fa-user"} />
                     </button>
                     <button type={"button"}>
-                        <i className={"fas fa-cogs"} />
+                        <i className={"far fa-question-circle"}></i>
                     </button>
                     <button type={"button"}>
                         <i className={"fas fa-sign-out-alt"} />

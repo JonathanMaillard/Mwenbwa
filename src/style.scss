@@ -1,10 +1,10 @@
-// ----------------------VARIABLES-----------------
+// ----------------------VARIABLES----------------------------------------------
 $blue: #183C45;
 $green: greenyellow;
 $bg-modal: rgba(255, 255, 255, 0.75);
 
 
-//------------------------MIXIN-------------------
+//------------------------MIXIN-------------------------------------------------
 @mixin title($size) {
   display: inline-block;
   font-size: $size;
@@ -40,7 +40,7 @@ $bg-modal: rgba(255, 255, 255, 0.75);
 }
 
 
-//-------------------------GENERALS-----------------------
+//-------------------------GENERALS---------------------------------------------
 @font-face {
   font-family: "Roboto";
   src: url("./ressources/font/Roboto-Regular.ttf");
@@ -62,7 +62,7 @@ body {
 }
 
 
-// Map 
+//----------------------MAP-----------------------------------------------------
 #mapid {
   position: absolute;
   z-index: 0;
@@ -80,7 +80,7 @@ body {
 
 
 
-// Profile
+//----------------------PROFIL----------------------------------------------------
 #container {
   height: 100vh;
   width: 100%;
@@ -137,6 +137,7 @@ body {
   &__photo {
     height: 102px;
     width: 102px;
+    min-width: 102px;
     border: 2px solid #0b242b;
     background-color: #3e6974;
     border-radius: 100%;
@@ -219,7 +220,7 @@ body {
 
 
 
-//button
+//----------------------BUTTON---------------------------------------------------
 .containerButton {
   width: 100%;
   display: flex;
@@ -271,8 +272,42 @@ body {
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .boxProfile__score {
+    width: 15rem;
+  }
+}
 
-//------------------------ RULES -----------------------
+@media only screen and (max-width: 500px) {
+  .boxProfile__score {
+    width: 50%;
+  }
+  .boxProfile__photo {
+    display: none;
+  }
+  .boxProfile__Info {
+    margin: 0;
+    width: 50%;
+  }
+  .boxProfile__score--leaves > .fa-leaf {
+    width:auto;
+  }
+  .boxProfile__score--trees > .fa-tree {
+    width:auto;
+  }
+  .boxProfile__score--leaves {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+  .boxProfile__score--trees {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+}
+
+//------------------------ RULES ------------------------------------------------
 .rules, .disconnect, .leaderboard, .gamelog {
   z-index: 1000;
 }
@@ -299,7 +334,7 @@ body {
 }
 
 
-//----------------------DISCONNECT -----------------------
+//----------------------DISCONNECT -------------------------------------------
 .disconnect {
   display: none;
   @include modal-dark-background();
@@ -342,7 +377,7 @@ body {
   }
 }
 
-// ------------------- LEADERBOARD --------------------
+// ------------------- LEADERBOARD ----------------------------------------------
 .leaderboard {
   // display: none;
   @include modal-dark-background();
@@ -383,7 +418,7 @@ body {
 }
 
 
-// --------------------- GAMELOG ------------------
+// --------------------- GAMELOG ----------------------------------------------
 .gamelog {
   display: none;
   @include modal-dark-background();
@@ -436,7 +471,7 @@ body {
     padding: 1em;
   }
 
-  // --------------------leaderboard
+  // --------------------LEADERBOARD---------------------------------------------
   .leaderboard-ranking {
     &__img {
       width: 280px;
@@ -457,7 +492,7 @@ body {
     }
   }
   
-  // ------------------------gamelog
+  // ------------------------GAMELOG---------------------------------------------
   .gamelog-history {
     @include flex(column, space-between, center);
     &__img {
@@ -528,5 +563,106 @@ body {
 
   .close-btn{
     width: 15px;
+  }
+}
+
+
+
+
+
+
+.dashContainer {
+  position: relative;
+  z-index: 80;
+  @include modal-dark-background();
+  @include flex(row, center, center);
+}
+.dash__Box {
+  @include modal-content-background();
+  @include flex(column, space-between, center);
+  width: 100%;
+  height: 90%;
+}
+.dash__BoxBtn {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.dash__BoxContenu {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  
+}
+.dash__BoxDroite {
+  height: 100%;
+  width: 70%;
+  padding: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid rgb(58, 58, 58);
+}
+.dash__BoxGauche {
+  height: 100%;
+  width: 30%;
+  padding: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-bottom: 6rem;
+  & > button {
+    background-color: transparent;
+    border: none;
+    color: $blue;
+    cursor: pointer;
+    & span {
+      margin-left: 1rem;
+    }
+  }
+}
+.dash__Photo {
+  background-color: blueviolet;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 100%;
+}
+.dash__NameAndBtn, .dash__MailAndBtn, .dash__Radio {
+  font-weight: 300;
+  font-size: 1.3rem;
+  & > button {
+    background-color: transparent;
+    border: none;
+    color: $blue;
+    cursor: pointer;
+    & span {
+      margin-left: 1rem;
+    }
+  }
+}
+.inputBox > input {
+  margin-right: 1rem;
+  margin-top: 1rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .dash__BoxContenu {
+    flex-direction: column;
+  }
+  .dash__BoxDroite {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid rgb(58, 58, 58);
+  }
+  .dash__BoxGauche {
+    width: 100%;
+    padding-bottom: 0;
+  }
+  .dash__NameAndBtn, .dash__MailAndBtn, .dash__Radio {
+    font-weight: 300;
+    font-size: 0.8rem;
   }
 }
