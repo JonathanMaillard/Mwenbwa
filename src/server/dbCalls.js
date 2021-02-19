@@ -50,6 +50,8 @@ const dbGetTree = (tree) => {
 
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 
+    //console.log(tree);
+
     async function run() {
         try {
           await client.connect();
@@ -57,11 +59,11 @@ const dbGetTree = (tree) => {
           const collection = database.collection('trees');
           
           const query = {
-              arbotag: tree
+              arbotag: +tree
           };
           const options = {
             // Include only useful infos in each returned document
-            //projection: { _id: 0, arbotag: 1, x_lambda: 1, y_phi: 1, hauteur_totale: 1, nom_complet: 1, circonf: 1 },
+            projection: { _id: 0, arbotag: 1, x_lambda: 1, y_phi: 1, hauteur_totale: 1, nom_complet: 1, circonf: 1 },
           };
           const cursor = await collection.find(query, options);
           const result = await cursor.toArray();
@@ -91,7 +93,7 @@ const dbGetUser = userId => {
           const database = client.db('mwenbwa');
           const collection = database.collection('playersTest');
 
-          const cursor = await collection.find({ playerId: userId });
+          const cursor = await collection.find({ id: +userId });
           const result = await cursor.toArray();
 
           //console.log(result);
@@ -207,8 +209,10 @@ const dbRegister = (userId, userPassword, userEmail, userColor) =>{
           await client.connect();
           const database = client.db('mwenbwa');
           const collection = database.collection('playersTest');
+          const numberOfPlayer = collection.count();
 
           const newUser = {
+            id: numberOfPlayer+1,
             username: userId,
             password: userPassword,
             email: userEmail,
@@ -216,8 +220,7 @@ const dbRegister = (userId, userPassword, userEmail, userColor) =>{
 
           };
 
-          //const query = {username: userInfo};
-          //const options = {};
+        
           const cursor = await collection.insertOne(newUser);
           const result = ("done");
 
@@ -240,7 +243,42 @@ const dbRegister = (userId, userPassword, userEmail, userColor) =>{
 // GAME ACTIONS
 
 //Buy tree
-const dbBuyTree = (tree, userId) => {};
+const dbBuyTree = (tree, userId) => {
+
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+    //console.log(tree);
+
+    async function run() {
+        try {
+          await client.connect();
+          const database = client.db('mwenbwa');
+          const collection = database.collection('trees');
+          
+          const query = {
+              arbotag: +tree
+          };
+          const options = {
+            // Include only useful infos in each returned document
+            projection: { _id: 0, arbotag: 1, x_lambda: 1, y_phi: 1, hauteur_totale: 1, nom_complet: 1, circonf: 1 },
+          };
+          const cursor = await collection.find(query, options);
+          const result = await cursor.toArray();
+
+          //console.log(result);
+          return result;
+
+         
+
+        } finally {
+          // Ensures that the client will close when you finish/error
+          await client.close();
+        }
+      }
+      //run().catch(console.dir);
+      return (run());
+      
+};
 
 //Add comment
 const dbLockTree = tree => {};
