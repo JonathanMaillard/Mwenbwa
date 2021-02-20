@@ -37,7 +37,7 @@ import {
     dbModifyUsername,
     dbModifyPassword,
     dbModifyPics,
-} from "./dbCalls";
+} from "./db-calls";
 
 // GET REQUESTS
 app.get("/trees", async (req, res) => {

@@ -40,7 +40,7 @@ const dbGetTrees = () => {
         }
     }
     //run().catch(console.dir);
-    //return result;
+    return run();
     
 };
 
