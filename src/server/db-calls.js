@@ -22,14 +22,21 @@ const dbGetTrees = () => {
             };
             const options = {
                 // Include only the arbotags and geoloc in each returned document
-                projection: {_id: 0, arbotag: 1, x_lambda: 1, y_phi: 1},
+                projection: {
+                    _id: 0,
+                    arbotag: 1,
+                    x_lambda: 1,
+                    y_phi: 1,
+                    owner: 1,
+                    locked: 1,
+                },
             };
             const cursor = await collection.find(query, options);
             const result = await cursor.toArray();
 
             return result;
         } catch (err) {
-            //console.error(`Something went wrong: ${err}`);
+            console.error(`Something went wrong: ${err}`);
         } finally {
             // Ensures that the client will close when you finish/error
             await client.close();
@@ -56,19 +63,8 @@ const dbGetTree = tree => {
             const query = {
                 arbotag: +tree,
             };
-            const options = {
-                // Include only useful infos in each returned document
-                projection: {
-                    _id: 0,
-                    arbotag: 1,
-                    x_lambda: 1,
-                    y_phi: 1,
-                    hauteur_totale: 1,
-                    nom_complet: 1,
-                    circonf: 1,
-                },
-            };
-            const cursor = await collection.find(query, options);
+
+            const cursor = await collection.find(query);
             const result = await cursor.toArray();
 
             //console.log(result);
@@ -256,7 +252,7 @@ const dbRegister = (userId, userPassword, userEmail, userColor) => {
 // GAME ACTIONS
 
 //Buy tree
-const dbBuyTree = (tree, userId) => {
+const dbBuyTree = (tree, userId, treePrice) => {
     const client = new MongoClient(uri, {useUnifiedTopology: true});
 
     async function run() {
@@ -282,6 +278,27 @@ const dbBuyTree = (tree, userId) => {
             console.log(
                 `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
             );
+
+            //update the score oh the player with minus the price of the tree
+            const collectionPlayer = database.collection("playersTest");
+
+            const filterPlayer = {username: userId};
+            const optionsPlayer = {upsert: false};
+
+            const updateDocPlayer = {
+                $inc: {
+                    score: -treePrice,
+                },
+            };
+
+            const resultPlayer = await collectionPlayer.updateOne(
+                filterPlayer,
+                updateDocPlayer,
+                optionsPlayer,
+            );
+            console.log(
+                `${resultPlayer.matchedCount} document(s) matched the filter, updated ${resultPlayer.modifiedCount} document(s)`,
+            );
         } catch (err) {
             console.error(`Something went wrong: ${err}`);
         } finally {
@@ -296,7 +313,7 @@ const dbBuyTree = (tree, userId) => {
 };
 
 //Lock a tree
-const dbLockTree = tree => {
+const dbLockTree = (tree, userId, treeLockPrice) => {
     const client = new MongoClient(uri, {useUnifiedTopology: true});
 
     async function run() {
@@ -311,6 +328,7 @@ const dbLockTree = tree => {
             const updateDoc = {
                 $set: {
                     locked: true,
+                    lockedBy: userId,
                 },
             };
 
@@ -321,6 +339,27 @@ const dbLockTree = tree => {
             );
             console.log(
                 `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+
+            //Update score with minus de locktree
+            const collectionPlayer = database.collection("playersTest");
+
+            const filterPlayer = {username: userId};
+            const optionsPlayer = {upsert: false};
+
+            const updateDocPlayer = {
+                $inc: {
+                    score: -treeLockPrice,
+                },
+            };
+
+            const resultPlayer = await collectionPlayer.updateOne(
+                filterPlayer,
+                updateDocPlayer,
+                optionsPlayer,
+            );
+            console.log(
+                `${resultPlayer.matchedCount} document(s) matched the filter, updated ${resultPlayer.modifiedCount} document(s)`,
             );
         } catch (err) {
             console.error(`Something went wrong: ${err}`);
