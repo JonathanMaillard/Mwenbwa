@@ -11,6 +11,7 @@ import ReactDOM from "react-dom";
 import "./../style.scss";
 
 import Map from "./components/map";
+import Sign from "./components/sign";
 import Rules from "./components/rules";
 import Disconnect from "./components/disconnect";
 import Leaderboard from "./components/leaderboard";
@@ -31,6 +32,7 @@ const App = () => (
             <Profile />
         </div>
 
+        <Sign />
         <Rules />
         <Disconnect />
         <Leaderboard />
