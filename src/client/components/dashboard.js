@@ -1,6 +1,7 @@
 import * as React from "react";
 import CloseSvg from "../../ressources/images/cancel.svg";
 import {hideDashboardModal} from "../display/hide-modal";
+import CircleColor from ".././components/color-theme";
 
 const dash = () => (
     <div className={"dashContainer"}>
@@ -36,12 +37,7 @@ const dash = () => (
 
                     <form className={"dash__Radio"}>
                         <h2>Color Theme</h2>
-                        <div className={"inputBox"}>
-                            <input type="radio" value="orange" name="orange" id="orange">
-                            </input>
-                            <input type="radio" value="blue" name="ok"></input>
-                            <input type="radio" value="green" name="ok"></input>
-                        </div>
+                        <CircleColor />
                     </form>
 
 

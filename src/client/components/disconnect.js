@@ -1,7 +1,7 @@
 import * as React from "react";
 import DisconnectSvg from "../../ressources/images/undraw_through_the_park.svg";
 import CloseSvg from "../../ressources/images/cancel.svg";
-import hideDisconnectModal from "../display/hide-modal";
+import {hideDisconnectModal} from "../display/hide-modal";
 
 const Disconnect = () => (
     <div className={"disconnect"}>
@@ -9,10 +9,9 @@ const Disconnect = () => (
             <p className={"disconnect__content__title"}>{"Disconnect ?"}</p>
             <div className={"disconnect__content__text"}>
                 <img
-                    className={"disconnect__content__svg"}
+                    className={"disconnect__content__text__svg"}
                     src={DisconnectSvg}
                     alt={"Trough the park, leaving"}
-                    width={"550"}
                 />
                 <div className={"disconnect__content__text__confirm"}>
                     <p>{"Hey, Nick Banken,"}</p>
