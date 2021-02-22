@@ -1,8 +1,9 @@
-// import * as React from "react";
-// import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
+import * as React from "react";
+import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 // import {divIcon} from "leaflet";
 // import ReactDOMServer from "react-dom/server";
-import L from leaflet;
+import L from "leaflet";
+import treesSvg from "../treesSvg";
 
 const treeBank = {
     "winter" : [
@@ -76,7 +77,7 @@ const treeBank = {
         "050-tree"
     ]
 }
-const SVG_PATH = "../../ressources/trees-svg/svg/"
+const SVG_PATH = "../../ressources/trees-svg/svg/";
 
 const getRandomTree = (month) => {
     let season;
@@ -111,11 +112,12 @@ const getRandomTree = (month) => {
 
 const newTree = () => {
     const month = new Date().getMonth();
-    const path = `${SVG_PATH}${getRandomTree(month)}.svg`;
+    // const path = `${SVG_PATH}${getRandomTree(month)}.svg`;
+    const tree = treesSvg[getRandomTree(month)];
     const leafletIcon = L.icon({
-        iconUrl: require(path),
-        iconSize: [64,64],
-        iconAnchor: [32, 64],
+        iconUrl: tree,
+        iconSize: [32,32],
+        iconAnchor: [16, 32],
         popupAnchor: null,
         shadowUrl: null,
         shadowSize: null,
@@ -124,9 +126,8 @@ const newTree = () => {
     return leafletIcon;
 }
 
-const MapMarker = ({coordinates, arbotag}) => (
-    <Marker position={coordinates} icon={newTree()} id={arbotag}>
-    </Marker>
+const MapMarker = ({position, arbotag}) => (
+    <Marker position={position} icon={newTree()} id={arbotag} />
 )
 
 export default MapMarker;
