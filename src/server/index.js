@@ -37,6 +37,7 @@ import {
     dbModifyUsername,
     dbModifyPassword,
     dbModifyPics,
+    dbAddLog,
 } from "./db-calls";
 
 // GET REQUESTS
@@ -92,6 +93,13 @@ app.post("/register", jsonParser, (req, res) => {
             request = dbRegister(username, hash, userEmail, userColor);
         });
     });
+    res.send(request);
+});
+
+app.post("/addLog", jsonParser, (req, res) => {
+    const userId = req.body.userId;
+    const content = req.body.content;
+    const request = dbAddLog(content, userId);
     res.send(request);
 });
 
