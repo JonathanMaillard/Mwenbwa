@@ -1,11 +1,3 @@
-// const modals = [...document.querySelectorAll(".modal")];
-
-// function hideModal() {
-//     modals.forEach(modal => {
-//         modal.classList.remove("show-modal");
-//     });
-// }
-
 function hideGamelogModal() {
     document.querySelector(".gamelog").classList.remove("show-modal");
 }

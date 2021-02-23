@@ -12,6 +12,7 @@ import "./../style.scss";
 const axios = require("axios");
 
 import Map from "./components/map";
+import Sign from "./components/sign";
 import Rules from "./components/rules";
 import Disconnect from "./components/disconnect";
 import Leaderboard from "./components/leaderboard";
@@ -33,6 +34,7 @@ const App = () => (
 
         <div id={"leaderboard"} />
         <div id={"gamelog"} />
+        <Sign />
         <Rules />
         <Disconnect />
         <Gamelog />
