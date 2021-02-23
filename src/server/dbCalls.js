@@ -11,21 +11,21 @@ const dbGetTrees = () => {
 
     async function run() {
         try {
-          await client.connect();
-          const database = client.db('mwenbwa');
-          const collection = database.collection('trees');
-          
-          const query = {
-              arbotag: { $ne: null },
-              circonf: { $ne: null },
-              hauteur_totale: { $ne: null }
-          };
-          const options = {
-            // Include only the arbotags and geoloc in each returned document
-            projection: { _id: 0, arbotag: 1, x_lambda: 1, y_phi: 1 },
-          };
-          const cursor = await collection.find(query, options);
-          const result = await cursor.toArray();
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("trees");
+
+            const query = {
+                arbotag: {$ne: null},
+                circonf: {$ne: null},
+                hauteur_totale: {$ne: null},
+            };
+            const options = {
+                // Include only the arbotags and geoloc in each returned document
+                projection: {_id: 0, arbotag: 1, x_lambda: 1, y_phi: 1, color: 1},
+            };
+            const cursor = await collection.find(query, options);
+            const result = await cursor.toArray();
 
             //const query = { arbotag: 1770 };
             //const tree = await collection.findOne(query);
@@ -33,6 +33,59 @@ const dbGetTrees = () => {
 
             // const cursor = await collection.find();
             // const result = await cursor.toArray();
+
+            //console.log(result);
+            return result.map(tree => {
+                return {
+                    "type": "Feature",
+                    "id": tree.arbotag,
+                    "properties": {
+                        "Color": tree.color
+                    },
+                    "geometry": {
+                        "type": "point",
+                        "coordinates": [tree.y_phi, tree.x_lambda]
+                    }
+                };
+            });
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+    }
+    //run().catch(console.dir);
+    return run();
+};
+
+//Get a specific tree
+const dbGetTree = tree => {
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    //console.log(tree);
+
+    async function run() {
+        try {
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("trees");
+
+            const query = {
+                arbotag: +tree,
+            };
+            const options = {
+                // Include only useful infos in each returned document
+                projection: {
+                    _id: 0,
+                    arbotag: 1,
+                    x_lambda: 1,
+                    y_phi: 1,
+                    hauteur_totale: 1,
+                    nom_complet: 1,
+                    circonf: 1,
+                },
+            };
+            const cursor = await collection.find(query, options);
+            const result = await cursor.toArray();
 
             //console.log(result);
             return result;
@@ -45,61 +98,21 @@ const dbGetTrees = () => {
     return run();
 };
 
-//Get a specific tree
-const dbGetTree = (tree) => {
-
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
-
-    //console.log(tree);
-
-    async function run() {
-        try {
-          await client.connect();
-          const database = client.db('mwenbwa');
-          const collection = database.collection('trees');
-          
-          const query = {
-              arbotag: +tree
-          };
-          const options = {
-            // Include only useful infos in each returned document
-            projection: { _id: 0, arbotag: 1, x_lambda: 1, y_phi: 1, hauteur_totale: 1, nom_complet: 1, circonf: 1 },
-          };
-          const cursor = await collection.find(query, options);
-          const result = await cursor.toArray();
-
-          //console.log(result);
-          return result;
-
-         
-
-        } finally {
-          // Ensures that the client will close when you finish/error
-          await client.close();
-        }
-      }
-      //run().catch(console.dir);
-      return (run());
-
-}
-
 //Get a user
 const dbGetUser = userId => {
     const client = new MongoClient(uri, {useUnifiedTopology: true});
 
     async function run() {
         try {
-          await client.connect();
-          const database = client.db('mwenbwa');
-          const collection = database.collection('playersTest');
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("playersTest");
 
-          const cursor = await collection.find({ id: +userId });
-          const result = await cursor.toArray();
+            const cursor = await collection.find({id: +userId});
+            const result = await cursor.toArray();
 
-          //console.log(result);
-          return result;
-
-            
+            //console.log(result);
+            return result;
         } finally {
             // Ensures that the client will close when you finish/error
             await client.close();
@@ -200,84 +213,79 @@ const dbLogin = userInfo => {
 };
 
 //Register
-const dbRegister = (userId, userPassword, userEmail, userColor) =>{
-
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
+const dbRegister = (userId, userPassword, userEmail, userColor) => {
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
 
     async function run() {
         try {
-          await client.connect();
-          const database = client.db('mwenbwa');
-          const collection = database.collection('playersTest');
-          const numberOfPlayer = collection.count();
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("playersTest");
+            const numberOfPlayer = collection.count();
 
-          const newUser = {
-            id: numberOfPlayer+1,
-            username: userId,
-            password: userPassword,
-            email: userEmail,
-            color: userColor,
+            const newUser = {
+                id: numberOfPlayer + 1,
+                username: userId,
+                password: userPassword,
+                email: userEmail,
+                color: userColor,
+            };
 
-          };
+            const cursor = await collection.insertOne(newUser);
+            const result = "done";
 
-        
-          const cursor = await collection.insertOne(newUser);
-          const result = ("done");
-
-          //console.log(result);
-          return result;
-
-         
-
+            //console.log(result);
+            return result;
         } finally {
-          // Ensures that the client will close when you finish/error
-          await client.close();
+            // Ensures that the client will close when you finish/error
+            await client.close();
         }
-      }
-      //run().catch(console.dir);
-      return (run());
-}
-
-
+    }
+    //run().catch(console.dir);
+    return run();
+};
 
 // GAME ACTIONS
 
 //Buy tree
 const dbBuyTree = (tree, userId) => {
-
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
 
     //console.log(tree);
 
     async function run() {
         try {
-          await client.connect();
-          const database = client.db('mwenbwa');
-          const collection = database.collection('trees');
-          
-          const query = {
-              arbotag: +tree
-          };
-          const options = {
-            // Include only useful infos in each returned document
-            projection: { _id: 0, arbotag: 1, x_lambda: 1, y_phi: 1, hauteur_totale: 1, nom_complet: 1, circonf: 1 },
-          };
-          const cursor = await collection.find(query, options);
-          const result = await cursor.toArray();
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("trees");
 
-          //console.log(result);
-          return result;
+            const query = {
+                arbotag: +tree,
+            };
+            const options = {
+                // Include only useful infos in each returned document
+                projection: {
+                    _id: 0,
+                    arbotag: 1,
+                    x_lambda: 1,
+                    y_phi: 1,
+                    hauteur_totale: 1,
+                    nom_complet: 1,
+                    circonf: 1,
+                },
+            };
+            const cursor = await collection.find(query, options);
+            const result = await cursor.toArray();
 
-         
-
+            //console.log(result);
+            return result;
         } finally {
-          // Ensures that the client will close when you finish/error
-          await client.close();
+            // Ensures that the client will close when you finish/error
+            await client.close();
         }
-      }
-      //run().catch(console.dir);
-      return (run());
-      
+    }
+    //run().catch(console.dir);
+    return run();
 };
 
 //Add comment
@@ -310,5 +318,5 @@ module.exports = {
     dbGetLogs,
     dbLogin,
     dbGetTree,
-    dbRegister
+    dbRegister,
 };

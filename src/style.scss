@@ -285,17 +285,17 @@ body {
     @include modal-content-background();
     @include flex(column, flex-start, center);
     &__title {
-      @include title(3.3rem);
+      @include title(2rem);
     }
     &__subtitle, &__text {
       width: 100%;
     }
     &__subtitle {
-      @include subtitle(2rem);
+      @include subtitle(1.4rem);
     }
     &__text {
-      font-size: 1.6rem;
-      padding: 0.5em 0 1em 0;
+      font-size: 1.1rem;
+      padding: 0.3em 0 0.6em 0;
     }
   }
 }
@@ -309,14 +309,18 @@ body {
     @include modal-content-background();
     @include flex(column, space-between, center);
     &__title {
-      @include title(3.3rem);
+      @include title(2.2rem);
     }
     &__text {
       @include flex(row, center, center);
       width: 100%;
+      &__svg {
+        width: 55%;
+      }
       &__confirm {
-        font-size: 2rem;
-        margin: 4em;
+        width: 45%;
+        font-size: 1.6rem;
+        margin-left: 2em;
         line-height: 1.6em;
       }  
       & .bold-txt {
@@ -330,12 +334,12 @@ body {
     width: 100%;
     &__button {
       font-weight: 300;
-      font-size: 1.6rem;
-      margin: 0 1em;
-      padding: 0.5em;
+      font-size: 1.4rem;
+      margin: 0 0.5em;
+      padding: 0.3em;
       color: $blue;
       border: 1px solid $blue;
-      border-radius: 12px;
+      border-radius: 10px;
       background-color: transparent;
       -webkit-appearance: none;
       &:hover {background-color: darken($bg-modal, 5);}
@@ -433,17 +437,14 @@ body {
   width: 35px;
 }
 
-// ---------------- SHOWING MODALS ---------------
-.show-modal {
-  display: flex;
-}
 
 // -------------------- RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE -----------------------
 
 @media only screen and (max-width: 768px) {
-  .leaderboard__content, .gamelog__content {
+  .leaderboard__content, .gamelog__content, .rules__content, .disconnect__content {
     margin: 1em;
     padding: 1.5em;
+    height: 95%;
     &__title {
       font-size: 1.8rem;
       padding-bottom: 0.2em;
@@ -451,6 +452,35 @@ body {
     &__subtitle{
       font-size: 1.1rem;
     }
+  }
+
+  // ---------------------rules
+  .rules__content__title {
+    font-size: 1.6rem;
+    padding-bottom: 0.2em;
+  }
+  .rules__content__subtitle{
+    font-size: 1.1rem;
+  }
+  .rules__content__text{
+    font-size: 0.9rem;
+  }
+
+  // ---------------------disconnected
+  .disconnect__content__text{
+    @include flex(column, center, center);
+    &__svg {
+      width: 65%;
+    }
+    &__confirm {
+      margin-left: 0;
+      margin-top: 2em;
+      text-align: center;
+      font-size: 1.2em;
+    }
+  }
+  .disconnect__btns__button {
+    font-size: 1.2em;
   }
 
   // ---------------------leaderboard
@@ -491,14 +521,39 @@ body {
 
 
 @media only screen and (max-width: 320px) {
-  .gamelog__content, .leaderboard__content {
+  .gamelog__content, .leaderboard__content, .rules__content, .disconnect__content {
     margin: 0;
     padding: 0.5em;
     height: 100%;
     border-radius: 0;
     &__title {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
+  }
+
+  // ---------------------rules
+  .rules__content__title {
+    font-size: 1.3rem;
+  }
+  .rules__content__subtitle{
+    font-size: 1rem;
+  }
+  .rules__content__text{
+    font-size: 0.8rem;
+  }
+
+  // ---------------------disconnected
+  .disconnect__content__text{
+    @include flex(column, center, center);
+    &__svg {
+      width: 70%;
+    }
+    &__confirm {
+      font-size: 1em;
+    }
+  }
+  .disconnect__btns__button {
+    font-size: 1em;
   }
 
   // ---------------------leaderboard
@@ -523,4 +578,11 @@ body {
     right: 1.3em;
     top: 1.3em;
   }
+}
+
+
+
+// ---------------- SHOWING MODALS ---------------
+.show-modal {
+  display: flex;
 }

@@ -197,7 +197,7 @@ axios
         //         // console.log("New tree inserted :", tree.fields.arbotag);
         //     }
         // });
-        console.log(response.data[0], response.data.length);
+        console.log("côté serveur : ", response.data.length);
     })
     .catch(e => {
         console.log("sad because :", e);
