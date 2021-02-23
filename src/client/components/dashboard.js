@@ -3,6 +3,18 @@ import CloseSvg from "../../ressources/images/cancel.svg";
 import {hideDashboardModal} from "../display/hide-modal";
 import CircleColor from ".././components/color-theme";
 
+function changeName() {
+    document.querySelector(".dashInput").disabled= false;
+    document.querySelector(".dashInput").classList.add("inputNameBorder");
+    document.querySelector(".dashInputBtn").classList.add("dashInputBtnClick");
+}
+
+function changeNameValidation() {
+    document.querySelector(".dashInput").disabled= true;
+    document.querySelector(".dashInput").classList.remove("inputNameBorder");
+    document.querySelector(".dashInputBtn").classList.remove("dashInputBtnClick");
+}
+
 const dash = () => (
     <div className={"dashContainer"}>
         <div className={"dash__Box"}>
@@ -26,13 +38,17 @@ const dash = () => (
 
                 <div className={"dash__BoxDroite"}>
                     <div className={"dash__NameAndBtn"}>
-                        <h2>Bastien le crack</h2>
-                        <button><i class="far fa-edit"></i><span>change name</span></button>
+                    <div className={"dash__InputAndBtn"}>
+                            <input className={"dashInput"} disabled="disabled" type='text'/>
+                            <button onClick={changeNameValidation} className={"dashInputBtn"}><i class="far fa-check-circle"></i></button>
+                    </div>
+                    <button 
+                        onClick={changeName} ><i class="far fa-edit"></i><span>change name</span>
+                    </button>
                     </div>
 
                     <div className={"dash__MailAndBtn"}>
                         <h2>Bastienlafalize@gmail.com</h2>
-                        <button><i class="far fa-edit"></i><span>change email</span></button>
                     </div>
 
                     <form className={"dash__Radio"}>

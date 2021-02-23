@@ -32,7 +32,7 @@ const App = () => (
             <Profile />
         </div>
 
-        <Sign />
+        {/* <Sign /> */}
         <Rules />
         <Disconnect />
         <Leaderboard />
