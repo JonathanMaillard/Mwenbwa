@@ -27,22 +27,21 @@ const dbGetTrees = () => {
           const cursor = await collection.find(query, options);
           const result = await cursor.toArray();
 
-            //const query = { arbotag: 1770 };
-            //const tree = await collection.findOne(query);
-            //console.log(tree);
+          return result;
 
-            // const cursor = await collection.find();
-            // const result = await cursor.toArray();
+        } catch (err) {
 
-            //console.log(result);
-            return result;
+            console.error(`Something went wrong: ${err}`);
+
         } finally {
             // Ensures that the client will close when you finish/error
             await client.close();
+            
         }
     }
     //run().catch(console.dir);
-    return run();
+    //return result;
+    
 };
 
 //Get a specific tree
@@ -73,6 +72,10 @@ const dbGetTree = (tree) => {
 
          
 
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
         } finally {
           // Ensures that the client will close when you finish/error
           await client.close();
@@ -100,6 +103,10 @@ const dbGetUser = userId => {
           return result;
 
             
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
         } finally {
             // Ensures that the client will close when you finish/error
             await client.close();
@@ -131,6 +138,11 @@ const dbGetLeaderboard = () => {
 
             //console.log(result);
             return result;
+
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
         } finally {
             // Ensures that the client will close when you finish/error
             await client.close();
@@ -162,6 +174,11 @@ const dbGetLogs = () => {
 
             //console.log(result);
             return result;
+
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
         } finally {
             // Ensures that the client will close when you finish/error
             await client.close();
@@ -190,6 +207,11 @@ const dbLogin = userInfo => {
 
             //console.log(result);
             return result;
+
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
         } finally {
             // Ensures that the client will close when you finish/error
             await client.close();
@@ -229,6 +251,10 @@ const dbRegister = (userId, userPassword, userEmail, userColor) =>{
 
          
 
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
         } finally {
           // Ensures that the client will close when you finish/error
           await client.close();
@@ -247,28 +273,32 @@ const dbBuyTree = (tree, userId) => {
 
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 
-    //console.log(tree);
-
+    
     async function run() {
         try {
           await client.connect();
           const database = client.db('mwenbwa');
           const collection = database.collection('trees');
           
-          const query = {
-              arbotag: +tree
+          const filter = { arbotag: +tree }
+          const options = { upsert: false };
+          
+          const updateDoc = {
+              $set: {
+                  owner: userId,
+              },
           };
-          const options = {
-            // Include only useful infos in each returned document
-            projection: { _id: 0, arbotag: 1, x_lambda: 1, y_phi: 1, hauteur_totale: 1, nom_complet: 1, circonf: 1 },
-          };
-          const cursor = await collection.find(query, options);
-          const result = await cursor.toArray();
 
-          //console.log(result);
-          return result;
+          const result = await collection.updateOne(filter, updateDoc, options);
+          console.log(
+            `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+          );
 
          
+
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
 
         } finally {
           // Ensures that the client will close when you finish/error
@@ -277,11 +307,50 @@ const dbBuyTree = (tree, userId) => {
       }
       //run().catch(console.dir);
       return (run());
-      
+
 };
 
-//Add comment
-const dbLockTree = tree => {};
+//Lock a tree
+const dbLockTree = tree => {
+
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+    
+    async function run() {
+        try {
+          await client.connect();
+          const database = client.db('mwenbwa');
+          const collection = database.collection('trees');
+          
+          const filter = { arbotag: +tree }
+          const options = { upsert: false };
+          
+          const updateDoc = {
+              $set: {
+                  locked: true,
+              },
+          };
+
+          const result = await collection.updateOne(filter, updateDoc, options);
+          console.log(
+            `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+          );
+
+         
+
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
+        } finally {
+          // Ensures that the client will close when you finish/error
+          await client.close();
+        }
+      }
+      //run().catch(console.dir);
+      return (run());
+
+};
 
 //Add a comment
 const dbAddComment = (tree, user, newComment) => {};
@@ -289,19 +358,195 @@ const dbAddComment = (tree, user, newComment) => {};
 //CHANGE SETTINGS
 
 //Change Color
-const dbChangeColor = (userId, newColor) => {};
+const dbChangeColor = (userId, newColor) => {
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    async function run() {
+        try {
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("playersTest");
+
+            const filter = { username: userId }
+            const options = { upsert: false };
+            
+            const updateDoc = {
+                $set: {
+                    color: newColor,
+                },
+            };
+
+            const result = await collection.updateOne(filter, updateDoc, options);
+            console.log(
+                `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+            
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+    }
+    //run().catch(console.dir);
+    return run();
+};
 
 //Change Mail
-const dbModifyMail = (userId, newMail) => {};
+const dbModifyMail = (userId, newMail) => {
+
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    async function run() {
+        try {
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("playersTest");
+
+            const filter = { username: userId }
+            const options = { upsert: false };
+            
+            const updateDoc = {
+                $set: {
+                    email: newMail,
+                },
+            };
+
+            const result = await collection.updateOne(filter, updateDoc, options);
+            console.log(
+                `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+            
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+    }
+    //run().catch(console.dir);
+    return run();
+
+};
 
 //Change Username
-const dbModifyUsername = (userId, newUsername) => {};
+const dbModifyUsername = (userId, newUsername) => {
+
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    async function run() {
+        try {
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("playersTest");
+
+            const filter = { username: userId }
+            const options = { upsert: false };
+            
+            const updateDoc = {
+                $set: {
+                    username: newUsername,
+                },
+            };
+
+            const result = await collection.updateOne(filter, updateDoc, options);
+            console.log(
+                `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+            
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+    }
+    //run().catch(console.dir);
+    return run();
+
+};
 
 //Change Password
-const dbModifyPassword = (userId, newPassword) => {};
+const dbModifyPassword = (userId, newPassword) => {
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    async function run() {
+        try {
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("playersTest");
+
+            const filter = { username: userId }
+            const options = { upsert: false };
+            
+            const updateDoc = {
+                $set: {
+                    password: newPassword,
+                },
+            };
+
+            const result = await collection.updateOne(filter, updateDoc, options);
+            console.log(
+                `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+            
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+    }
+    //run().catch(console.dir);
+    return run();
+};
 
 //Modify Profile Pics
-const dbModifyPics = (userId, newPics) => {};
+const dbModifyPics = (userId, newPics) => {
+
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    async function run() {
+        try {
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("playersTest");
+
+            const filter = { username: userId }
+            const options = { upsert: false };
+            
+            const updateDoc = {
+                $set: {
+                    picture: newPics,
+                },
+            };
+
+            const result = await collection.updateOne(filter, updateDoc, options);
+            console.log(
+                `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+            
+        } catch (err) {
+            
+            console.error(`Something went wrong: ${err}`);
+
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+    }
+    //run().catch(console.dir);
+    return run();
+
+};
 
 module.exports = {
     dbGetTrees,
@@ -310,5 +555,12 @@ module.exports = {
     dbGetLogs,
     dbLogin,
     dbGetTree,
-    dbRegister
+    dbRegister,
+    dbBuyTree,
+    dbLockTree,
+    dbChangeColor,
+    dbModifyMail,
+    dbModifyUsername,
+    dbModifyPassword,
+    dbModifyPics
 };

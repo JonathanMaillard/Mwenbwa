@@ -37,7 +37,7 @@ import {
     dbModifyUsername,
     dbModifyPassword,
     dbModifyPics,
-} from "./dbCalls";
+} from "./db-calls";
 
 // GET REQUESTS
 app.get("/trees", async (req, res) => {
@@ -104,9 +104,10 @@ app.post("/buyTree", jsonParser, (req, res) => {
     res.send(request);
 });
 app.post("/lockTree", jsonParser, (req, res) => {
+    const userId = req.body.userId;
     const treeId = req.body.treeId;
     const treeLockPrice = req.body.treeLockPrice;
-    const request = dbLockTree(treeId, treeLockPrice);
+    const request = dbLockTree(treeId, userId, treeLockPrice);
     res.send(request);
 });
 app.post("/comment", jsonParser, (req, res) => {
