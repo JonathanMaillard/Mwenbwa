@@ -153,19 +153,43 @@ const dbGetLogs = () => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("logs");
+            /*const collection = database.collection("logs");
 
             const query = {};
             const options = {
                 // sort returned documents in descending order by score
                 sort: {_id: -1},
                 // Include only the username, color and score fields in each returned document
-                projection: {_id: 0, content: 1},
+                projection: {_id: 0, content: 1, authorId: 1},
             };
             const cursor = await collection.find(query, options);
-            const result = await cursor.toArray();
+            const result = await cursor.toArray();*/
 
-            //console.log(result);
+            //// TEEEEST
+
+            const aggCursor = await database.collection("logs").aggregate([
+                {
+                    $lookup: {
+                        from: "playersTest",
+                        localField: "authorId",
+                        foreignField: "id",
+                        as: "data",
+                    },
+                },
+                {
+                    $unwind: "$data",
+                },
+                {
+                    $project: {
+                        //config: '$1234', //In your schema you may have the same key instead of 1234 and 2345
+                        username: "$data.username",
+                        content: 1,
+                    },
+                },
+            ]);
+
+            const result = await aggCursor.toArray();
+
             return result;
         } catch (err) {
             console.error(`Something went wrong: ${err}`);
