@@ -3,7 +3,7 @@ import LeaderboardSvg from "../../ressources/images/undraw_destination.svg";
 import CloseSvg from "../../ressources/images/cancel.svg";
 import {hideLeaderboardModal} from "../display/hide-modal";
 
-const Leaderboard = () => (
+const Leaderboard = ({leaderboard:leaderboard}) => (
     <div className={"modal leaderboard"}>
         <div className={"leaderboard__content"}>
             <p className={"leaderboard__content__title"}>{"Leaderboard"}</p>
@@ -16,6 +16,12 @@ const Leaderboard = () => (
                     alt={"destination"}
                     className={"leaderboard-ranking__img"}
                 />
+
+                {leaderboard.map( user => {
+                    console.log(user)
+                })}
+
+
                 <ul className={"leaderboard-ranking__list"}>
                     <li className={"leaderboard-ranking__list__title"}>
                         <p className={"name"}>{"Player's Name"}</p>

@@ -26,16 +26,27 @@ const App = () => (
         </div>
 
         <Button />
+        <div id={"leaderboard"}>
 
+        </div>
         <div id={"app"}>
             <Profile />
         </div>
 
         <Rules />
         <Disconnect />
-        <Leaderboard />
         <Gamelog />
     </div>
 );
+
+axios
+    .get(`/leaderboard`)
+    .then(response => {
+        ReactDOM.render(<Leaderboard leaderboard={response.data} />, document.querySelector("#leaderboard"));
+        
+    })
+    .catch(e => {
+        console.log("sad because :", e);
+    });
 
 ReactDOM.render(<App />, document.querySelector("#root"));
