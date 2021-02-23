@@ -90,7 +90,7 @@ const dbGetUser = userId => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const cursor = await collection.find({id: +userId});
             const result = await cursor.toArray();
@@ -215,7 +215,7 @@ const dbLogin = userInfo => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const query = {username: userInfo};
             const options = {};
@@ -245,7 +245,7 @@ const dbRegister = (userId, userPassword, userEmail, userColor) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
             const numberOfPlayer = collection.count();
 
             const newUser = {
@@ -254,6 +254,7 @@ const dbRegister = (userId, userPassword, userEmail, userColor) => {
                 password: userPassword,
                 email: userEmail,
                 color: userColor,
+                score: 0,
             };
 
             const result = await collection.insertOne(newUser);
@@ -305,7 +306,7 @@ const dbBuyTree = (tree, userId, treePrice) => {
             );
 
             //update the score oh the player with minus the price of the tree
-            const collectionPlayer = database.collection("playersTest");
+            const collectionPlayer = database.collection("players");
 
             const filterPlayer = {username: userId};
             const optionsPlayer = {upsert: false};
@@ -367,7 +368,7 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             );
 
             //Update score with minus de locktree
-            const collectionPlayer = database.collection("playersTest");
+            const collectionPlayer = database.collection("players");
 
             const filterPlayer = {username: userId};
             const optionsPlayer = {upsert: false};
@@ -447,7 +448,7 @@ const dbChangeColor = (userId, newColor) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const filter = {username: userId};
             const options = {upsert: false};
@@ -487,7 +488,7 @@ const dbModifyMail = (userId, newMail) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const filter = {username: userId};
             const options = {upsert: false};
@@ -527,7 +528,7 @@ const dbModifyUsername = (userId, newUsername) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const filter = {username: userId};
             const options = {upsert: false};
@@ -567,7 +568,7 @@ const dbModifyPassword = (userId, newPassword) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const filter = {username: userId};
             const options = {upsert: false};
@@ -607,7 +608,7 @@ const dbModifyPics = (userId, newPics) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const filter = {username: userId};
             const options = {upsert: false};
