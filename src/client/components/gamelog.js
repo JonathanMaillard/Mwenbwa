@@ -16,8 +16,20 @@ const Gamelog = () => (
                     alt={"destination"}
                     className={"gamelog-history__img"}
                 />
+
                 <ul className={"gamelog-history__list"}>
-                    <li className={"gamelog-history__list__item"}>
+                    {/* {logs&&logs.forEach(log => 
+                    (
+                        <li className={"gamelog-history__list__item"}>
+                            <p>
+                                <span className={"italic"}>{"Jhonhathan"}</span>
+                                {log.content}
+                            </p>
+                        </li>
+                    )
+                    )} */}
+
+                    {/* <li className={"gamelog-history__list__item"}>
                         <p>
                             <span className={"italic"}>{"Jhonhathan "}</span>
                             {"locked the tree named PasDinspi"}
@@ -82,7 +94,7 @@ const Gamelog = () => (
                             <span className={"italic"}>{"Jhonhathan "}</span>
                             {"bought the tree named PasDinspi"}
                         </p>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
 

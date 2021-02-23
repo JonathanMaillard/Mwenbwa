@@ -3,7 +3,7 @@ import LeaderboardSvg from "../../ressources/images/undraw_destination.svg";
 import CloseSvg from "../../ressources/images/cancel.svg";
 import {hideLeaderboardModal} from "../display/hide-modal";
 
-const Leaderboard = () => (
+const Leaderboard = ({leaderboard}) => (
     <div className={"modal leaderboard"}>
         <div className={"leaderboard__content"}>
             <p className={"leaderboard__content__title"}>{"Leaderboard"}</p>
@@ -16,51 +16,22 @@ const Leaderboard = () => (
                     alt={"destination"}
                     className={"leaderboard-ranking__img"}
                 />
+
                 <ul className={"leaderboard-ranking__list"}>
                     <li className={"leaderboard-ranking__list__title"}>
                         <p className={"name"}>{"Player's Name"}</p>
                         <p className={"score"}>{"Score"}</p>
                     </li>
-                    <li className={"leaderboard-ranking__list__item"}>
-                        <p className={"name"}>{"Bertrand DoZogne"}</p>
-                        <p className={"score"}>{"infinity"}</p>
-                    </li>
-                    <li className={"leaderboard-ranking__list__item"}>
-                        <p className={"name"}>{"Baztien Lafalisse"}</p>
-                        <p className={"score"}>{"105 222"}</p>
-                    </li>
-                    <li className={"leaderboard-ranking__list__item"}>
-                        <p className={"name"}>{"Johnhathan Mayard"}</p>
-                        <p className={"score"}>{"105 221"}</p>
-                    </li>
-                    <li className={"leaderboard-ranking__list__item"}>
-                        <p className={"name"}>{"Johnhathan Mayard"}</p>
-                        <p className={"score"}>{"105 221"}</p>
-                    </li>
-                    <li className={"leaderboard-ranking__list__item"}>
-                        <p className={"name"}>{"Johnhathan Mayard"}</p>
-                        <p className={"score"}>{"105 221"}</p>
-                    </li>
-                    <li className={"leaderboard-ranking__list__item"}>
-                        <p className={"name"}>{"Johnhathan Mayard"}</p>
-                        <p className={"score"}>{"105 221"}</p>
-                    </li>
-                    <li className={"leaderboard-ranking__list__item"}>
-                        <p className={"name"}>{"Johnhathan Mayard"}</p>
-                        <p className={"score"}>{"105 221"}</p>
-                    </li>
-                    <li className={"leaderboard-ranking__list__item"}>
-                        <p className={"name"}>{"Johnhathan Mayard"}</p>
-                        <p className={"score"}>{"105 221"}</p>
-                    </li>
-                    <li className={"leaderboard-ranking__list__item"}>
-                        <p className={"name"}>{"Johnhathan Mayard"}</p>
-                        <p className={"score"}>{"105 221"}</p>
-                    </li>
-                    <li className={"leaderboard-ranking__list__item"}>
-                        <p className={"name"}>{"Johnhathan Mayard"}</p>
-                        <p className={"score"}>{"105 221"}</p>
-                    </li>
+
+                    {leaderboard.map(user => (
+                        <li
+                            key={user.username}
+                            className={"leaderboard-ranking__list__item"}>
+                            <p className={"name"}>{user.username}</p>
+                            <p className={"score"}>{user.score}</p>
+                        </li>
+                        //TODO: AJOUTER key={user.id} DANS LE TAG LI QUAND JONA AURA CORRIGÉ LA REQUETE AXIOS
+                    ))}
                 </ul>
             </div>
 

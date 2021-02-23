@@ -28,6 +28,8 @@ const App = () => (
         </div>
 
         <Button />
+        <div id={"leaderboard"} />
+        <div id={"gamelog"} />
 
         <div id={"app"}>
             <Profile />
@@ -36,12 +38,35 @@ const App = () => (
         {/* <Sign /> */}
         <Rules />
         <Disconnect />
-        <Leaderboard />
         <Gamelog />
 
         <Dashboard />
     </div>
 );
+
+axios
+    .get(`/leaderboard`)
+    .then(response => {
+        ReactDOM.render(
+            <Leaderboard leaderboard={response.data} />,
+            document.querySelector("#leaderboard"),
+        );
+    })
+    .catch(e => {
+        console.log("sad because :", e);
+    });
+
+axios
+    .get(`/logs`)
+    .then(response => {
+        ReactDOM.render(
+            <Gamelog logs={response.data} />,
+            document.querySelector("#gamelog"),
+        );
+    })
+    .catch(e => {
+        console.log("sad because :", e);
+    });
 
 ReactDOM.render(<App />, document.querySelector("#root"));
 
