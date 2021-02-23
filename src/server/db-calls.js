@@ -90,7 +90,7 @@ const dbGetUser = userId => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const cursor = await collection.find({id: +userId});
             const result = await cursor.toArray();
@@ -153,22 +153,13 @@ const dbGetLogs = () => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            /*const collection = database.collection("logs");
-
-            const query = {};
-            const options = {
-                // sort returned documents in descending order by score
-                sort: {_id: -1},
-                // Include only the username, color and score fields in each returned document
-                projection: {_id: 0, content: 1, authorId: 1},
-            };
-            const cursor = await collection.find(query, options);
-            const result = await cursor.toArray();*/
-
-            //// TEEEEST
 
             const aggCursor = await database.collection("logs").aggregate([
-                {$sort: {_id: -1}},
+                {
+                    $sort: {
+                        _id: -1,
+                    },
+                },
                 {
                     $lookup: {
                         from: "playersTest",
@@ -182,7 +173,7 @@ const dbGetLogs = () => {
                 },
                 {
                     $project: {
-                        //config: '$1234', //In your schema you may have the same key instead of 1234 and 2345
+                        _id: 0,
                         username: "$data.username",
                         content: 1,
                     },
@@ -215,7 +206,7 @@ const dbLogin = userInfo => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const query = {username: userInfo};
             const options = {};
@@ -245,7 +236,7 @@ const dbRegister = (userId, userPassword, userEmail, userColor) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
             const numberOfPlayer = collection.count();
 
             const newUser = {
@@ -254,6 +245,7 @@ const dbRegister = (userId, userPassword, userEmail, userColor) => {
                 password: userPassword,
                 email: userEmail,
                 color: userColor,
+                score: 0,
             };
 
             const result = await collection.insertOne(newUser);
@@ -305,7 +297,7 @@ const dbBuyTree = (tree, userId, treePrice) => {
             );
 
             //update the score oh the player with minus the price of the tree
-            const collectionPlayer = database.collection("playersTest");
+            const collectionPlayer = database.collection("players");
 
             const filterPlayer = {username: userId};
             const optionsPlayer = {upsert: false};
@@ -367,7 +359,7 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             );
 
             //Update score with minus de locktree
-            const collectionPlayer = database.collection("playersTest");
+            const collectionPlayer = database.collection("players");
 
             const filterPlayer = {username: userId};
             const optionsPlayer = {upsert: false};
@@ -386,6 +378,37 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             console.log(
                 `${resultPlayer.matchedCount} document(s) matched the filter, updated ${resultPlayer.modifiedCount} document(s)`,
             );
+        } catch (err) {
+            console.error(`Something went wrong: ${err}`);
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+
+        return "done";
+    }
+    //run().catch(console.dir);
+    return run();
+};
+
+//add log
+const dbAddLog = (content, userId) => {
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    async function run() {
+        try {
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("logs");
+
+            const newLog = {
+                authorId: userId,
+                content,
+            };
+
+            const result = await collection.insertOne(newLog);
+
+            return result;
         } catch (err) {
             console.error(`Something went wrong: ${err}`);
         } finally {
@@ -447,7 +470,7 @@ const dbChangeColor = (userId, newColor) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const filter = {username: userId};
             const options = {upsert: false};
@@ -487,7 +510,7 @@ const dbModifyMail = (userId, newMail) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const filter = {username: userId};
             const options = {upsert: false};
@@ -527,7 +550,7 @@ const dbModifyUsername = (userId, newUsername) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const filter = {username: userId};
             const options = {upsert: false};
@@ -567,7 +590,7 @@ const dbModifyPassword = (userId, newPassword) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const filter = {username: userId};
             const options = {upsert: false};
@@ -607,7 +630,7 @@ const dbModifyPics = (userId, newPics) => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const filter = {username: userId};
             const options = {upsert: false};
@@ -655,4 +678,5 @@ module.exports = {
     dbModifyPassword,
     dbModifyPics,
     dbAddComment,
+    dbAddLog,
 };
