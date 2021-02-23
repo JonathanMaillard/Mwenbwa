@@ -12,12 +12,14 @@ import "./../style.scss";
 const axios = require("axios");
 
 import Map from "./components/map";
+import Sign from "./components/sign";
 import Rules from "./components/rules";
 import Disconnect from "./components/disconnect";
 import Leaderboard from "./components/leaderboard";
 import Gamelog from "./components/gamelog";
 import Profile from "./components/profile";
 import Button from "./components/button";
+import Dashboard from "./components/dashboard";
 
 const App = () => (
     <div id={"container"}>
@@ -31,10 +33,13 @@ const App = () => (
             <Profile />
         </div>
 
+        {/* <Sign /> */}
         <Rules />
         <Disconnect />
         <Leaderboard />
         <Gamelog />
+
+        <Dashboard />
     </div>
 );
 

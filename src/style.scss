@@ -1,10 +1,10 @@
-// ----------------------VARIABLES-----------------
+// ----------------------VARIABLES----------------------------------------------
 $blue: #183C45;
 $green: greenyellow;
 $bg-modal: rgba(255, 255, 255, 0.75);
 
 
-//------------------------MIXIN-------------------
+//------------------------MIXIN-------------------------------------------------
 @mixin title($size) {
   display: inline-block;
   font-size: $size;
@@ -33,6 +33,7 @@ $bg-modal: rgba(255, 255, 255, 0.75);
   background-color: #183c45b2;
 }
 @mixin modal-content-background() {
+  width: 100%;
   height: 85%;
   margin: 3em;
   padding: 3em;
@@ -42,7 +43,7 @@ $bg-modal: rgba(255, 255, 255, 0.75);
 }
 
 
-//-------------------------GENERALS-----------------------
+//-------------------------GENERALS---------------------------------------------
 @font-face {
   font-family: "Roboto";
   src: url("./ressources/font/Roboto-Regular.ttf");
@@ -64,7 +65,7 @@ body {
 }
 
 
-// Map 
+//----------------------MAP-----------------------------------------------------
 #mapid {
   position: absolute;
   z-index: 0;
@@ -82,7 +83,7 @@ body {
 
 
 
-// Profile
+//----------------------PROFIL----------------------------------------------------
 #container {
   height: 100vh;
   width: 100%;
@@ -101,6 +102,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  bottom: -9.4rem;
+  transition: all 0.3s ease-in-out;
+
 }
 
 .boxProfile {
@@ -119,6 +124,7 @@ body {
   &__button {
     position: relative;
     z-index: 1;
+    width: 10rem;
     margin-bottom: 0.3rem;
     background-color: $blue;
     padding: 0.5rem 0.8rem;
@@ -128,6 +134,7 @@ body {
     border: none;
     border-radius: 0.25rem;
     display: flex;
+    justify-content: space-between;
     cursor: pointer;
     outline: none;
     transition: all 0.3s ease-in-out;
@@ -139,6 +146,7 @@ body {
   &__photo {
     height: 102px;
     width: 102px;
+    min-width: 102px;
     border: 2px solid #0b242b;
     background-color: #3e6974;
     border-radius: 100%;
@@ -215,13 +223,20 @@ body {
   }
 }
 
+.containerToggleWord::before {
+  content: "Show ";
+  margin-right: 5px;
+}
+
 .fa-chevron-down {
+  transform: rotate(180deg);
   margin-left: 0.5rem;
+  transition: all 0.3s ease-in-out;
 }
 
 
 
-//button
+//----------------------BUTTON---------------------------------------------------
 .containerButton {
   width: 100%;
   display: flex;
@@ -273,11 +288,68 @@ body {
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .boxProfile__score {
+    width: 15rem;
+  }
+}
 
-//------------------------ RULES -----------------------
-.rules, .disconnect, .leaderboard, .gamelog {
+@media only screen and (max-width: 500px) {
+  .boxProfile__score {
+    width: 50%;
+  }
+  .boxProfile__photo {
+    display: none;
+  }
+  .boxProfile__Info {
+    margin: 0;
+    width: 50%;
+  }
+  .boxProfile__score--leaves > .fa-leaf {
+    width:auto;
+  }
+  .boxProfile__score--trees > .fa-tree {
+    width:auto;
+  }
+  .boxProfile__score--leaves {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+  .boxProfile__score--trees {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+}
+
+//-------------------------SIGNIN/UP------------------------
+.rules, .disconnect, .leaderboard, .gamelog, .sign {
   z-index: 1000;
 }
+
+.sign {
+  @include modal-dark-background();
+  &__content {
+    @include modal-content-background();
+    width: 95%;
+    &__title {
+      @include flex(row, space-between, center);
+      & .sign-up-btn, .sign-in-btn {
+        width: 50%;
+        background-color: transparent;
+        border: none;
+        padding: 3em;
+        box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.25);
+        border-radius: 25px;
+        &:focus {outline: none;}
+      }
+    }
+  }
+}
+
+//------------------------ RULES -----------------------
+
 .rules {
   display: none;
   @include modal-dark-background();
@@ -289,6 +361,7 @@ body {
     }
     &__subtitle, &__text {
       width: 100%;
+      max-width: 1200px;
     }
     &__subtitle {
       @include subtitle(1.4rem);
@@ -301,7 +374,7 @@ body {
 }
 
 
-//----------------------DISCONNECT -----------------------
+//----------------------DISCONNECT -------------------------------------------
 .disconnect {
   display: none;
   @include modal-dark-background();
@@ -313,9 +386,9 @@ body {
     }
     &__text {
       @include flex(row, center, center);
-      width: 100%;
       &__svg {
         width: 55%;
+        max-width: 600px;
       }
       &__confirm {
         width: 45%;
@@ -348,7 +421,7 @@ body {
   }
 }
 
-// ------------------- LEADERBOARD --------------------
+// ------------------- LEADERBOARD ----------------------------------------------
 .leaderboard {
   display: none;
   @include modal-dark-background();
@@ -392,7 +465,7 @@ body {
 }
 
 
-// --------------------- GAMELOG ------------------
+// --------------------- GAMELOG ----------------------------------------------
 .gamelog {
   display: none;
   @include modal-dark-background();
@@ -437,6 +510,52 @@ body {
   width: 35px;
 }
 
+// -------------------- RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE -----------------------
+@media only screen and (max-width: 1250px) {
+  .leaderboard__content__title, .gamelog__content__title  {
+    font-size: 2.5rem;
+  }
+  .gamelog__content__subtitle, .leaderboard__content__subtitle {
+    font-size: 1.3rem;
+    padding: 1em;
+  }
+}
+  // --------------------LEADERBOARD---------------------------------------------
+  .leaderboard-ranking {
+    &__img {
+      width: 280px;
+    }
+    &__list {
+      width: 50%;
+      padding: 2em 0;
+      &__title {
+        font-size: 1.4rem;
+      }
+      &__item, &__title {
+        font-size: 1.2rem;
+        justify-content: space-between;
+      }
+      .name {
+        width: auto;
+      }
+    }
+  }
+  
+  // ------------------------GAMELOG---------------------------------------------
+  .gamelog-history {
+    @include flex(column, space-between, center);
+    &__img {
+      width: 200px;
+    }
+    &__list{
+      padding-left: 0;
+      padding-top: 1em;
+      &__item {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
 
 // -------------------- RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE -----------------------
 
@@ -466,7 +585,7 @@ body {
     font-size: 0.9rem;
   }
 
-  // ---------------------disconnected
+  // ---------------------disconnect
   .disconnect__content__text{
     @include flex(column, center, center);
     &__svg {
@@ -542,7 +661,7 @@ body {
     font-size: 0.8rem;
   }
 
-  // ---------------------disconnected
+  // ---------------------disconnect
   .disconnect__content__text{
     @include flex(column, center, center);
     &__svg {
@@ -582,7 +701,191 @@ body {
 
 
 
+
+
+
+.dashContainer {
+  position: relative;
+  z-index: 80;
+  display: flex;
+  @include modal-dark-background();
+  opacity: 0%;
+  pointer-events: none;
+  transition: all 0.15s ease-in-out;
+}
+.dash__Box {
+  @include modal-content-background();
+  @include flex(column, space-between, center);
+  width: 100%;
+  height: 90%;
+}
+.dash__BoxBtn {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.dash__BoxContenu {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.dashBtn {
+  cursor: pointer;
+}
+.dash__BoxDroite {
+  height: 100%;
+  width: 70%;
+  padding: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid rgb(58, 58, 58);
+}
+.dash__BoxGauche {
+  height: 100%;
+  width: 30%;
+  padding: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-bottom: 6rem;
+  & > button {
+    background-color: transparent;
+    border: none;
+    color: $blue;
+    cursor: pointer;
+    & span {
+      margin-left: 1rem;
+    }
+  }
+}
+.dash__Photo {
+  background-color: blueviolet;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 100%;
+}
+.dash__NameAndBtn, .dash__MailAndBtn, .dash__Radio {
+  font-weight: 300;
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  & > button {
+    background-color: transparent;
+    border: none;
+    color: $blue;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    & span {
+      margin-left: 1rem;
+    }
+  }
+}
+.dashInput {
+  background-color: transparent;
+  border-radius: 0.3rem;
+  padding: 0 0.5rem;
+  font-family: "Roboto", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: $blue;
+  border: transparent;
+  font-size: 31.2px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+.inputBox > input {
+  margin-right: 1rem;
+  margin-top: 1rem;
+  width: 2rem;
+  height: 2rem;
+}
+.dash__InputAndBtn {
+  display: flex;
+}
+
+.dashInputBtn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 2rem;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  color: $blue;
+  margin-left: 0.2rem;
+  opacity: 0%;
+  transition: all 0.2s ease-in-out;
+}
+.dashInputBtnClick {
+  display: flex;
+  opacity: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.circle-picker {
+  display: flex;
+  align-items: center!important;
+  margin-top: 1rem!important;
+  width: 100%!important;
+}
+
+@media only screen and (max-width: 768px) {
+  .dash__BoxContenu {
+    flex-direction: column;
+  }
+  .dash__BoxDroite {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid rgb(58, 58, 58);
+  }
+  .dash__BoxGauche {
+    width: 100%;
+    padding-bottom: 0;
+  }
+  .dash__NameAndBtn, .dash__MailAndBtn, .dash__Radio {
+    font-weight: 300;
+    font-size: 0.8rem;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .dashInput {
+    width: 100%;
+  }
+}
+
+.inputNameBorder {
+  border: 1px solid rgb(30, 54, 82);
+  transition: all 0.2s ease-in-out;
+}
+
+
+
+
+.navigation__button {
+  background-color: chartreuse;
+  width: 2rem;
+  height: 2rem;
+}
+
+
+
 // ---------------- SHOWING MODALS ---------------
 .show-modal {
   display: flex;
+  opacity: 100%;
+  pointer-events: all;
+}
+
+.show-profile {
+  transform: translate(0, -150px);
+  .containerToggleWord::before {
+    content: "Hide ";
+  }
+  .fa-chevron-down {
+    transform: rotate(0deg);
+  }
 }

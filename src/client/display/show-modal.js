@@ -18,8 +18,19 @@ function showRulesModal() {
 function showDisconnectModal() {
     document.querySelector(".disconnect").classList.add("show-modal");
 }
+function showDashboardModal() {
+    document.querySelector(".dashContainer").classList.add("show-modal");
+}
+function toggleProfile() {
+    document.querySelector(".containerProfile").classList.toggle("show-profile");
+}
+
+
+
 
 export {showGamelogModal};
 export {showLeaderboardModal};
 export {showRulesModal};
 export {showDisconnectModal};
+export {showDashboardModal};
+export {toggleProfile};

@@ -55,6 +55,7 @@
         "express": "^4.17.1",
         "mongodb": "^3.6.4",
         "react": "^16.13.1",
+        "react-color": "^2.19.3",
         "react-dom": "^16.13.1",
         "react-leaflet": "^3.1.0",
         "react-leaflet-markercluster": "^3.0.0-rc1",

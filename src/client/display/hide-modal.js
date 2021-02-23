@@ -18,8 +18,18 @@ function hideRulesModal() {
 function hideDisconnectModal() {
     document.querySelector(".disconnect").classList.remove("show-modal");
 }
+function hideDashboardModal() {
+    document.querySelector(".dashContainer").classList.remove("show-modal");
+}
+
+
+function hideProfile() {
+    document.querySelector(".containerProfile").classList.remove("show-profile");
+}
 
 export {hideGamelogModal};
 export {hideLeaderboardModal};
 export {hideRulesModal};
 export {hideDisconnectModal};
+export {hideDashboardModal};
+export {hideProfile};
