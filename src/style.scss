@@ -275,6 +275,11 @@ body {
 
 
 //------------------------ RULES -----------------------
+#leaderboard, #gamelog {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
 .rules, .disconnect, .leaderboard, .gamelog {
   z-index: 1000;
 }
