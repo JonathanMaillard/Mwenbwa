@@ -168,6 +168,7 @@ const dbGetLogs = () => {
             //// TEEEEST
 
             const aggCursor = await database.collection("logs").aggregate([
+                {$sort: {_id: -1}},
                 {
                     $lookup: {
                         from: "playersTest",
