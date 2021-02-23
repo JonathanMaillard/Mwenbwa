@@ -22,11 +22,10 @@ function showDashboardModal() {
     document.querySelector(".dashContainer").classList.add("show-modal");
 }
 function toggleProfile() {
-    document.querySelector(".containerProfile").classList.toggle("show-profile");
+    document
+        .querySelector(".containerProfile")
+        .classList.toggle("show-profile");
 }
-
-
-
 
 export {showGamelogModal};
 export {showLeaderboardModal};

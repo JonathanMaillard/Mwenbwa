@@ -30,7 +30,7 @@ export class CircleColor extends Component {
                             "#43AA8B",
                             "#4D908E",
                             "#577590",
-                            "#277DA1"
+                            "#277DA1",
                         ]}
                         color={this.state.color}
                         onChange={this.handleOnChange}

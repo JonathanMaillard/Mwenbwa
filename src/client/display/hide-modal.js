@@ -22,9 +22,10 @@ function hideDashboardModal() {
     document.querySelector(".dashContainer").classList.remove("show-modal");
 }
 
-
 function hideProfile() {
-    document.querySelector(".containerProfile").classList.remove("show-profile");
+    document
+        .querySelector(".containerProfile")
+        .classList.remove("show-profile");
 }
 
 export {hideGamelogModal};

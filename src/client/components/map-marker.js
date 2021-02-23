@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Marker} from "react-leaflet";
 import L from "leaflet";
-import treesSvg from "../scripts/treesSvg";
+import treesSvg from "../scripts/trees-svg";
 
 const treeBank = {
     winter: [

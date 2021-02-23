@@ -34,19 +34,17 @@ const dbGetTrees = () => {
             const cursor = await collection.find(query, options);
             const result = await cursor.toArray();
 
-            return result.map(tree => {
-                return {
-                    "type": "Feature",
-                    "id": tree.arbotag,
-                    "properties": {
-                        "Color": tree.color
-                    },
-                    "geometry": {
-                        "type": "point",
-                        "coordinates": [tree.y_phi, tree.x_lambda]
-                    }
-                };
-            });
+            return result.map(tree => ({
+                type: "Feature",
+                id: tree.arbotag,
+                properties: {
+                    Color: tree.color,
+                },
+                geometry: {
+                    type: "point",
+                    coordinates: [tree.y_phi, tree.x_lambda],
+                },
+            }));
         } catch (err) {
             console.error(`Something went wrong: ${err}`);
         } finally {
