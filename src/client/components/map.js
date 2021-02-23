@@ -1,5 +1,6 @@
 import * as React from "react";
-import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
+import {MapContainer, TileLayer, Marker} from "react-leaflet";
+import {myPopup} from "./popup";
 // import {divIcon} from "leaflet";
 // import ReactDOMServer from "react-dom/server";
 // import MySVG from "../../ressources/images/cancel.svg";
@@ -25,9 +26,7 @@ const Map = () => (
         <TileLayer url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"} />
 
         <Marker position={[50.62571, 5.56878]}>
-            <Popup>
-                {"A pretty CSS3 popup."} <br /> {"Easily customizable."}
-            </Popup>
+            <myPopup />
         </Marker>
     </MapContainer>
 );

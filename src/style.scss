@@ -329,6 +329,7 @@ body {
 }
 
 .sign {
+  display: none; //TEMPORARY FOR TESTING
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
