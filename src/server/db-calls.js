@@ -153,22 +153,13 @@ const dbGetLogs = () => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            /*const collection = database.collection("logs");
-
-            const query = {};
-            const options = {
-                // sort returned documents in descending order by score
-                sort: {_id: -1},
-                // Include only the username, color and score fields in each returned document
-                projection: {_id: 0, content: 1, authorId: 1},
-            };
-            const cursor = await collection.find(query, options);
-            const result = await cursor.toArray();*/
-
-            //// TEEEEST
 
             const aggCursor = await database.collection("logs").aggregate([
-                {$sort: {_id: -1}},
+                {
+                    $sort: {
+                        _id: -1,
+                    },
+                },
                 {
                     $lookup: {
                         from: "playersTest",
@@ -182,7 +173,7 @@ const dbGetLogs = () => {
                 },
                 {
                     $project: {
-                        //config: '$1234', //In your schema you may have the same key instead of 1234 and 2345
+                        _id: 0,
                         username: "$data.username",
                         content: 1,
                     },
@@ -387,6 +378,37 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             console.log(
                 `${resultPlayer.matchedCount} document(s) matched the filter, updated ${resultPlayer.modifiedCount} document(s)`,
             );
+        } catch (err) {
+            console.error(`Something went wrong: ${err}`);
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+
+        return "done";
+    }
+    //run().catch(console.dir);
+    return run();
+};
+
+//add log
+const dbAddLog = (content, userId) => {
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    async function run() {
+        try {
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("logs");
+
+            const newLog = {
+                authorId: userId,
+                content,
+            };
+
+            const result = await collection.insertOne(newLog);
+
+            return result;
         } catch (err) {
             console.error(`Something went wrong: ${err}`);
         } finally {
@@ -656,4 +678,5 @@ module.exports = {
     dbModifyPassword,
     dbModifyPics,
     dbAddComment,
+    dbAddLog,
 };
