@@ -24,7 +24,7 @@ const Sign = () => (
             <div className={"sign-up sign-active"}>
                 <img className={"sign-up__img"} src={SignSVG} alt={"Sign up"} />
                 <form action={"????????"} className={"sign-up__form"}>
-                    <label htmlFor={"userimg"} className={"sign-up__form__img"}>
+                    {/* <label htmlFor={"userimg"} className={"sign-up__form__img"}>
                         {"Profile picture:"}
                         <div className={"preview"}>
                             <span className={"choose-txt"}>
@@ -37,7 +37,7 @@ const Sign = () => (
                             accept={"image/*"}
                             name={"userimg"}
                         />
-                    </label>
+                    </label> */}
 
                     <div className={"sign-up__form__name"}>
                         <label htmlFor={"username"} className={"label"}>
