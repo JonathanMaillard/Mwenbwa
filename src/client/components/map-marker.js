@@ -74,7 +74,6 @@ const treeBank = {
         "050-tree",
     ],
 };
-const SVG_PATH = "../../ressources/trees-svg/svg/";
 
 const getRandomTree = month => {
     let season;
@@ -104,13 +103,11 @@ const getRandomTree = month => {
     }
     const tree =
         treeBank[season][(Math.random() * treeBank[season].length) | 0];
-    console.log(tree, season);
     return tree;
 };
 
 const newTree = () => {
     const month = new Date().getMonth();
-    // const path = `${SVG_PATH}${getRandomTree(month)}.svg`;
     const tree = treesSvg[getRandomTree(month)];
     const leafletIcon = L.icon({
         iconUrl: tree,

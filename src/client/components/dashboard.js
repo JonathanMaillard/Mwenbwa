@@ -33,9 +33,9 @@ const dash = () => (
             <div className={"dash__BoxContenu"}>
                 <div className={"dash__BoxGauche"}>
                     <div className={"dash__Photo"} />
-                    <button>
+                    <button type={"button"}>
                         <i className={"far fa-edit"} />
-                        <span>change profile picture</span>
+                        <span>{"change profile picture"}</span>
                     </button>
                 </div>
 
@@ -48,23 +48,24 @@ const dash = () => (
                                 type={"text"}
                             />
                             <button
+                                type={"button"}
                                 onClick={changeNameValidation}
                                 className={"dashInputBtn"}>
                                 <i className={"far fa-check-circle"} />
                             </button>
                         </div>
-                        <button onClick={changeName}>
+                        <button type={"button"} onClick={changeName}>
                             <i className={"far fa-edit"} />
-                            <span>change name</span>
+                            <span>{"change name"}</span>
                         </button>
                     </div>
 
                     <div className={"dash__MailAndBtn"}>
-                        <h2>Bastienlafalize@gmail.com</h2>
+                        <h2>{"Bastienlafalize@gmail.com"}</h2>
                     </div>
 
                     <form className={"dash__Radio"}>
-                        <h2>Color Theme</h2>
+                        <h2>{"Color Theme"}</h2>
                         <CircleColor />
                     </form>
                 </div>
