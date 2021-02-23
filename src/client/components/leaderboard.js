@@ -22,7 +22,6 @@ const Leaderboard = ({leaderboard}) => (
                         <p className={"name"}>{"Player's Name"}</p>
                         <p className={"score"}>{"Score"}</p>
                     </li>
-                    {console.log(leaderboard[1])}
                     {leaderboard.map(user => (
                         <li
                             key={user.username}
