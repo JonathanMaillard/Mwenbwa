@@ -32,6 +32,7 @@ bower_components
 # Compiled binary
 build/Release
 bin
+bin/
 
 # Dependency directories
 node_modules/
@@ -60,7 +61,18 @@ typings/
 .env
 
 # parcel-bundler cache (https://parceljs.org/)
+<<<<<<< HEAD
+.cache
+=======
 .cache
 
 
+<<<<<<< HEAD
 .vscode
+=======
+# TernJS port file
+.tern-port
+
+bin
+>>>>>>> e19d67d01389cd10f4078320e90c3eb21eeef8e5
+>>>>>>> devbdo

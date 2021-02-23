@@ -9,6 +9,7 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
 import "./../style.scss";
+const axios = require("axios");
 
 import Map from "./components/map";
 import Rules from "./components/rules";

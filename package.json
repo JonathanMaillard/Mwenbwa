@@ -48,8 +48,13 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "leaflet": "^1.7.1",
+    "mongodb": "^3.6.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-leaflet": "^3.1.0",
