@@ -18,15 +18,15 @@ const Gamelog = () => (
                 />
 
                 <ul className={"gamelog-history__list"}>
-                    {/* {logs&&logs.forEach(log => 
-                    (
-                        <li className={"gamelog-history__list__item"}>
-                            <p>
-                                <span className={"italic"}>{"Jhonhathan"}</span>
-                                {log.content}
-                            </p>
-                        </li>
-                    )
+                    {/* {logs&&logs.forEach(log => {console.log(log)}
+                    // (
+                    //     <li className={"gamelog-history__list__item"}>
+                    //         <p>
+                    //             <span className={"italic"}>{"Jhonhathan"}</span>
+                    //             {log.content}
+                    //         </p>
+                    //     </li>
+                    // )
                     )} */}
 
                     {/* <li className={"gamelog-history__list__item"}>

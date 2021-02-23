@@ -26,13 +26,13 @@ const App = () => (
         </div>
 
         <Button />
-        <div id={"leaderboard"} />
-        <div id={"gamelog"} />
 
         <div id={"app"}>
             <Profile />
         </div>
 
+        <div id={"leaderboard"} />
+        <div id={"gamelog"} />
         <Rules />
         <Disconnect />
         <Gamelog />

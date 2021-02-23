@@ -279,6 +279,7 @@ body {
   position: absolute;
   width: 100vw;
   height: 100vh;
+  pointer-events: none;
 }
 .rules, .disconnect, .leaderboard, .gamelog {
   z-index: 1000;
@@ -590,4 +591,5 @@ body {
 // ---------------- SHOWING MODALS ---------------
 .show-modal {
   display: flex;
+  pointer-events: all;
 }
