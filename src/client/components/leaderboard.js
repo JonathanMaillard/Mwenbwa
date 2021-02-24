@@ -4,7 +4,7 @@ import CloseSvg from "../../ressources/images/cancel.svg";
 import {hideLeaderboardModal} from "../display/hide-modal";
 
 const Leaderboard = ({leaderboard}) => (
-    <div className={"modal leaderboard"}>
+    <div className={"leaderboard"}>
         <div className={"leaderboard__content"}>
             <p className={"leaderboard__content__title"}>{"Leaderboard"}</p>
             <div className={"leaderboard__content__subtitle"}>
@@ -22,7 +22,6 @@ const Leaderboard = ({leaderboard}) => (
                         <p className={"name"}>{"Player's Name"}</p>
                         <p className={"score"}>{"Score"}</p>
                     </li>
-
                     {leaderboard.map(user => (
                         <li
                             key={user.username}
@@ -30,7 +29,6 @@ const Leaderboard = ({leaderboard}) => (
                             <p className={"name"}>{user.username}</p>
                             <p className={"score"}>{user.score}</p>
                         </li>
-                        //TODO: AJOUTER key={user.id} DANS LE TAG LI QUAND JONA AURA CORRIGÉ LA REQUETE AXIOS
                     ))}
                 </ul>
             </div>
