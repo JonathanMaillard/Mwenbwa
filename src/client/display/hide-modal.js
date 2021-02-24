@@ -1,8 +1,8 @@
 function hideGamelogModal() {
-    document.querySelector(".gamelog").classList.remove("show-modal");
+    document.querySelector("#gamelog").classList.remove("show-modal");
 }
 function hideLeaderboardModal() {
-    document.querySelector(".leaderboard").classList.remove("show-modal");
+    document.querySelector("#leaderboard").classList.remove("show-modal");
 }
 function hideRulesModal() {
     document.querySelector(".rules").classList.remove("show-modal");
