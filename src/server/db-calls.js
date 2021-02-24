@@ -23,7 +23,7 @@ const dbGetTrees = () => {
             const options = {
                 // Include only the arbotags and geoloc in each returned document
                 projection: {
-                    _id: 0,
+                    _id: 1,
                     arbotag: 1,
                     x_lambda: 1,
                     y_phi: 1,
@@ -36,7 +36,7 @@ const dbGetTrees = () => {
 
             return result.map(tree => ({
                 type: "Feature",
-                id: tree.arbotag,
+                id: tree._id,
                 properties: {
                     Color: tree.color,
                 },
