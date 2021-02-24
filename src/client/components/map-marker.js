@@ -113,7 +113,7 @@ const newTree = () => {
         iconUrl: tree,
         iconSize: [32, 32],
         iconAnchor: [16, 32],
-        popupAnchor: null,
+        popupAnchor: [0, -32],
         shadowUrl: null,
         shadowSize: null,
         shadowAnchor: null,
