@@ -324,18 +324,19 @@ body {
   }
 }
 
-//------------------------ RULES -----------------------
+//------------------------ All Modals -----------------------
 #leaderboard, #gamelog {
+  display: none;
   position: absolute;
   width: 100vw;
   height: 100vh;
   pointer-events: none;
 }
-//-------------------------SIGNIN/UP------------------------
 .rules, .disconnect, .leaderboard, .gamelog, .sign {
   z-index: 1000;
 }
 
+//-------------------------SIGNIN/UP------------------------
 .hide-sign-form {
   display: none;
 }
@@ -500,7 +501,6 @@ body {
 
 // ------------------- LEADERBOARD ----------------------------------------------
 .leaderboard {
-  display: none;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
@@ -544,7 +544,6 @@ body {
 
 // --------------------- GAMELOG ----------------------------------------------
 .gamelog {
-  display: none;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
@@ -952,9 +951,9 @@ body {
 
 // ---------------- SHOWING MODALS ---------------
 .show-modal {
-  display: flex;
+  display: flex !important;
   opacity: 100%;
-  pointer-events: all;
+  pointer-events: all !important;
 }
 
 .show-profile {
