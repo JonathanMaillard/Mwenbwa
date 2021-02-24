@@ -72,14 +72,30 @@ app.post("/login", jsonParser, async (req, res) => {
         const request = await dbGetUserFromInfo(userInfo);
         if (request) {
             bcrypt.compare(pwd, request, (err, result) => {
-                res.send(result ? "correct" : "invalidPwd");
+                res.status(result ? 200 : 400).send(
+                    result
+                        ? {
+                              msg: "correct",
+                              content: request,
+                          }
+                        : {
+                              msg: "invalidPwd",
+                              content: {},
+                          },
+                );
             });
         } else {
-            res.send("invalidInfo");
+            res.status(400).send({
+                msg: "invalidInfo",
+                content: {},
+            });
         }
     } catch (e) {
         console.log(e);
-        res.send("error");
+        res.status(400).send({
+            msg: "error",
+            content: {},
+        });
     }
 });
 app.post("/register", jsonParser, (req, res) => {
@@ -89,11 +105,11 @@ app.post("/register", jsonParser, (req, res) => {
     const userColor = req.body.userColor;
     let request;
     bcrypt.genSalt(saltRounds, (err, salt) => {
-        bcrypt.hash(userPwd, salt, (error, hash) => {
-            request = dbRegister(username, hash, userEmail, userColor);
+        bcrypt.hash(userPwd, salt, async (error, hash) => {
+            request = await dbRegister(username, hash, userEmail, userColor);
         });
     });
-    res.send(request);
+    res.status(200).send(request);
 });
 
 app.post("/addLog", jsonParser, (req, res) => {
@@ -104,53 +120,53 @@ app.post("/addLog", jsonParser, (req, res) => {
 });
 
 // GAME ACTIONS COMMANDS
-app.post("/buyTree", jsonParser, (req, res) => {
+app.post("/buyTree", jsonParser, async (req, res) => {
     const userId = req.body.userId;
     const treeId = req.body.treeId;
     const treePrice = req.body.treePrice;
-    const request = dbBuyTree(treeId, userId, treePrice);
-    res.send(request);
+    const request = await dbBuyTree(treeId, userId, treePrice);
+    res.status(200).send(request);
 });
-app.post("/lockTree", jsonParser, (req, res) => {
+app.post("/lockTree", jsonParser, async (req, res) => {
     const userId = req.body.userId;
     const treeId = req.body.treeId;
     const treeLockPrice = req.body.treeLockPrice;
-    const request = dbLockTree(treeId, userId, treeLockPrice);
-    res.send(request);
+    const request = await dbLockTree(treeId, userId, treeLockPrice);
+    res.status(200).send(request);
 });
-app.post("/comment", jsonParser, (req, res) => {
+app.post("/comment", jsonParser, async (req, res) => {
     const userId = req.body.userId;
     const treeId = req.body.treeId;
     const comment = req.body.comment;
-    const request = dbAddComment(treeId, userId, comment);
-    res.send(request);
+    const request = await dbAddComment(treeId, userId, comment);
+    res.status(200).send(request);
 });
 
 // CHANGE SETTINGS COMMANDS
-app.post("/changeColor", jsonParser, (req, res) => {
+app.post("/changeColor", jsonParser, async (req, res) => {
     const userId = req.body.userId;
     const color = req.body.color;
-    const request = dbChangeColor(userId, color);
-    res.send(request);
+    const request = await dbChangeColor(userId, color);
+    res.status(200).send(request);
 });
-app.post("/changeEmail", jsonParser, (req, res) => {
+app.post("/changeEmail", jsonParser, async (req, res) => {
     const userId = req.body.userId;
     const userEmail = req.body.userEmail;
-    const request = dbModifyMail(userId, userEmail);
-    res.send(request);
+    const request = await dbModifyMail(userId, userEmail);
+    res.status(200).send(request);
 });
-app.post("/changeUsername", jsonParser, (req, res) => {
+app.post("/changeUsername", jsonParser, async (req, res) => {
     const userId = req.body.userId;
     const username = req.body.username;
-    const request = dbModifyUsername(userId, username);
-    res.send(request);
+    const request = await dbModifyUsername(userId, username);
+    res.status(200).send(request);
 });
-app.post("/changePwd", jsonParser, (req, res) => {
+app.post("/changePwd", jsonParser, async (req, res) => {
     const userId = req.body.userId;
     const newPwd = req.body.newPwd;
     const oldPwd = req.body.oldPwd;
     try {
-        const request = dbGetUser(userId);
+        const request = await dbGetUser(userId);
         if (request) {
             bcrypt.compare(oldPwd, request, (errComp, result) => {
                 result &&
@@ -159,21 +175,37 @@ app.post("/changePwd", jsonParser, (req, res) => {
                             result && dbModifyPassword(userId, hash);
                         });
                     });
-                res.send(result ? "correct" : "invalidPwd");
+                res.status(result ? 200 : 400).send(
+                    result
+                        ? {
+                              msg: "correct",
+                              content: request,
+                          }
+                        : {
+                              msg: "invalidPwd",
+                              content: {},
+                          },
+                );
             });
         } else {
-            res.send("invalidId");
+            res.status(400).send({
+                msg: "invalidInfo",
+                content: {},
+            });
         }
     } catch (e) {
         console.log(e);
-        res.send("error");
+        res.status(400).send({
+            msg: "error",
+            content: {},
+        });
     }
 });
-app.post("/changePic", jsonParser, (req, res) => {
+app.post("/changePic", jsonParser, async (req, res) => {
     const userId = req.body.userId;
     const userPic = req.body.userPic;
-    const request = dbModifyPics(userId, userPic);
-    res.send(request);
+    const request = await dbModifyPics(userId, userPic);
+    res.status(200).send(request);
 });
 
 /*===================
