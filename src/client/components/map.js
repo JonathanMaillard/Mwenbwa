@@ -22,6 +22,7 @@ const Map = ({trees}) => {
                         {trees.map(tree => (
                             <MapMarker
                                 position={tree.geometry.coordinates}
+                                tree={tree.id}
                                 key={tree.id}
                             />
                         ))}

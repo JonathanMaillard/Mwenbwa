@@ -3,6 +3,8 @@
 // DATABASE CONNEXION
 import {MongoClient, uri} from "./db-connexion";
 
+const ObjectId = require("mongodb").ObjectId;
+
 //GET
 
 //Get all trees
@@ -70,8 +72,10 @@ const dbGetTree = tree => {
             const database = client.db("mwenbwa");
             const collection = database.collection("trees");
 
+            const treeId = new ObjectId(tree);
+
             const query = {
-                _id: tree,
+                _id: treeId,
             };
 
             const cursor = await collection.find(query);
