@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Marker} from "react-leaflet";
+import {Marker, Popup} from "react-leaflet";
 import L from "leaflet";
 import treesSvg from "../scripts/trees-svg";
 
@@ -113,7 +113,7 @@ const newTree = () => {
         iconUrl: tree,
         iconSize: [32, 32],
         iconAnchor: [16, 32],
-        popupAnchor: null,
+        popupAnchor: [0, -32],
         shadowUrl: null,
         shadowSize: null,
         shadowAnchor: null,
@@ -122,7 +122,11 @@ const newTree = () => {
 };
 
 const MapMarker = ({position, key}) => (
-    <Marker position={position} icon={newTree()} key={key} />
+    <Marker position={position} icon={newTree()} key={key}>
+        <Popup>
+            {"A pretty CSS3 popup."} <br /> {"Easily customizable."}
+        </Popup>
+    </Marker>
 );
 
 export default MapMarker;

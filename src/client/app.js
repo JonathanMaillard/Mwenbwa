@@ -15,8 +15,6 @@ import Map from "./components/map";
 import Sign from "./components/sign";
 import Rules from "./components/rules";
 import Disconnect from "./components/disconnect";
-import Leaderboard from "./components/leaderboard";
-import Gamelog from "./components/gamelog";
 import Profile from "./components/profile";
 import Button from "./components/button";
 import Dashboard from "./components/dashboard";
@@ -125,30 +123,6 @@ const App = () => {
         </div>
     );
 };
-
-axios
-    .get(`/leaderboard`)
-    .then(response => {
-        ReactDOM.render(
-            <Leaderboard leaderboard={response.data} />,
-            document.querySelector("#leaderboard"),
-        );
-    })
-    .catch(e => {
-        console.log("sad because :", e);
-    });
-
-axios
-    .get(`/logs`)
-    .then(response => {
-        ReactDOM.render(
-            <Gamelog logs={response.data} />,
-            document.querySelector("#gamelog"),
-        );
-    })
-    .catch(e => {
-        console.log("sad because :", e);
-    });
 
 ReactDOM.render(<App />, document.querySelector("#root"));
 

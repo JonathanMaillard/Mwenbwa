@@ -34,7 +34,6 @@ $bg-modal: rgba(255, 255, 255, 0.75);
   background-color: #183c45b2;
 }
 @mixin modal-content-background() {
-  width: 100%;
   height: 85%;
   margin: 3em;
   padding: 3em;
@@ -324,18 +323,20 @@ body {
   }
 }
 
-//------------------------ RULES -----------------------
+//------------------------ All Modals -----------------------
 #leaderboard, #gamelog {
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease-in-out;
   position: absolute;
   width: 100vw;
   height: 100vh;
-  pointer-events: none;
 }
-//-------------------------SIGNIN/UP------------------------
 .rules, .disconnect, .leaderboard, .gamelog, .sign {
   z-index: 1000;
 }
 
+//-------------------------SIGNIN/UP------------------------
 .hide-sign-form {
   display: none;
 }
@@ -428,10 +429,13 @@ body {
 //------------------------ RULES -----------------------
 
 .rules {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease-in-out;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
+    // width: 100%;
     @include flex(column, flex-start, center);
     &__title {
       @include title(2rem);
@@ -453,7 +457,9 @@ body {
 
 //----------------------DISCONNECT -------------------------------------------
 .disconnect {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease-in-out;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
@@ -500,7 +506,6 @@ body {
 
 // ------------------- LEADERBOARD ----------------------------------------------
 .leaderboard {
-  display: none;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
@@ -544,7 +549,6 @@ body {
 
 // --------------------- GAMELOG ----------------------------------------------
 .gamelog {
-  display: none;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
@@ -952,9 +956,9 @@ body {
 
 // ---------------- SHOWING MODALS ---------------
 .show-modal {
-  display: flex;
-  opacity: 100%;
-  pointer-events: all;
+  // display: flex !important;
+  opacity: 100% !important;
+  pointer-events: all !important;
 }
 
 .show-profile {

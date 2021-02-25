@@ -23,7 +23,7 @@ const dbGetTrees = () => {
             const options = {
                 // Include only the arbotags and geoloc in each returned document
                 projection: {
-                    _id: 0,
+                    _id: 1,
                     arbotag: 1,
                     x_lambda: 1,
                     y_phi: 1,
@@ -36,7 +36,7 @@ const dbGetTrees = () => {
 
             return result.map(tree => ({
                 type: "Feature",
-                id: tree.arbotag,
+                id: tree._id,
                 properties: {
                     Color: tree.color,
                 },
@@ -71,7 +71,7 @@ const dbGetTree = tree => {
             const collection = database.collection("trees");
 
             const query = {
-                arbotag: +tree,
+                _id: tree,
             };
 
             const cursor = await collection.find(query);
@@ -102,7 +102,7 @@ const dbGetUser = userId => {
             const database = client.db("mwenbwa");
             const collection = database.collection("players");
 
-            const cursor = await collection.find({id: +userId});
+            const cursor = await collection.find({_id: userId});
             const result = await cursor.toArray();
 
             //console.log(result);
@@ -174,7 +174,7 @@ const dbGetLogs = () => {
                     $lookup: {
                         from: "playersTest",
                         localField: "authorId",
-                        foreignField: "id",
+                        foreignField: "_id",
                         as: "data",
                     },
                 },
@@ -239,7 +239,7 @@ const dbLogin = userInfo => {
 };
 
 //Register
-const dbRegister = (userId, userPassword, userEmail, userColor) => {
+const dbRegister = (userName, userPassword, userEmail, userColor) => {
     const client = new MongoClient(uri, {useUnifiedTopology: true});
 
     async function run() {
@@ -247,11 +247,9 @@ const dbRegister = (userId, userPassword, userEmail, userColor) => {
             await client.connect();
             const database = client.db("mwenbwa");
             const collection = database.collection("players");
-            const numberOfPlayer = collection.count();
 
             const newUser = {
-                id: numberOfPlayer + 1,
-                username: userId,
+                username: userName,
                 password: userPassword,
                 email: userEmail,
                 color: userColor,
@@ -288,7 +286,7 @@ const dbBuyTree = (tree, userId, treePrice) => {
             const database = client.db("mwenbwa");
             const collection = database.collection("trees");
 
-            const filter = {arbotag: +tree};
+            const filter = {_id: tree};
             const options = {upsert: false};
 
             const updateDoc = {
@@ -309,7 +307,7 @@ const dbBuyTree = (tree, userId, treePrice) => {
             //update the score oh the player with minus the price of the tree
             const collectionPlayer = database.collection("players");
 
-            const filterPlayer = {username: userId};
+            const filterPlayer = {_id: userId};
             const optionsPlayer = {upsert: false};
 
             const updateDocPlayer = {
@@ -349,7 +347,7 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             const database = client.db("mwenbwa");
             const collection = database.collection("trees");
 
-            const filter = {arbotag: +tree};
+            const filter = {_id: tree};
             const options = {upsert: false};
 
             const updateDoc = {
@@ -371,7 +369,7 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             //Update score with minus de locktree
             const collectionPlayer = database.collection("players");
 
-            const filterPlayer = {username: userId};
+            const filterPlayer = {_id: userId};
             const optionsPlayer = {upsert: false};
 
             const updateDocPlayer = {
@@ -433,7 +431,7 @@ const dbAddLog = (content, userId) => {
 };
 
 //Add a comment
-const dbAddComment = (tree, user, newComment) => {
+const dbAddComment = (tree, userId, newComment) => {
     const client = new MongoClient(uri, {useUnifiedTopology: true});
 
     async function run() {
@@ -442,12 +440,12 @@ const dbAddComment = (tree, user, newComment) => {
             const database = client.db("mwenbwa");
             const collection = database.collection("trees");
 
-            const query = {arbotag: tree};
-            const options = {upsert: true};
+            const query = {_id: tree};
+            const options = {upsert: false};
 
             const updateDoc = {
                 $push: {
-                    comments: [user, newComment],
+                    comments: [userId, newComment],
                 },
             };
 
