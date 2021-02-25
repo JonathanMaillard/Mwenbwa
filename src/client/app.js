@@ -18,7 +18,7 @@ import Disconnect from "./components/disconnect";
 import Profile from "./components/profile";
 import Button from "./components/button";
 import Dashboard from "./components/dashboard";
-import {hideSignForm} from "../display/hide-sign-form";
+//import {hideSignForm} from "../display/hide-sign-form";
 
 const sessionId = -1 //infoFromCookies || -1;
 
@@ -117,7 +117,7 @@ const App = () => {
             <Sign signUp={signUp} signIn={signIn} />
             <Rules />
             <Disconnect />
-            <Gamelog />
+            
 
             <Dashboard />
         </div>
