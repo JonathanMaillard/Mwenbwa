@@ -1,8 +1,8 @@
 import * as React from "react";
 import SignSVG from "../../ressources/images/undraw_nature.svg";
 import {showSignIn, showSignUp} from "../display/show-sign-form";
-import CircleColor from ".././components/color-theme";
-import axios from "axios";
+// import CircleColor from ".././components/color-theme";
+// import axios from "axios";
 
 const Sign = ({"signUp": signUp, "signIn": signIn}) => (
     <div className={"sign"}>
@@ -65,7 +65,7 @@ const Sign = ({"signUp": signUp, "signIn": signIn}) => (
                         <label htmlFor={"colortheme"} className={"label"}>
                             {"Color theme:"}
                         </label>
-                        <CircleColor />
+                        
                     </div>
 
                     <input
