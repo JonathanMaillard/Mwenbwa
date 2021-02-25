@@ -18,7 +18,7 @@ import Disconnect from "./components/disconnect";
 import Profile from "./components/profile";
 import Button from "./components/button";
 import Dashboard from "./components/dashboard";
-import {hideSignForm} from "../display/hide-sign-form";
+// import {hideSignForm} from "../display/hide-sign-form";
 
 const sessionId = -1 //infoFromCookies || -1;
 
@@ -47,7 +47,6 @@ const App = () => {
                     "userId": result.content.userId,
                     "username": result.content.username,
                     "userEmail": result.content.email,
-                    "userPic": result.content.username,
                     "userColor": result.content.color,
                     // "userPic": result.content.pic,
                     "userScore": result.content.score,
@@ -117,7 +116,7 @@ const App = () => {
             <Sign signUp={signUp} signIn={signIn} />
             <Rules />
             <Disconnect />
-            <Gamelog />
+            {/* <Gamelog /> */}
 
             <Dashboard />
         </div>
