@@ -26,7 +26,6 @@ const MyPopup = ({treeId}) => {
         <Popup onOpen={handlePopupOpen}>
             <div className={"popup"}>
                 <h3>{name}</h3>
-                <p>{treeId}</p>
             </div>
         </Popup>
     );
