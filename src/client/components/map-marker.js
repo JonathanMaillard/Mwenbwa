@@ -1,7 +1,8 @@
 import * as React from "react";
-import {Marker, Popup} from "react-leaflet";
+import {Marker} from "react-leaflet";
 import L from "leaflet";
 import treesSvg from "../scripts/trees-svg";
+import MyPopup from "./popup";
 
 const treeBank = {
     winter: [
@@ -121,11 +122,9 @@ const newTree = () => {
     return leafletIcon;
 };
 
-const MapMarker = ({position, key}) => (
-    <Marker position={position} icon={newTree()} key={key}>
-        <Popup>
-            {"A pretty CSS3 popup."} <br /> {"Easily customizable."}
-        </Popup>
+const MapMarker = ({position, tree}) => (
+    <Marker position={position} icon={newTree()} key={tree}>
+        <MyPopup treeId={tree} />
     </Marker>
 );
 

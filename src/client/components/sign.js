@@ -64,7 +64,7 @@ const Sign = ({"signUp": signUp, "signIn": signIn}) => (
                         <label htmlFor={"colortheme"} className={"label"}>
                             {"Color theme:"}
                         </label>
-                        <CircleColor />
+                        
                     </div>
 
                     <input

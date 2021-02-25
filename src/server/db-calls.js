@@ -3,6 +3,8 @@
 // DATABASE CONNEXION
 import {MongoClient, uri} from "./db-connexion";
 
+const ObjectId = require("mongodb").ObjectId;
+
 //GET
 
 //Get all trees
@@ -70,8 +72,10 @@ const dbGetTree = tree => {
             const database = client.db("mwenbwa");
             const collection = database.collection("trees");
 
+            const treeId = new ObjectId(tree);
+
             const query = {
-                _id: tree,
+                _id: treeId,
             };
 
             const cursor = await collection.find(query);
@@ -102,7 +106,13 @@ const dbGetUser = userId => {
             const database = client.db("mwenbwa");
             const collection = database.collection("players");
 
-            const cursor = await collection.find({_id: userId});
+            const o_userId = new ObjectId(userId);
+
+            const query = {
+                _id: o_userId,
+            };
+
+            const cursor = await collection.find(query);
             const result = await cursor.toArray();
 
             //console.log(result);
@@ -286,12 +296,15 @@ const dbBuyTree = (tree, userId, treePrice) => {
             const database = client.db("mwenbwa");
             const collection = database.collection("trees");
 
-            const filter = {_id: tree};
+            const treeId = new ObjectId(tree);
+            const user = new ObjectId(userId);
+
+            const filter = {_id: treeId};
             const options = {upsert: false};
 
             const updateDoc = {
                 $set: {
-                    owner: userId,
+                    owner: user,
                 },
             };
 
@@ -307,7 +320,7 @@ const dbBuyTree = (tree, userId, treePrice) => {
             //update the score oh the player with minus the price of the tree
             const collectionPlayer = database.collection("players");
 
-            const filterPlayer = {_id: userId};
+            const filterPlayer = {_id: user};
             const optionsPlayer = {upsert: false};
 
             const updateDocPlayer = {
@@ -347,13 +360,16 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             const database = client.db("mwenbwa");
             const collection = database.collection("trees");
 
-            const filter = {_id: tree};
+            const treeId = new ObjectId(tree);
+            const user = new ObjectId(userId);
+
+            const filter = {_id: treeId};
             const options = {upsert: false};
 
             const updateDoc = {
                 $set: {
                     locked: true,
-                    lockedBy: userId,
+                    lockedBy: user,
                 },
             };
 
@@ -369,7 +385,7 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             //Update score with minus de locktree
             const collectionPlayer = database.collection("players");
 
-            const filterPlayer = {_id: userId};
+            const filterPlayer = {_id: user};
             const optionsPlayer = {upsert: false};
 
             const updateDocPlayer = {
@@ -440,12 +456,15 @@ const dbAddComment = (tree, userId, newComment) => {
             const database = client.db("mwenbwa");
             const collection = database.collection("trees");
 
-            const query = {_id: tree};
+            const treeId = new ObjectId(tree);
+            const user = new ObjectId(userId);
+
+            const query = {_id: treeId};
             const options = {upsert: false};
 
             const updateDoc = {
                 $push: {
-                    comments: [userId, newComment],
+                    comments: [user, newComment],
                 },
             };
 
