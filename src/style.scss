@@ -341,7 +341,8 @@ body {
   display: none;
 }
 .sign {
-  display: none; //A ENLVER A ENLEVER C JUSTE EN ATTENDANT QUE LE FORM SOIT PRET MAIS LE COMPONENT EST OKKKKKKKKKKKKKKKKKKKKK !!!!!!!!!!!!!!
+    opacity: 0;
+    pointer-events: none;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();

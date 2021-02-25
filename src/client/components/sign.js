@@ -4,7 +4,7 @@ import {showSignIn, showSignUp} from "../display/show-sign-form";
 import axios from "axios";
 
 const Sign = ({"signUp": signUp, "signIn": signIn}) => (
-    <div className={"sign"}>
+    <div className={"sign show-modal"}>
         <div className={"sign__content"}>
             <div className={"sign__content__title"}>
                 <button

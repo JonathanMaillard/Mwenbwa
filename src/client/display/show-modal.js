@@ -43,6 +43,9 @@ function showDisconnectModal() {
 function showDashboardModal() {
     document.querySelector(".dashContainer").classList.add("show-modal");
 }
+function showConnectModal() {
+    document.querySelector(".sign").classList.add("show-modal");
+}
 function toggleProfile() {
     document
         .querySelector(".containerProfile")
@@ -54,4 +57,5 @@ export {showLeaderboardModal};
 export {showRulesModal};
 export {showDisconnectModal};
 export {showDashboardModal};
+export {showConnectModal};
 export {toggleProfile};

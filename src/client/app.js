@@ -18,18 +18,46 @@ import Disconnect from "./components/disconnect";
 import Profile from "./components/profile";
 import Button from "./components/button";
 import Dashboard from "./components/dashboard";
-import {hideSignForm} from "../display/hide-sign-form";
+import {hideSignForm} from "./display/hide-sign-form";
+import {showConnectModal} from "./display/show-modal";
+import {hideDisconnectModal} from "./display/hide-modal";
 
-const sessionId = -1 //infoFromCookies || -1;
+const defaultUser = {
+    "userId": undefined,
+    "username": "guest",
+    "userEmail": "mail@example.com",
+    // "userPic": "",
+    "userColor": "#F94144",
+    "userScore": 3,
+}
+const cookieSessionId = 
+    document.cookie && document.cookie.split(";").find(x => x.trim().startsWith("userId"))
+    ? document.cookie.split(";").find(x => x.trim().startsWith("userId")).split("=")[1].trim()
+    : undefined;
+cookieSessionId && axios
+    .get(`getUser/${cookieSessionId}`)
+    .then((result) => {
+        setSession({
+            "userId": result.content.userId,
+            "username": result.content.username,
+            "userEmail": result.content.email,
+            "userColor": result.content.color,
+            // "userPic": result.content.pic,
+            "userScore": result.content.score,
+            "userTrees": result.content.trees,
+        })
+    })
+    .catch(error => console.log(error))
 
 const App = () => {
     const [session, setSession] = useState({
-        "userId": -1,
+        "userId": 0,
         "username": "guest",
         "userEmail": "",
         // "userPic": "",
         "userColor": "#F94144",
         "userScore": 0,
+        "userTrees": [],
     })
     const signUp = () => {
         const username = document.querySelector("#usernameUp");
@@ -42,7 +70,7 @@ const App = () => {
                 "userPwd": userPwd,
             })
             .then(result => {
-                document.cookie = `userId=${result.content.userId}; expires=${new Date(new Date().getTime()+1000*60*60*24*365).toGMTString()}; path=/`;
+                document.cookie = `userId=${result.content.userId}; expires=${new Date(new Date().getTime()+1000*60*60*24*3).toGMTString()}`;
                 setSession({
                     "userId": result.content.userId,
                     "username": result.content.username,
@@ -51,6 +79,7 @@ const App = () => {
                     "userColor": result.content.color,
                     // "userPic": result.content.pic,
                     "userScore": result.content.score,
+                    "userTrees": result.content.trees,
                 });
                 hideSignForm();
             })
@@ -80,7 +109,17 @@ const App = () => {
                 "userPwd": userPwd,
             })
             .then(result => {
-                //FOUTRE LES COOKIES MDRRRRRR
+                document.cookie = `userId=${result.content.userId}; expires=${new Date(new Date().getTime()+1000*60*60*24*3).toGMTString()}`;
+                setSession({
+                    "userId": result.content.userId,
+                    "username": result.content.username,
+                    "userEmail": result.content.email,
+                    "userPic": result.content.username,
+                    "userColor": result.content.color,
+                    // "userPic": result.content.pic,
+                    "userScore": result.content.score,
+                    "userTrees": result.content.trees,
+                });
                 hideSignForm();
             })
             .catch(error => {
@@ -100,6 +139,12 @@ const App = () => {
                 //INTEGRER L'ERREUR DANS LE DOM
             })
     }
+    const logout = () => {
+        document.cookie = "userId= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+        setSession(defaultUser);
+        hideDisconnectModal();
+        showConnectModal();
+    }
     return (
         <div id={"container"}>
             <div id={"mapid"}>
@@ -116,7 +161,7 @@ const App = () => {
             <div id={"gamelog"} />
             <Sign signUp={signUp} signIn={signIn} />
             <Rules />
-            <Disconnect />
+            <Disconnect logout={logout} />
             <Gamelog />
 
             <Dashboard />

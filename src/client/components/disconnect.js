@@ -1,9 +1,8 @@
 import * as React from "react";
 import DisconnectSvg from "../../ressources/images/undraw_through_the_park.svg";
 import CloseSvg from "../../ressources/images/cancel.svg";
-import {hideDisconnectModal} from "../display/hide-modal";
 
-const Disconnect = () => (
+const Disconnect = ({logout}) => (
     <div className={"disconnect"}>
         <div className={"disconnect__content"}>
             <p className={"disconnect__content__title"}>{"Disconnect ?"}</p>
@@ -35,7 +34,7 @@ const Disconnect = () => (
                 className={"close-btn"}
                 src={CloseSvg}
                 alt={"Close"}
-                onClick={hideDisconnectModal}
+                onClick={logout}
             />
         </div>
     </div>
