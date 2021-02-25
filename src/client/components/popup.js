@@ -60,7 +60,6 @@ const MyPopup = ({treeId}) => {
             })
             .then(response => {
                 setOwner("user.username");
-                console.log("tout va bien bordel", response)
             })
             .catch(e => {
                 console.log("sad because :", e);
@@ -68,7 +67,20 @@ const MyPopup = ({treeId}) => {
     }
 
     const LockTree = () => {
-        console.log("test");
+        axios
+            .post(`/lockTree`, {
+                "userId": "6037b898fe778c8f96f2eb36",
+                "treeId": treeId,
+                "treeLockPrice": priceLock,
+            })
+            .then(response => {
+                setOwner("user.username");
+                setIsLocked(true);
+                console.log(response, "je sais pas")
+            })
+            .catch(e => {
+                console.log("sad because :", e);
+            });
     }
 
     return (
@@ -79,6 +91,7 @@ const MyPopup = ({treeId}) => {
                 <a href={wiki} target={"_blank"} rel={"noreferrer"}>{"More info on this tree's species"}</a>
                 <p>{"Comment : "}<span>{comment}</span></p>
 
+                {/* FAIRE UN SWITCH POUR TOUS LES CAS POSSIBLES (ARBRE LOCK, PAS ASSEZ D'ARGENT, OU ARBRE DÉJÀ À NOUS, OU AUCUN DES CAS DONC AFFICHER LES BOUTONS) */}
                 {isLocked ? (
                     <p>{"Locked"}</p>
                 ) : (
