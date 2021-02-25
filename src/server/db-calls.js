@@ -290,8 +290,7 @@ const dbRegister = (userName, userPassword, userEmail, userColor) => {
 const dbBuyTree = (tree, userId, treePrice) => {
     const client = new MongoClient(uri, {useUnifiedTopology: true});
 
-
-    console.log(tree, userId, treePrice );
+    console.log(tree, userId, treePrice);
 
     async function run() {
         try {
@@ -372,7 +371,7 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             const updateDoc = {
                 $set: {
                     locked: true,
-                    lockedBy: user,
+                    owner: user,
                 },
             };
 
