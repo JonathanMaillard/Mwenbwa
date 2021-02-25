@@ -102,7 +102,7 @@ app.post("/register", jsonParser, (req, res) => {
     const username = req.body.username;
     const userEmail = req.body.userEmail;
     const userPwd = req.body.userPwd;
-    const userColor = req.body.userColor;
+    const userColor = req.body.userColor || "#F94144";
     let request;
     bcrypt.genSalt(saltRounds, (err, salt) => {
         bcrypt.hash(userPwd, salt, async (error, hash) => {
