@@ -26,7 +26,7 @@ const MyPopup = ({treeId}) => {
                     setName(data.nom_complet);
 
                     if (data.owner) {
-                        setOwner(data.owner);
+                        setOwner(data.username);
                     }
 
                     const circonf = data.circonf;
@@ -63,7 +63,7 @@ const MyPopup = ({treeId}) => {
                 treePrice: price,
             })
             .then(response => {
-                setOwner("user.username");
+                setOwner(user.username);
                 console.log(response);
             })
             .catch(e => {
@@ -88,25 +88,35 @@ const MyPopup = ({treeId}) => {
             });
     };
 
-    // const SwitchDisplay = () => {
-    //     if (isLocked) {
-    //         return (<p>{"Locked"}</p>)
-    //         // si l'arbre est lock, ne pas afficher les boutons
-    //     } else if (user.score <= 0) {
-    //         return (<p>{"You don't have enough leaves !"}</p>)
-    //         // si pas assez d'argent, ne pas afficher les boutons
-    //     } else if (user.id === userSession) {
-    //         return (<p>{"This tree is already yours"}</p>)
-    //         // si l'arbre est à l'utlisateur connecté, ne pas afficher les boutons
-    //     } else {
-    //         return (
-    //             <div>
-    //                 <button type={"button"} onClick={BuyTree}>{"Buy for "}{price}{" leaves"}</button>
-    //                 <button type={"button"} onClick={LockTree}>{"Lock for "}{priceLock}{" leaves"}</button>
-    //             </div>
-    //         )
-    //     }
-    //   }
+    const SwitchDisplay = () => {
+        if (isLocked) {
+            return (<p>{"Locked"}</p>)
+            // si l'arbre est lock, ne pas afficher les boutons
+        } 
+        // else if (user.score <= 0) {
+        //     return (<p>{"You don't have enough leaves !"}</p>)
+        //     // si pas assez d'argent, ne pas afficher les boutons
+        // } else if (user.id === userSession) {
+        //     return (<p>{"This tree is already yours"}</p>)
+        //     // si l'arbre est à l'utlisateur connecté, ne pas afficher les boutons
+        // } 
+        else {
+            return (
+                <div className={"popup__button-container"}>
+                    <button className={"popup__button-container__buy"} type={"button"} onClick={BuyTree}>
+                        {"Buy for "}
+                        {price}
+                        {" leaves"}
+                    </button>
+                    <button className={"popup__button-container__lock"} type={"button"} onClick={LockTree}>
+                        {"Lock for "}
+                        {priceLock}
+                        {" leaves"}
+                    </button>
+                </div>
+            )
+        }
+      }
 
     return (
         <Popup onOpen={handlePopupOpen}>
@@ -144,8 +154,8 @@ const MyPopup = ({treeId}) => {
                         {"Comment : "}
                         <span>{comment}</span>
                     </div>
-                    {/* <SwitchDisplay /> */}
-                    {isLocked ? (
+                    <SwitchDisplay />
+                    {/* {isLocked ? (
                         <p className={"popup__locked"}>{"Locked"}</p>
                     ) : (
                         <div className={"popup__button-container"}>
@@ -160,7 +170,7 @@ const MyPopup = ({treeId}) => {
                                 {" leaves"}
                             </button>
                         </div>
-                    )}
+                    )} */}
                 </div>
             )}
             
