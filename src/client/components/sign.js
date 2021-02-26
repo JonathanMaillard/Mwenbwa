@@ -78,7 +78,7 @@ const Sign = ({"signUp": signUp, "signIn": signIn}) => (
 
             <div className={"sign-in"}>
                 <img className={"sign-in__img"} src={SignSVG} alt={"Sign up"} />
-                <form className={"sign-in__form"}>
+                <div className={"sign-in__form"}>
                     <div className={"sign-in__form__name"}>
                         <label htmlFor={"userInfoIn"} className={"label"}>
                             {"Username:"}
@@ -87,20 +87,19 @@ const Sign = ({"signUp": signUp, "signIn": signIn}) => (
                     </div>
 
                     <div className={"sign-in__form__pwd"}>
-                        <label htmlFor={"userpwdIn"} className={"label"}>
+                        <label htmlFor={"userPwdIn"} className={"label"}>
                             {"Password:"}
                         </label>
-                        <input type={"password"} name={"userpwdIn"} id={"userpwdIn"} />
+                        <input type={"password"} name={"userPwdIn"} id={"userPwdIn"} />
                     </div>
 
                     <button
                         className={"sign-in__form__btn"}
                         id={"signInSubmit"}
-                        type={"submit"}
                         value={"Sign In"}
                         onClick={signIn}
                     >{"Sign In"}</button>
-                </form>
+                </div>
             </div>
         </div>
     </div>

@@ -19,7 +19,6 @@ function showGamelogModal() {
             console.log("sad because :", e);
         });
 }
-
 function showLeaderboardModal() {
     document.querySelector("#leaderboard").classList.add("show-modal");
     axios

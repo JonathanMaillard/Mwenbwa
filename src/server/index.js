@@ -70,13 +70,14 @@ app.post("/login", jsonParser, async (req, res) => {
     const pwd = req.body.userPwd;
     try {
         const request = await dbGetUserFromInfo(userInfo);
+        console.log(request);
         if (request) {
-            bcrypt.compare(pwd, request, (err, result) => {
+            bcrypt.compare(pwd, request[0].password, (err, result) => {
                 res.status(result ? 200 : 400).send(
                     result
                         ? {
                               msg: "correct",
-                              content: request,
+                              content: request[0],
                           }
                         : {
                               msg: "invalidPwd",

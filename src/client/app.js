@@ -26,7 +26,6 @@ const defaultUser = {
     "userId": undefined,
     "username": "guest",
     "userEmail": "mail@example.com",
-    // "userPic": "",
     "userColor": "#F94144",
     "userScore": 3,
 }
@@ -42,7 +41,6 @@ cookieSessionId && axios
             "username": result.content.username,
             "userEmail": result.content.email,
             "userColor": result.content.color,
-            // "userPic": result.content.pic,
             "userScore": result.content.score,
             "userTrees": result.content.trees,
         })
@@ -54,7 +52,6 @@ const App = () => {
         "userId": 0,
         "username": "guest",
         "userEmail": "",
-        // "userPic": "",
         "userColor": "#F94144",
         "userScore": 0,
         "userTrees": [],
@@ -71,16 +68,14 @@ const App = () => {
             })
             .then(result => {
                 console.log(result);
-                document.cookie = `userId=${result.userId}; expires=${new Date(new Date().getTime()+1000*60*60*24*3).toGMTString()}`;
+                document.cookie = `userId=${result.data.content._id}; expires=${new Date(new Date().getTime()+1000*60*60*24*3).toGMTString()}`;
                 setSession({
-                    "userId": result.userId,
-                    "username": result.username,
-                    "userEmail": result.email,
-                    "userPic": result.username,
-                    "userColor": result.color,
-                    // "userPic": result.pic,
-                    "userScore": result.score,
-                    "userTrees": result.trees,
+                    "userId": result.data.content._id,
+                    "username": result.data.content.username,
+                    "userEmail": result.data.content.email,
+                    "userColor": result.data.content.color,
+                    "userScore": result.data.content.score,
+                    "userTrees": result.data.content.trees || [],
                 });
                 hideSignForm();
             })
@@ -111,20 +106,20 @@ const App = () => {
                 "userPwd": userPwd,
             })
             .then(result => {
-                document.cookie = `userId=${result.content.userId}; expires=${new Date(new Date().getTime()+1000*60*60*24*3).toGMTString()}`;
+                console.log(result);
+                document.cookie = `userId=${result.data.content._id}; expires=${new Date(new Date().getTime()+1000*60*60*24*3).toGMTString()}`;
                 setSession({
-                    "userId": result.content.userId,
-                    "username": result.content.username,
-                    "userEmail": result.content.email,
-                    "userPic": result.content.username,
-                    "userColor": result.content.color,
-                    // "userPic": result.content.pic,
-                    "userScore": result.content.score,
-                    "userTrees": result.content.trees,
+                    "userId": result.data.content._id,
+                    "username": result.data.content.username,
+                    "userEmail": result.data.content.email,
+                    "userColor": result.data.content.color,
+                    "userScore": result.data.content.score,
+                    "userTrees": result.data.content.trees || [],
                 });
                 hideSignForm();
             })
             .catch(error => {
+                console.log("HELP HELP HELP", error);
                 let displayMessage;
                 switch(error.msg) {
                     case "invalidPwd":
