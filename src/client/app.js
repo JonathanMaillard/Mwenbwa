@@ -26,10 +26,11 @@ const App = () => {
     const [session, setSession] = useState({
         "userId": -1,
         "username": "guest",
-        "userEmail": "",
+        "userEmail": "guest@BertrandleBG.com",
         // "userPic": "",
         "userColor": "#F94144",
         "userScore": 0,
+        "userTrees": [],
     })
     const signUp = () => {
         const username = document.querySelector("#usernameUp");
@@ -47,10 +48,10 @@ const App = () => {
                     "userId": result.content.userId,
                     "username": result.content.username,
                     "userEmail": result.content.email,
-                    "userPic": result.content.username,
                     "userColor": result.content.color,
                     // "userPic": result.content.pic,
                     "userScore": result.content.score,
+                    "userTrees": result.content.trees,
                 });
                 hideSignForm();
             })
@@ -100,6 +101,15 @@ const App = () => {
                 //INTEGRER L'ERREUR DANS LE DOM
             })
     }
+
+    function changeNameValidation() {
+        axios.post("/changeUsername", {userId:session.userId, username:document.querySelector("#usernameInput").value}).then( result => {
+            document.querySelector(".dashInput").disabled = true;
+            document.querySelector(".dashInput").classList.remove("inputNameBorder");
+            document.querySelector(".dashInputBtn").classList.remove("dashInputBtnClick");
+            document.querySelector(".dashInput").placeholder = (result.username);
+        })
+    }
     return (
         <div id={"container"}>
             <div id={"mapid"}>
@@ -117,9 +127,7 @@ const App = () => {
             <Sign signUp={signUp} signIn={signIn} />
             <Rules />
             <Disconnect />
-            
-
-            <Dashboard />
+            <Dashboard user={session} changeNameValidation={changeNameValidation}/>
         </div>
     );
 };

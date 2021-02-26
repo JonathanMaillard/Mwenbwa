@@ -1,9 +1,14 @@
 import React, {useState} from "react";
 import {Popup} from "react-leaflet";
+import OwnerSVG from "../../ressources/images/owner.svg";
+import InfoSVG from "../../ressources/images/info.svg";
+import CommentSVG from "../../ressources/images/comment.svg";
+import LoadSVG from "../../ressources/trees-svg/svg/033-larch.svg";
 
 const axios = require("axios");
 
 const MyPopup = ({treeId}) => {
+    const [dataLoaded, setDataLoaded] = useState(false);
     const [name, setName] = useState("");
     const [owner, setOwner] = useState("No one owns this tree yet !");
     const [price, setPrice] = useState(0);
@@ -16,8 +21,7 @@ const MyPopup = ({treeId}) => {
         axios
             .get(`/tree/${treeId}`)
             .then(response => {
-                //whatever you want to do with datas
-
+                setDataLoaded(true);
                 response.data.map(data => {
                     setName(data.nom_complet);
 
@@ -106,37 +110,60 @@ const MyPopup = ({treeId}) => {
 
     return (
         <Popup onOpen={handlePopupOpen}>
-            <div className={"popup"}>
-                <h3 className={"popup__name"}>{name}</h3>
-                <p className={"popup__owner"}>
-                    {"Owner : "}
-                    <span>{owner}</span>
-                </p>
-                <a href={wiki} target={"_blank"} rel={"noreferrer"}>
-                    {"More info on this tree's species"}
-                </a>
-                <p>
-                    {"Comment : "}
-                    <span>{comment}</span>
-                </p>
-                {/* <SwitchDisplay /> */}
-                {isLocked ? (
-                    <p>{"Locked"}</p>
-                ) : (
-                    <div>
-                        <button type={"button"} onClick={BuyTree}>
-                            {"Buy for "}
-                            {price}
-                            {" leaves"}
-                        </button>
-                        <button type={"button"} onClick={LockTree}>
-                            {"Lock for "}
-                            {priceLock}
-                            {" leaves"}
-                        </button>
+
+            {!dataLoaded ? (
+                <div className={"loader-animation"}>
+                    <img src={LoadSVG}/>
+                </div>
+            ) : (
+                <div className={"popup"}>
+                    <h3 className={"popup__name"}>{name}</h3>
+                    <div className={"popup__owner"}>
+                        <img
+                            src={OwnerSVG}
+                            alt={"owner"}
+                            className={"popup__owner__img"}
+                        />
+                        {"Owner : "}
+                        <span>{owner}</span>
                     </div>
-                )}
-            </div>
+                    <a className={"popup__link"} href={wiki} target={"_blank"} rel={"noreferrer"}>
+                        <img
+                            src={InfoSVG}
+                            alt={"information"}
+                            className={"popup__link__img"}
+                        />
+                        {"More info on this tree's species"}
+                    </a>
+                    <div className={"popup__comment"}>
+                        <img
+                            src={CommentSVG}
+                            alt={"comment"}
+                            className={"popup__comment__img"}
+                        />
+                        {"Comment : "}
+                        <span>{comment}</span>
+                    </div>
+                    {/* <SwitchDisplay /> */}
+                    {isLocked ? (
+                        <p className={"popup__locked"}>{"Locked"}</p>
+                    ) : (
+                        <div className={"popup__button-container"}>
+                            <button className={"popup__button-container__buy"} type={"button"} onClick={BuyTree}>
+                                {"Buy for "}
+                                {price}
+                                {" leaves"}
+                            </button>
+                            <button className={"popup__button-container__lock"} type={"button"} onClick={LockTree}>
+                                {"Lock for "}
+                                {priceLock}
+                                {" leaves"}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            )}
+            
         </Popup>
     );
 };
