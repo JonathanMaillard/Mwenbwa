@@ -63,7 +63,7 @@ const MyPopup = ({treeId}) => {
                 treePrice: price,
             })
             .then(response => {
-                setOwner(user.username);
+                setOwner(response.data.username);
                 console.log(response);
             })
             .catch(e => {
@@ -79,7 +79,7 @@ const MyPopup = ({treeId}) => {
                 treeLockPrice: priceLock,
             })
             .then(response => {
-                setOwner("user.username");
+                setOwner(response.data.username);
                 setIsLocked(true);
                 console.log(response, "je sais pas");
             })
@@ -90,7 +90,7 @@ const MyPopup = ({treeId}) => {
 
     const SwitchDisplay = () => {
         if (isLocked) {
-            return (<p>{"Locked"}</p>)
+            return (<p className={"popup__locked"}>{"Tis tree is locked"}</p>)
             // si l'arbre est lock, ne pas afficher les boutons
         } 
         // else if (user.score <= 0) {
