@@ -23,24 +23,24 @@ const MyPopup = ({treeId}) => {
 
                     if (data.owner) {
                         setOwner(data.owner);
-                    };
+                    }
 
-                    let circonf = data.circonf;
-                    let height = data.hauteur_totale;
-                    let treePrice = Math.ceil(circonf * height);
+                    const circonf = data.circonf;
+                    const height = data.hauteur_totale;
+                    const treePrice = Math.ceil(circonf * height);
                     setPrice(treePrice);
-                    setPriceLock(treePrice*10);
+                    setPriceLock(treePrice * 10);
 
                     if (data.comment) {
                         setComment(data.comment);
-                    };
+                    }
 
                     if (data.locked) {
                         setIsLocked(true);
-                    };
+                    }
 
-                    let treeNameArray = data.nom_complet.split(" ");
-                    let treeName = treeNameArray.join("_");
+                    const treeNameArray = data.nom_complet.split(" ");
+                    const treeName = treeNameArray.join("_");
                     setWiki(`https://en.wikipedia.org/wiki/${treeName}`);
 
                     return "done";
@@ -54,51 +54,87 @@ const MyPopup = ({treeId}) => {
     const BuyTree = () => {
         axios
             .post(`/buyTree`, {
-                "userId": "6037b898fe778c8f96f2eb36",
-                "treeId": treeId,
-                "treePrice": price,
+                userId: "6037b898fe778c8f96f2eb36",
+                treeId,
+                treePrice: price,
             })
             .then(response => {
                 setOwner("user.username");
+                console.log(response);
             })
             .catch(e => {
                 console.log("sad because :", e);
             });
-    }
+    };
 
     const LockTree = () => {
         axios
             .post(`/lockTree`, {
-                "userId": "6037b898fe778c8f96f2eb36",
-                "treeId": treeId,
-                "treeLockPrice": priceLock,
+                userId: "6037b898fe778c8f96f2eb36",
+                treeId,
+                treeLockPrice: priceLock,
             })
             .then(response => {
                 setOwner("user.username");
                 setIsLocked(true);
-                console.log(response, "je sais pas")
+                console.log(response, "je sais pas");
             })
             .catch(e => {
                 console.log("sad because :", e);
             });
-    }
+    };
+
+    // const SwitchDisplay = () => {
+    //     if (isLocked) {
+    //         return (<p>{"Locked"}</p>)
+    //         // si l'arbre est lock, ne pas afficher les boutons
+    //     } else if (user.score <= 0) {
+    //         return (<p>{"You don't have enough leaves !"}</p>)
+    //         // si pas assez d'argent, ne pas afficher les boutons
+    //     } else if (user.id === userSession) {
+    //         return (<p>{"This tree is already yours"}</p>)
+    //         // si l'arbre est à l'utlisateur connecté, ne pas afficher les boutons
+    //     } else {
+    //         return (
+    //             <div>
+    //                 <button type={"button"} onClick={BuyTree}>{"Buy for "}{price}{" leaves"}</button>
+    //                 <button type={"button"} onClick={LockTree}>{"Lock for "}{priceLock}{" leaves"}</button>
+    //             </div>
+    //         )
+    //     }
+    //   }
 
     return (
         <Popup onOpen={handlePopupOpen}>
             <div className={"popup"}>
                 <h3>{name}</h3>
-                <p>{"Owner : "}<span>{owner}</span></p>
-                <a href={wiki} target={"_blank"} rel={"noreferrer"}>{"More info on this tree's species"}</a>
-                <p>{"Comment : "}<span>{comment}</span></p>
-
-                {/* FAIRE UN SWITCH POUR TOUS LES CAS POSSIBLES (ARBRE LOCK, PAS ASSEZ D'ARGENT, OU ARBRE DÉJÀ À NOUS, OU AUCUN DES CAS DONC AFFICHER LES BOUTONS) */}
+                <p>
+                    {"Owner : "}
+                    <span>{owner}</span>
+                </p>
+                <a href={wiki} target={"_blank"} rel={"noreferrer"}>
+                    {"More info on this tree's species"}
+                </a>
+                <p>
+                    {"Comment : "}
+                    <span>{comment}</span>
+                </p>
+                {/* <SwitchDisplay /> */}
                 {isLocked ? (
                     <p>{"Locked"}</p>
                 ) : (
-                    <>
-                    <button type={"button"} onClick={BuyTree}>{"Buy for "}{price}{" leaves"}</button>
-                    <button type={"button"} onClick={LockTree}>{"Lock for "}{priceLock}{" leaves"}</button>
-                    </>
+                    <div>
+                        <button type={"button"} onClick={BuyTree}>
+                            {"Buy for "}
+                            {price}
+                            {" leaves"}
+                        </button>
+                        <button type={"button"} onClick={LockTree}>
+                            {"Lock for "}
+                            {priceLock}
+                            {" leaves"}
+                        </button>
+                    </div>
                 )}
             </div>
         </Popup>
