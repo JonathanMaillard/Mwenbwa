@@ -107,8 +107,8 @@ const MyPopup = ({treeId}) => {
     return (
         <Popup onOpen={handlePopupOpen}>
             <div className={"popup"}>
-                <h3>{name}</h3>
-                <p>
+                <h3 className={"popup__name"}>{name}</h3>
+                <p className={"popup__owner"}>
                     {"Owner : "}
                     <span>{owner}</span>
                 </p>
