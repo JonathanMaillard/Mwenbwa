@@ -377,6 +377,7 @@ const dbBuyTree = (tree, userId, treePrice) => {
                 `${resultPlayer.matchedCount} document(s) matched the filter, updated ${resultPlayer.modifiedCount} document(s)`,
             );
 
+            /*
             //Add a log of the action
             const collectionLog = database.collection("logs");
 
@@ -390,6 +391,7 @@ const dbBuyTree = (tree, userId, treePrice) => {
             console.log(
                 `${resultLog.matchedCount} document(s) matched the filter, updated ${resultLog.modifiedCount} document(s)`,
             );
+            */
 
             //const playerName = await collectionPlayer.find({_id: user});
             //const playerInfo = await playerName.toArray();
