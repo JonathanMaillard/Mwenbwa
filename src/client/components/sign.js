@@ -23,7 +23,7 @@ const Sign = ({"signUp": signUp, "signIn": signIn}) => (
 
             <div className={"sign-up sign-active"}>
                 <img className={"sign-up__img"} src={SignSVG} alt={"Sign up"} />
-                <form className={"sign-up__form"}>
+                <div className={"sign-up__form"}>
                     {/* <label htmlFor={"userimg"} className={"sign-up__form__img"}>
                         {"Profile picture:"}
                         <div className={"preview"}>
@@ -50,14 +50,14 @@ const Sign = ({"signUp": signUp, "signIn": signIn}) => (
                         <label htmlFor={"useremailUp"} className={"label"}>
                             {"Email adress:"}
                         </label>
-                        <input type={"email"} name={"useremailUp"} id={"useremailUp"} />
+                        <input type={"email"} name={"useremailUp"} id={"userEmailUp"} />
                     </div>
 
                     <div className={"sign-up__form__pwd"}>
                         <label htmlFor={"userpwdUp"} className={"label"}>
                             {"Password:"}
                         </label>
-                        <input type={"password"} name={"userpwdUp"} id={"userpwdUp"} />
+                        <input type={"password"} name={"userpwdUp"} id={"userPwdUp"} />
                     </div>
 
                     <div className={"sign-up__form__color"}>
@@ -67,14 +67,13 @@ const Sign = ({"signUp": signUp, "signIn": signIn}) => (
                         
                     </div>
 
-                    <input
+                    <button
                         className={"sign-up__form__btn"}
                         id={"signUpSubmit"}
-                        type={"submit"}
                         value={"Sign Up"}
                         onClick={signUp}
-                    />
-                </form>
+                    >{"Sign up"}</button>
+                </div>
             </div>
 
             <div className={"sign-in"}>
@@ -94,13 +93,13 @@ const Sign = ({"signUp": signUp, "signIn": signIn}) => (
                         <input type={"password"} name={"userpwdIn"} id={"userpwdIn"} />
                     </div>
 
-                    <input
+                    <button
                         className={"sign-in__form__btn"}
                         id={"signInSubmit"}
                         type={"submit"}
                         value={"Sign In"}
                         onClick={signIn}
-                    />
+                    >{"Sign In"}</button>
                 </form>
             </div>
         </div>

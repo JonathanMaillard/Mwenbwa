@@ -103,13 +103,16 @@ app.post("/register", jsonParser, (req, res) => {
     const userEmail = req.body.userEmail;
     const userPwd = req.body.userPwd;
     const userColor = req.body.userColor || "#F94144";
+    console.log("register", username, userEmail, userPwd, userColor);
     let request;
     bcrypt.genSalt(saltRounds, (err, salt) => {
         bcrypt.hash(userPwd, salt, async (error, hash) => {
+            console.log(error, hash);
             request = await dbRegister(username, hash, userEmail, userColor);
+            console.log(request);
+            res.status(200).send(request.ops[0]);
         });
     });
-    res.status(200).send(request);
 });
 
 app.post("/addLog", jsonParser, (req, res) => {

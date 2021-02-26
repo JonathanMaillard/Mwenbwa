@@ -35,7 +35,7 @@ const cookieSessionId =
     ? document.cookie.split(";").find(x => x.trim().startsWith("userId")).split("=")[1].trim()
     : undefined;
 cookieSessionId && axios
-    .get(`getUser/${cookieSessionId}`)
+    .get(`/getUser/${cookieSessionId}`)
     .then((result) => {
         setSession({
             "userId": result.content.userId,
@@ -60,9 +60,9 @@ const App = () => {
         "userTrees": [],
     })
     const signUp = () => {
-        const username = document.querySelector("#usernameUp");
-        const userEmail = document.querySelector("#userEmailUp");
-        const userPwd = document.querySelector("#userPwdUp");
+        const username = document.querySelector("#usernameUp").value;
+        const userEmail = document.querySelector("#userEmailUp").value;
+        const userPwd = document.querySelector("#userPwdUp").value;
         axios
             .post("/register", {
                 "username": username,
@@ -70,20 +70,22 @@ const App = () => {
                 "userPwd": userPwd,
             })
             .then(result => {
-                document.cookie = `userId=${result.content.userId}; expires=${new Date(new Date().getTime()+1000*60*60*24*3).toGMTString()}`;
+                console.log(result);
+                document.cookie = `userId=${result.userId}; expires=${new Date(new Date().getTime()+1000*60*60*24*3).toGMTString()}`;
                 setSession({
-                    "userId": result.content.userId,
-                    "username": result.content.username,
-                    "userEmail": result.content.email,
-                    "userPic": result.content.username,
-                    "userColor": result.content.color,
-                    // "userPic": result.content.pic,
-                    "userScore": result.content.score,
-                    "userTrees": result.content.trees,
+                    "userId": result.userId,
+                    "username": result.username,
+                    "userEmail": result.email,
+                    "userPic": result.username,
+                    "userColor": result.color,
+                    // "userPic": result.pic,
+                    "userScore": result.score,
+                    "userTrees": result.trees,
                 });
                 hideSignForm();
             })
             .catch(error => {
+                console.log(error);
                 let displayMessage;
                 switch(error.msg) {
                     case "invalidPwd":
@@ -101,8 +103,8 @@ const App = () => {
             });
     }
     const signIn = () => {
-        const userInfo = document.querySelector("#userInfoIn");
-        const userPwd = document.querySelector("#userPwdIn");
+        const userInfo = document.querySelector("#userInfoIn").value;
+        const userPwd = document.querySelector("#userPwdIn").value;
         axios
             .post("/login", {
                 "userInfo": userInfo,
@@ -162,7 +164,6 @@ const App = () => {
             <Sign signUp={signUp} signIn={signIn} />
             <Rules />
             <Disconnect logout={logout} />
-            <Gamelog />
 
             <Dashboard />
         </div>
