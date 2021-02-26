@@ -148,7 +148,6 @@ body {
     width: 102px;
     min-width: 102px;
     border: 2px solid #0b242b;
-    background-color: #3e6974;
     border-radius: 100%;
   }
 
@@ -842,7 +841,6 @@ body {
   }
 }
 .dash__Photo {
-  background-color: blueviolet;
   width: 12rem;
   height: 12rem;
   border-radius: 100%;
@@ -914,6 +912,19 @@ body {
   width: 100%!important;
 }
 
+.dash__Input__File {
+  display: none;
+}
+
+.label-file {
+  cursor: pointer;
+  color: #164247;
+  font-weight: bold;
+}
+.label-file:hover {
+  color: #25a5c4;
+}
+
 @media only screen and (max-width: 768px) {
   .dash__BoxContenu {
     flex-direction: column;
@@ -972,14 +983,75 @@ body {
   pointer-events: all;
 }
 
-.leaflet-marker-pane > div {
+@mixin tree__marker($color:rgba(128, 255, 0, 0.664)) {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 100%;
-  background-color: rgba(128, 255, 0, 0.664);
+  background-color: $color;
   font-weight: 800;
 }
+
+.leaflet-marker-pane > div {
+  @include tree__marker();
+}
+
+.theme1 .leaflet-marker-pane > div {
+  @include tree__marker(#f94144bd);
+}
+
+.theme2 .leaflet-marker-pane > div {
+  @include tree__marker(#f3722cc9);
+}
+
+.theme3 .leaflet-marker-pane > div {
+  @include tree__marker(#f8961ec2);
+}
+
+.theme4 .leaflet-marker-pane > div {
+  @include tree__marker(#f9844abb);
+}
+
+.theme5 .leaflet-marker-pane > div {
+  @include tree__marker(#f9c64fb7);
+}
+
+.theme6 .leaflet-marker-pane > div {
+  @include tree__marker(#90be6dbd);
+}
+
+.theme7 .leaflet-marker-pane > div {
+  @include tree__marker(#43aa8bbd);
+}
+
+.theme8 .leaflet-marker-pane > div {
+  @include tree__marker(#4d908eb9);
+}
+
+.theme9 .leaflet-marker-pane > div {
+  @include tree__marker(#577590b7);
+}
+
+.theme10 .leaflet-marker-pane > div {
+  @include tree__marker(#277ca1b4);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .leaflet-interactive {
   stroke-opacity: 0;

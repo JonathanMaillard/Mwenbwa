@@ -110,6 +110,8 @@ const App = () => {
             document.querySelector(".dashInput").placeholder = (result.username);
         })
     }
+
+
     return (
         <div id={"container"}>
             <div id={"mapid"}>
@@ -147,3 +149,20 @@ axios
     .catch(e => {
         console.log("sad because :", e);
     });
+
+    const cookieColor = 
+    document.cookie && document.cookie.split(";").find(x => x.trim().startsWith("color"))
+    ? document.cookie.split(";").find(x => x.trim().startsWith("color")).split("=")[1].trim()
+    : undefined;
+    document.querySelector("body").className= cookieColor ? cookieColor : "";
+    console.log(document.cookie);
+
+const colorButtons = [...document.querySelectorAll(".circle-picker>span")];
+colorButtons.forEach((button,i) => {
+    button.addEventListener("click", () => {
+        console.log(document.cookie); 
+        document.querySelector("body").className=`theme${i-9}`;
+        document.cookie = `color=theme${i-9}; expires=${new Date(new Date().getTime()+1000*60*60*24*3).toGMTString()}`;
+    })
+})
+
