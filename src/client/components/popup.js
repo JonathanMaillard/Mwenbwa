@@ -57,7 +57,7 @@ const MyPopup = ({treeId}) => {
 
     const handlePopupClose = () => {
         setDataLoaded(false);
-    }
+    };
 
     const BuyTree = () => {
         axios
@@ -92,42 +92,11 @@ const MyPopup = ({treeId}) => {
             });
     };
 
-    const SwitchDisplay = () => {
-        if (isLocked) {
-            return (<p className={"popup__locked"}>{"Tis tree is locked"}</p>)
-            // si l'arbre est lock, ne pas afficher les boutons
-        } 
-        // else if (user.score <= 0) {
-        //     return (<p>{"You don't have enough leaves !"}</p>)
-        //     // si pas assez d'argent, ne pas afficher les boutons
-        // } else if (user.id === userSession) {
-        //     return (<p>{"This tree is already yours"}</p>)
-        //     // si l'arbre est à l'utlisateur connecté, ne pas afficher les boutons
-        // } 
-        else {
-            return (
-                <div className={"popup__button-container"}>
-                    <button className={"popup__button-container__buy"} type={"button"} onClick={BuyTree}>
-                        {"Buy for "}
-                        {price}
-                        {" leaves"}
-                    </button>
-                    <button className={"popup__button-container__lock"} type={"button"} onClick={LockTree}>
-                        {"Lock for "}
-                        {priceLock}
-                        {" leaves"}
-                    </button>
-                </div>
-            )
-        }
-      }
-
     return (
         <Popup onOpen={handlePopupOpen} onClose={handlePopupClose}>
-
             {!dataLoaded ? (
                 <div className={"loader-animation"}>
-                    <img src={LoadSVG}/>
+                    <img src={LoadSVG} />
                 </div>
             ) : (
                 <div className={"popup"}>
@@ -141,7 +110,11 @@ const MyPopup = ({treeId}) => {
                         {"Owner : "}
                         <span>{owner}</span>
                     </div>
-                    <a className={"popup__link"} href={wiki} target={"_blank"} rel={"noreferrer"}>
+                    <a
+                        className={"popup__link"}
+                        href={wiki}
+                        target={"_blank"}
+                        rel={"noreferrer"}>
                         <img
                             src={InfoSVG}
                             alt={"information"}
@@ -158,26 +131,47 @@ const MyPopup = ({treeId}) => {
                         {"Comment : "}
                         <span>{comment}</span>
                     </div>
-                    {SwitchDisplay}
-                    {/* {isLocked ? (
-                        <p className={"popup__locked"}>{"Locked"}</p>
-                    ) : (
-                        <div className={"popup__button-container"}>
-                            <button className={"popup__button-container__buy"} type={"button"} onClick={BuyTree}>
-                                {"Buy for "}
-                                {price}
-                                {" leaves"}
-                            </button>
-                            <button className={"popup__button-container__lock"} type={"button"} onClick={LockTree}>
-                                {"Lock for "}
-                                {priceLock}
-                                {" leaves"}
-                            </button>
-                        </div>
-                    )} */}
+                    {/* <SwitchDisplay /> */}
+
+                    {(() => {
+                        if (isLocked) {
+                            return (
+                                <p className={"popup__locked"}>
+                                    {"Tis tree is locked"}
+                                </p>
+                            );
+                        }
+                        // else if (user.score <= 0) {
+                        //     return (<p>{"You don't have enough leaves !"}</p>)
+                        //     // si pas assez d'argent, ne pas afficher les boutons
+                        // } else if (user.id === userSession) {
+                        //     return (<p>{"This tree is already yours"}</p>)
+                        //     // si l'arbre est à l'utlisateur connecté, ne pas afficher les boutons
+                        // }
+
+                        return (
+                            <div className={"popup__button-container"}>
+                                <button
+                                    className={"popup__button-container__buy"}
+                                    type={"button"}
+                                    onClick={BuyTree}>
+                                    {"Buy for "}
+                                    {price}
+                                    {" leaves"}
+                                </button>
+                                <button
+                                    className={"popup__button-container__lock"}
+                                    type={"button"}
+                                    onClick={LockTree}>
+                                    {"Lock for "}
+                                    {priceLock}
+                                    {" leaves"}
+                                </button>
+                            </div>
+                        );
+                    })()}
                 </div>
             )}
-            
         </Popup>
     );
 };
