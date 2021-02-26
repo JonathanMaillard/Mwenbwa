@@ -55,15 +55,19 @@ const MyPopup = ({treeId}) => {
             });
     };
 
+    const handlePopupClose = () => {
+        setDataLoaded(false);
+    }
+
     const BuyTree = () => {
         axios
             .post(`/buyTree`, {
-                userId: "6037b898fe778c8f96f2eb36",
+                userId: "6037b898fe778c8f96f2eb36", //user.id venant des cookies
                 treeId,
                 treePrice: price,
             })
             .then(response => {
-                setOwner(response.data.username);
+                setOwner("username du cookiiiiie session");
                 console.log(response);
             })
             .catch(e => {
@@ -74,14 +78,14 @@ const MyPopup = ({treeId}) => {
     const LockTree = () => {
         axios
             .post(`/lockTree`, {
-                userId: "6037b898fe778c8f96f2eb36",
+                userId: "6037b898fe778c8f96f2eb36", //user.id venant des cookies
                 treeId,
                 treeLockPrice: priceLock,
             })
             .then(response => {
-                setOwner(response.data.username);
+                setOwner("username du cookiiiiie session");
                 setIsLocked(true);
-                console.log(response, "je sais pas");
+                console.log(response);
             })
             .catch(e => {
                 console.log("sad because :", e);
@@ -119,7 +123,7 @@ const MyPopup = ({treeId}) => {
       }
 
     return (
-        <Popup onOpen={handlePopupOpen}>
+        <Popup onOpen={handlePopupOpen} onClose={handlePopupClose}>
 
             {!dataLoaded ? (
                 <div className={"loader-animation"}>
@@ -154,7 +158,7 @@ const MyPopup = ({treeId}) => {
                         {"Comment : "}
                         <span>{comment}</span>
                     </div>
-                    <SwitchDisplay />
+                    {SwitchDisplay}
                     {/* {isLocked ? (
                         <p className={"popup__locked"}>{"Locked"}</p>
                     ) : (
