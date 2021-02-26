@@ -6,7 +6,7 @@ import {
     toggleProfile,
 } from "../display/show-modal";
 
-const Profile = () => (
+const Profile = ({user}) => (
     <div className={"containerProfile"}>
         <button
             type={"button"}
@@ -23,7 +23,7 @@ const Profile = () => (
 
             <div className={"boxProfile__Info"}>
                 <div className={"boxProfile__Info--name"}>
-                    {"La Babase (El Crackito)"}
+                    {user.username}
                 </div>
                 <div className={"boxProfile__Info--button"}>
                     <button type={"button"} onClick={showDashboardModal}>
@@ -41,11 +41,11 @@ const Profile = () => (
             <div className={"boxProfile__score"}>
                 <div className={"boxProfile__score--leaves"}>
                     <i className={"fas fa-leaf"} />
-                    {"5000 leaves"}
+                    {user.userScore + " leaves"}
                 </div>
                 <div className={"boxProfile__score--trees"}>
                     <i className={"fas fa-tree"} />
-                    {"432 trees"}
+                    {user.userTrees.length + " trees"}
                 </div>
             </div>
         </div>

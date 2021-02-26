@@ -1,6 +1,7 @@
 import * as React from "react";
 import SignSVG from "../../ressources/images/undraw_nature.svg";
 import {showSignIn, showSignUp} from "../display/show-sign-form";
+import CircleColor from ".././components/color-theme";
 import axios from "axios";
 
 const Sign = ({"signUp": signUp, "signIn": signIn}) => (
