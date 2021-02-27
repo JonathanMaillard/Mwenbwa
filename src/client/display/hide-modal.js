@@ -11,7 +11,7 @@ function hideDisconnectModal() {
     document.querySelector(".disconnect").classList.remove("show-modal");
 }
 function hideDashboardModal() {
-    document.querySelector(".dashContainer").classList.remove("show-modal");
+    document.querySelector("#dashboard").classList.remove("show-modal");
 }
 
 function hideProfile() {

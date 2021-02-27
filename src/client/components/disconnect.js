@@ -1,6 +1,7 @@
 import * as React from "react";
 import DisconnectSvg from "../../ressources/images/undraw_through_the_park.svg";
 import CloseSvg from "../../ressources/images/cancel.svg";
+import {hideDisconnectModal} from "../display/hide-modal";
 
 const Disconnect = ({logout}) => (
     <div className={"disconnect"}>
@@ -22,10 +23,10 @@ const Disconnect = ({logout}) => (
                 </div>
             </div>
             <div className={"disconnect__btns"}>
-                <button type={"button"} className={"disconnect__btns__button"}>
+                <button type={"button"} className={"disconnect__btns__button"} onClick={logout}>
                     {"Disconnect"}
                 </button>
-                <button type={"button"} className={"disconnect__btns__button"}>
+                <button type={"button"} className={"disconnect__btns__button"} onClick={hideDisconnectModal}>
                     {"Go back"}
                 </button>
             </div>
@@ -34,7 +35,7 @@ const Disconnect = ({logout}) => (
                 className={"close-btn"}
                 src={CloseSvg}
                 alt={"Close"}
-                onClick={logout}
+                onClick={hideDisconnectModal}
             />
         </div>
     </div>

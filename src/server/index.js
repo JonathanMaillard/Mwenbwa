@@ -53,6 +53,7 @@ app.get("/tree/:treeid", async (req, res) => {
 app.get("/user/:userid", async (req, res) => {
     const userId = req.params.userid;
     const request = await dbGetUser(userId);
+    console.log(request);
     res.send(request);
 });
 app.get("/leaderboard", async (req, res) => {

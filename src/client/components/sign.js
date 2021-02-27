@@ -1,10 +1,9 @@
 import * as React from "react";
 import SignSVG from "../../ressources/images/undraw_nature.svg";
 import {showSignIn, showSignUp} from "../display/show-sign-form";
-import axios from "axios";
 
-const Sign = ({"signUp": signUp, "signIn": signIn}) => (
-    <div className={"sign show-modal"}>
+const Sign = ({signUp, signIn, state}) => (
+    <div className={state}>
         <div className={"sign__content"}>
             <div className={"sign__content__title"}>
                 <button
@@ -43,36 +42,49 @@ const Sign = ({"signUp": signUp, "signIn": signIn}) => (
                         <label htmlFor={"usernameUp"} className={"label"}>
                             {"Username:"}
                         </label>
-                        <input type={"text"} name={"usernameUp"} id={"usernameUp"} />
+                        <input
+                            type={"text"}
+                            name={"usernameUp"}
+                            id={"usernameUp"}
+                        />
                     </div>
 
                     <div className={"sign-up__form__email"}>
                         <label htmlFor={"useremailUp"} className={"label"}>
                             {"Email adress:"}
                         </label>
-                        <input type={"email"} name={"useremailUp"} id={"userEmailUp"} />
+                        <input
+                            type={"email"}
+                            name={"useremailUp"}
+                            id={"userEmailUp"}
+                        />
                     </div>
 
                     <div className={"sign-up__form__pwd"}>
                         <label htmlFor={"userpwdUp"} className={"label"}>
                             {"Password:"}
                         </label>
-                        <input type={"password"} name={"userpwdUp"} id={"userPwdUp"} />
+                        <input
+                            type={"password"}
+                            name={"userpwdUp"}
+                            id={"userPwdUp"}
+                        />
                     </div>
 
                     <div className={"sign-up__form__color"}>
                         <label htmlFor={"colortheme"} className={"label"}>
                             {"Color theme:"}
                         </label>
-                        
                     </div>
 
                     <button
                         className={"sign-up__form__btn"}
                         id={"signUpSubmit"}
+                        type={"button"}
                         value={"Sign Up"}
-                        onClick={signUp}
-                    >{"Sign up"}</button>
+                        onClick={signUp}>
+                        {"Sign up"}
+                    </button>
                 </div>
             </div>
 
@@ -83,22 +95,32 @@ const Sign = ({"signUp": signUp, "signIn": signIn}) => (
                         <label htmlFor={"userInfoIn"} className={"label"}>
                             {"Username:"}
                         </label>
-                        <input type={"text"} name={"userInfoIn"} id={"userInfoIn"} />
+                        <input
+                            type={"text"}
+                            name={"userInfoIn"}
+                            id={"userInfoIn"}
+                        />
                     </div>
 
                     <div className={"sign-in__form__pwd"}>
                         <label htmlFor={"userPwdIn"} className={"label"}>
                             {"Password:"}
                         </label>
-                        <input type={"password"} name={"userPwdIn"} id={"userPwdIn"} />
+                        <input
+                            type={"password"}
+                            name={"userPwdIn"}
+                            id={"userPwdIn"}
+                        />
                     </div>
 
                     <button
                         className={"sign-in__form__btn"}
                         id={"signInSubmit"}
+                        type={"button"}
                         value={"Sign In"}
-                        onClick={signIn}
-                    >{"Sign In"}</button>
+                        onClick={signIn}>
+                        {"Sign In"}
+                    </button>
                 </div>
             </div>
         </div>

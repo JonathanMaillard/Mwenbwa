@@ -93,7 +93,8 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-#app {
+#profile {
+  position: relative;
   width: 100%;
   max-width: 1500px;
 }
@@ -102,10 +103,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
+  position: absolute;
   bottom: -9.4rem;
   transition: all 0.3s ease-in-out;
-
 }
 
 .boxProfile {
@@ -148,7 +148,6 @@ body {
     width: 102px;
     min-width: 102px;
     border: 2px solid #0b242b;
-    background-color: #3e6974;
     border-radius: 100%;
   }
 
@@ -324,11 +323,12 @@ body {
 }
 
 //------------------------ All Modals -----------------------
-#leaderboard, #gamelog {
+#leaderboard, #gamelog, #dashboard {
   opacity: 0;
   pointer-events: none;
   transition: all 0.15s ease-in-out;
   position: absolute;
+  z-index: 80;
   width: 100vw;
   height: 100vh;
 }
@@ -791,8 +791,6 @@ body {
   z-index: 80;
   display: flex;
   @include modal-dark-background();
-  opacity: 0%;
-  pointer-events: none;
   transition: all 0.15s ease-in-out;
 }
 .dash__Box {
@@ -843,7 +841,6 @@ body {
   }
 }
 .dash__Photo {
-  background-color: blueviolet;
   width: 12rem;
   height: 12rem;
   border-radius: 100%;
@@ -915,6 +912,19 @@ body {
   width: 100%!important;
 }
 
+.dash__Input__File {
+  display: none;
+}
+
+.label-file {
+  cursor: pointer;
+  color: #164247;
+  font-weight: bold;
+}
+.label-file:hover {
+  color: #25a5c4;
+}
+
 @media only screen and (max-width: 768px) {
   .dash__BoxContenu {
     flex-direction: column;
@@ -962,6 +972,8 @@ body {
   pointer-events: all !important;
 }
 
+
+// ---------------- SHOWING PROFILE ---------------
 .show-profile {
   transform: translate(0, -150px);
   .containerToggleWord::before {
@@ -971,4 +983,153 @@ body {
     transform: rotate(0deg);
   }
   pointer-events: all;
+}
+
+@mixin tree__marker($color:rgba(128, 255, 0, 0.664)) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  background-color: $color;
+  font-weight: 800;
+}
+
+.leaflet-marker-pane > div {
+  @include tree__marker();
+}
+
+.theme1 .leaflet-marker-pane > div {
+  @include tree__marker(#f94144bd);
+}
+
+.theme2 .leaflet-marker-pane > div {
+  @include tree__marker(#f3722cc9);
+}
+
+.theme3 .leaflet-marker-pane > div {
+  @include tree__marker(#f8961ec2);
+}
+
+.theme4 .leaflet-marker-pane > div {
+  @include tree__marker(#f9844abb);
+}
+
+.theme5 .leaflet-marker-pane > div {
+  @include tree__marker(#f9c64fb7);
+}
+
+.theme6 .leaflet-marker-pane > div {
+  @include tree__marker(#90be6dbd);
+}
+
+.theme7 .leaflet-marker-pane > div {
+  @include tree__marker(#43aa8bbd);
+}
+
+.theme8 .leaflet-marker-pane > div {
+  @include tree__marker(#4d908eb9);
+}
+
+.theme9 .leaflet-marker-pane > div {
+  @include tree__marker(#577590b7);
+}
+
+.theme10 .leaflet-marker-pane > div {
+  @include tree__marker(#277ca1b4);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.leaflet-interactive {
+  stroke-opacity: 0;
+  transition: all 0.5s ease-in-out;
+  animation-name: test;
+  animation-duration : 0.7s;
+  animation-fill-mode: forwards;
+}
+@keyframes test {
+  from {
+    stroke-opacity: 0;
+  }
+  to {
+    stroke-opacity: 0.5;
+  }
+}
+
+// ---------------- LEAFLET MARKERS -----------------
+.popup{
+  font-family: "Roboto", sans-serif;
+  color: $blue;
+  font-size: 1rem;
+  & img {
+    width: 20px;
+    margin-right: 5px;
+  }
+  &__owner, &__link, &__comment {
+    padding: 0.5em 0;
+  }
+  &__name{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+  }
+  &__link {
+    color: $blue !important;
+    text-decoration: none;
+  }
+  &__button-container {
+    @include flex(column, flex-start, flex-start);
+    &__buy, &__lock {
+      width: 100%;
+      font-family: "Roboto", sans-serif;
+      color: $blue;
+      margin: 0.7em 0;
+      padding: 0.3em;
+      border: 1px solid $blue;
+      border-radius: 10px;
+      cursor: pointer;
+      -webkit-appearance: none;
+      &:focus {outline: none;}
+    }
+    &__buy {
+      background-color: lighten($green, 15);
+      &:hover {background-color: lighten($green, 5);}
+    }
+    &__lock {
+      background-color: lighten($orange, 20);
+      &:hover {background-color: lighten($orange, 10);}
+    }
+  }
+}
+
+// ---------------- LOADING ANIMATION -----------------
+.loader-animation {
+  height: 200px;
+  width: 250px;
+  @include flex(row, center, center);
+  animation: flip-vertical 2.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) infinite both;
+  & img {height: 100px;}
+}
+@keyframes flip-vertical {
+  0% {
+    transform: rotateY(0);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
 }

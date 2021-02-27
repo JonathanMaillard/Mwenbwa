@@ -3,21 +3,15 @@ import CloseSvg from "../../ressources/images/cancel.svg";
 import {hideDashboardModal} from "../display/hide-modal";
 import CircleColor from ".././components/color-theme";
 
+const md5 = require("md5");
+
 function changeName() {
     document.querySelector(".dashInput").disabled = false;
     document.querySelector(".dashInput").classList.add("inputNameBorder");
     document.querySelector(".dashInputBtn").classList.add("dashInputBtnClick");
 }
 
-function changeNameValidation() {
-    document.querySelector(".dashInput").disabled = true;
-    document.querySelector(".dashInput").classList.remove("inputNameBorder");
-    document
-        .querySelector(".dashInputBtn")
-        .classList.remove("dashInputBtnClick");
-}
-
-const dash = () => (
+const dash = ({user, changeNameValidation}) => (
     <div className={"dashContainer"}>
         <div className={"dash__Box"}>
             <div className={"dash__BoxBtn"}>
@@ -32,11 +26,12 @@ const dash = () => (
 
             <div className={"dash__BoxContenu"}>
                 <div className={"dash__BoxGauche"}>
-                    <div className={"dash__Photo"} />
-                    <button type={"button"}>
-                        <i className={"far fa-edit"} />
-                        <span>{"change profile picture"}</span>
-                    </button>
+                    <img
+                        className={"dash__Photo"}
+                        src={`http://www.gravatar.com/avatar/${md5(
+                            "bastienlafalize@gmail.com",
+                        )}?s=200`}
+                    />
                 </div>
 
                 <div className={"dash__BoxDroite"}>
@@ -46,6 +41,8 @@ const dash = () => (
                                 className={"dashInput"}
                                 disabled={"disabled"}
                                 type={"text"}
+                                placeholder={user.username}
+                                id={"usernameInput"}
                             />
                             <button
                                 type={"button"}
@@ -61,9 +58,8 @@ const dash = () => (
                     </div>
 
                     <div className={"dash__MailAndBtn"}>
-                        <h2>{"Bastienlafalize@gmail.com"}</h2>
+                        <h2>{user.userEmail}</h2>
                     </div>
-
                     <form className={"dash__Radio"}>
                         <h2>{"Color Theme"}</h2>
                         <CircleColor />

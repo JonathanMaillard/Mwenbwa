@@ -40,7 +40,7 @@ function showDisconnectModal() {
     document.querySelector(".disconnect").classList.add("show-modal");
 }
 function showDashboardModal() {
-    document.querySelector(".dashContainer").classList.add("show-modal");
+    document.querySelector("#dashboard").classList.add("show-modal");
 }
 function showConnectModal() {
     document.querySelector(".sign").classList.add("show-modal");

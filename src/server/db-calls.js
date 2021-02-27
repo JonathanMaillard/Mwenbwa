@@ -79,10 +79,47 @@ const dbGetTree = tree => {
             };
 
             const cursor = await collection.find(query);
-            const result = await cursor.toArray();
+            const resultSearch = await cursor.toArray();
 
-            //console.log(result);
-            return result;
+            console.log(resultSearch[0].owner);
+
+            if (resultSearch[0].owner) {
+                const aggCursor = await collection.aggregate([
+                    {
+                        $match: {
+                            _id: treeId,
+                        },
+                    },
+                    {
+                        $lookup: {
+                            from: "players",
+                            localField: "owner",
+                            foreignField: "_id",
+                            as: "data",
+                        },
+                    },
+                    {
+                        $unwind: "$data",
+                    },
+                    {
+                        $project: {
+                            _id: 1,
+                            username: "$data.username",
+                            hauteur_total: 1,
+                            nom_complet: 1,
+                            circonf: 1,
+                            owner: 1,
+                            locked: 1,
+                        },
+                    },
+                ]);
+
+                const result = await aggCursor.toArray();
+                console.log(result);
+                return result;
+            }
+
+            return resultSearch;
         } catch (err) {
             console.error(`Something went wrong: ${err}`);
         } finally {
@@ -170,7 +207,7 @@ const dbGetLeaderboard = () => {
         try {
             await client.connect();
             const database = client.db("mwenbwa");
-            const collection = database.collection("playersTest");
+            const collection = database.collection("players");
 
             const query = {};
             const options = {
@@ -214,7 +251,7 @@ const dbGetLogs = () => {
                 },
                 {
                     $lookup: {
-                        from: "playersTest",
+                        from: "players",
                         localField: "authorId",
                         foreignField: "_id",
                         as: "data",
@@ -295,7 +332,7 @@ const dbRegister = (userName, userPassword, userEmail, userColor) => {
                 password: userPassword,
                 email: userEmail,
                 color: userColor,
-                score: 0,
+                score: 3000,
             };
 
             const result = await collection.insertOne(newUser);
@@ -321,6 +358,8 @@ const dbRegister = (userName, userPassword, userEmail, userColor) => {
 //Buy tree
 const dbBuyTree = (tree, userId, treePrice) => {
     const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    //console.log(tree, userId, treePrice);
 
     async function run() {
         try {
@@ -369,6 +408,25 @@ const dbBuyTree = (tree, userId, treePrice) => {
             console.log(
                 `${resultPlayer.matchedCount} document(s) matched the filter, updated ${resultPlayer.modifiedCount} document(s)`,
             );
+
+            //Add a log of the action
+            const collectionLog = database.collection("logs");
+
+            const newLog = {
+                content: " bought a tree",
+                authorId: user,
+            };
+
+            const resultLog = await collectionLog.insertOne(newLog);
+
+            console.log(
+                `${resultLog.matchedCount} document(s) matched the filter, updated ${resultLog.modifiedCount} document(s)`,
+            );
+
+            //const playerName = await collectionPlayer.find({_id: user});
+            //const playerInfo = await playerName.toArray();
+
+            //return playerInfo;
         } catch (err) {
             console.error(`Something went wrong: ${err}`);
         } finally {
@@ -401,7 +459,7 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             const updateDoc = {
                 $set: {
                     locked: true,
-                    lockedBy: user,
+                    owner: user,
                 },
             };
 
@@ -434,6 +492,25 @@ const dbLockTree = (tree, userId, treeLockPrice) => {
             console.log(
                 `${resultPlayer.matchedCount} document(s) matched the filter, updated ${resultPlayer.modifiedCount} document(s)`,
             );
+
+            //Add a log of the action
+            const collectionLog = database.collection("logs");
+
+            const newLog = {
+                content: " locked a tree",
+                authorId: user,
+            };
+
+            const resultLog = await collectionLog.insertOne(newLog);
+
+            console.log(
+                `${resultLog.matchedCount} document(s) matched the filter, updated ${resultLog.modifiedCount} document(s)`,
+            );
+
+            //const playerName = await collectionPlayer.find({_id: user});
+            //const playerInfo = await playerName.toArray();
+
+            //return playerInfo;
         } catch (err) {
             console.error(`Something went wrong: ${err}`);
         } finally {
