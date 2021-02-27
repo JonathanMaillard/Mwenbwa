@@ -11,7 +11,6 @@ export class CircleColor extends Component {
     }
 
     handleOnChange(color) {
-        console.log(color);
         this.setState({color});
     }
 

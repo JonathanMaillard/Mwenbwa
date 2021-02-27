@@ -2,7 +2,7 @@
  *
  * /src/server/index.js - Server entry point
  *
- * coded by leny@BeCode
+ * coded by leny@BeCode & smaragdenteam
  * started at 18/05/2020
  */
 
@@ -53,7 +53,6 @@ app.get("/tree/:treeid", async (req, res) => {
 app.get("/user/:userid", async (req, res) => {
     const userId = req.params.userid;
     const request = await dbGetUser(userId);
-    console.log(request);
     res.send(request);
 });
 app.get("/leaderboard", async (req, res) => {
@@ -71,7 +70,6 @@ app.post("/login", jsonParser, async (req, res) => {
     const pwd = req.body.userPwd;
     try {
         const request = await dbGetUserFromInfo(userInfo);
-        console.log(request);
         if (request) {
             bcrypt.compare(pwd, request[0].password, (err, result) => {
                 res.status(result ? 200 : 400).send(
@@ -105,16 +103,28 @@ app.post("/register", jsonParser, (req, res) => {
     const userEmail = req.body.userEmail;
     const userPwd = req.body.userPwd;
     const userColor = req.body.userColor || "#F94144";
-    console.log("register", username, userEmail, userPwd, userColor);
     let request;
-    bcrypt.genSalt(saltRounds, (err, salt) => {
-        bcrypt.hash(userPwd, salt, async (error, hash) => {
-            console.log(error, hash);
-            request = await dbRegister(username, hash, userEmail, userColor);
-            console.log(request);
-            res.status(200).send(request.ops[0]);
+    try {
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            bcrypt.hash(userPwd, salt, async (error, hash) => {
+                request = await dbRegister(
+                    username,
+                    hash,
+                    userEmail,
+                    userColor,
+                );
+                res.status(200).send({
+                    msg: "correct",
+                    content: request.ops[0],
+                });
+            });
         });
-    });
+    } catch (e) {
+        res.status(400).send({
+            msg: "error",
+            content: e,
+        });
+    }
 });
 
 app.post("/addLog", jsonParser, (req, res) => {
@@ -217,38 +227,15 @@ app.post("/changePic", jsonParser, async (req, res) => {
 SERVER LAUNCH
 ===================*/
 // INITIATE DATABASE
-console.time("dataset");
-const axios = require("axios");
-const dataSetUrl =
-    "https://opendata.liege.be/explore/dataset/arbustum/download/?format=json&timezone=Europe/Berlin&lang=fr";
-axios
-    .get(dataSetUrl)
-    .then(response => {
-        // response.data.forEach((tree)=>{
-        //     if(
-        //         tree.fields.arbotag
-        //         && tree.fields.hauteur_totale
-        //         && tree.fields.circonf
-        //         // && await !dbGetTree(tree.arbotag)
-        //     ) {
-        //         // dbAddTree({
-        //         //     "arbotag": tree.fields.arbotag,
-        //         //     "name": tree.fields.nom_complet ? tree.fields.nom_complet : "",
-        //         //     "latitude": tree.fields.x_lambda,
-        //         //     "longitude": tree.fields.y_phi,
-        //         //     "height": tree.fields.hauteur_totale,
-        //         //     "circonf": tree.fields.circonf,
-        //         //     "basePrice": Math.ceil(tree.fields.circonf*tree.fields.hauteur_totale)
-        //         // });
-        //         // console.log("New tree inserted :", tree.fields.arbotag);
-        //     }
-        // });
-        console.log("côté serveur : ", response.data.length);
-    })
-    .catch(e => {
-        console.log("sad because :", e);
-    })
-    .finally(() => console.timeEnd("dataset"));
+// const axios = require("axios");
+// const dataSetUrl =
+//     "https://opendata.liege.be/explore/dataset/arbustum/download/?format=json&timezone=Europe/Berlin&lang=fr";
+// axios
+//     .get(dataSetUrl)
+//     .then(response => {})
+//     .catch(e => {
+//         console.log("sad because :", e);
+//     });
 
 // START SERVER
 app.listen(APP_PORT, () =>
