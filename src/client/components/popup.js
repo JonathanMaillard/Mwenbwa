@@ -7,7 +7,7 @@ import LoadSVG from "../../ressources/trees-svg/svg/033-larch.svg";
 
 const axios = require("axios");
 
-const MyPopup = ({treeId}) => {
+const MyPopup = ({treeId, sessionInfo}) => {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [name, setName] = useState("");
     const [owner, setOwner] = useState("No one owns this tree yet !");
@@ -21,6 +21,7 @@ const MyPopup = ({treeId}) => {
         axios
             .get(`/tree/${treeId}`)
             .then(response => {
+                console.log(sessionInfo);
                 setDataLoaded(true);
                 response.data.map(data => {
                     setName(data.nom_complet);
@@ -137,18 +138,17 @@ const MyPopup = ({treeId}) => {
                         if (isLocked) {
                             return (
                                 <p className={"popup__locked"}>
-                                    {"Tis tree is locked"}
+                                    {"Bouuuuh, This tree is locked"}
                                 </p>
                             );
                         }
                         // else if (user.score <= 0) {
-                        //     return (<p>{"You don't have enough leaves !"}</p>)
+                        //     return (<p className={"popup__no-leaves"}>{"You don't have enough leaves !"}</p>)
                         //     // si pas assez d'argent, ne pas afficher les boutons
                         // } else if (user.id === userSession) {
-                        //     return (<p>{"This tree is already yours"}</p>)
+                        //     return (<p className={"popup__tree-yours"}>{"Come on, This tree is already yours..."}</p>)
                         //     // si l'arbre est à l'utlisateur connecté, ne pas afficher les boutons
                         // }
-
                         return (
                             <div className={"popup__button-container"}>
                                 <button

@@ -497,6 +497,7 @@ body {
       border: 1px solid $blue;
       border-radius: 10px;
       background-color: transparent;
+      cursor: pointer;
       -webkit-appearance: none;
       &:hover {background-color: darken($bg-modal, 5);}
       &:focus {outline: none;}
@@ -1045,6 +1046,19 @@ body {
     }
   }
 }
+
+.popup__locked, .popup__no-leaves, .popup__tree-yours {
+  text-align: center;
+  width: 100%;
+  color: #183c45c7;
+  margin: 0.7em 0;
+  padding: 0.3em;
+  border: 1px solid $blue;
+  border-radius: 10px;
+}
+.popup__locked {background-color: #e04b3183;}
+.popup__no-leaves {background-color: #c2723d83;}
+.popup__tree-yours {background-color: lighten($green, 5);}
 
 // ---------------- LOADING ANIMATION -----------------
 .loader-animation {

@@ -26,7 +26,7 @@ const Disconnect = () => (
                 <button type={"button"} className={"disconnect__btns__button"}>
                     {"Disconnect"}
                 </button>
-                <button type={"button"} className={"disconnect__btns__button"}>
+                <button type={"button"} className={"disconnect__btns__button"} onClick={hideDisconnectModal}>
                     {"Go back"}
                 </button>
             </div>

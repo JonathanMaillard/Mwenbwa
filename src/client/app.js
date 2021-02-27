@@ -113,7 +113,7 @@ const App = () => {
     return (
         <div id={"container"}>
             <div id={"mapid"}>
-                <Map trees={[]} />
+                <Map trees={[]} sessionInfo={session} />
             </div>
 
             <Button />

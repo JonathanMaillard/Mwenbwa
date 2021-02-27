@@ -122,9 +122,9 @@ const newTree = () => {
     return leafletIcon;
 };
 
-const MapMarker = ({position, tree}) => (
+const MapMarker = ({position, tree, sessionInfo}) => (
     <Marker position={position} icon={newTree()} key={tree}>
-        <MyPopup treeId={tree} />
+        <MyPopup treeId={tree} sessionInfo={sessionInfo}/>
     </Marker>
 );
 
