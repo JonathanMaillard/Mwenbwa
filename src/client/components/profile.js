@@ -5,7 +5,7 @@ import {
     showDashboardModal,
     toggleProfile,
 } from "../display/show-modal";
-
+const md5 = require('md5');
 const Profile = ({user}) => (
     <div className={"containerProfile"}>
         <button
@@ -19,7 +19,8 @@ const Profile = ({user}) => (
             <i className={"fas fa-chevron-down"} />
         </button>
         <div className={"boxProfile"}>
-            <div className={"boxProfile__photo"} />
+            <img className={"boxProfile__photo"} src={'http://www.gravatar.com/avatar/' + md5("bastienlafalize@gmail.com") + "?s=200"}></img>
+
 
             <div className={"boxProfile__Info"}>
                 <div className={"boxProfile__Info--name"}>

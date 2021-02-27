@@ -4,6 +4,8 @@ import {hideDashboardModal} from "../display/hide-modal";
 import CircleColor from ".././components/color-theme";
 import axios from "axios";
 
+const md5 = require('md5');
+
 function changeName() {
     document.querySelector(".dashInput").disabled = false;
     document.querySelector(".dashInput").classList.add("inputNameBorder");
@@ -26,12 +28,11 @@ const dash = ({user, changeNameValidation}) => (
 
             <div className={"dash__BoxContenu"}>
                 <div className={"dash__BoxGauche"}>
-                    <div className={"dash__Photo"} />
-                    <button type={"button"}>
-                        <i className={"far fa-edit"} />
-                        <span>{"change profile picture"}</span>
-                    </button>
+
+                    <img className={"dash__Photo"} src={'http://www.gravatar.com/avatar/' + md5("bastienlafalize@gmail.com") + "?s=200"}></img>
+
                 </div>
+            
 
                 <div className={"dash__BoxDroite"}>
                     <div className={"dash__NameAndBtn"}>
@@ -51,8 +52,8 @@ const dash = ({user, changeNameValidation}) => (
                             </button>
                         </div>
                         <button type={"button"} onClick={changeName}>
-                            <i className={"far fa-edit"} />
-                            <span>{"change name"}</span>
+                                <i className={"far fa-edit"} />
+                                <span>{"change name"}</span>
                         </button>
                     </div>
 
