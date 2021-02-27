@@ -53,6 +53,7 @@ app.get("/tree/:treeid", async (req, res) => {
 app.get("/user/:userid", async (req, res) => {
     const userId = req.params.userid;
     const request = await dbGetUser(userId);
+    console.log(request);
     res.send(request);
 });
 app.get("/leaderboard", async (req, res) => {
@@ -70,13 +71,14 @@ app.post("/login", jsonParser, async (req, res) => {
     const pwd = req.body.userPwd;
     try {
         const request = await dbGetUserFromInfo(userInfo);
+        console.log(request);
         if (request) {
-            bcrypt.compare(pwd, request, (err, result) => {
+            bcrypt.compare(pwd, request[0].password, (err, result) => {
                 res.status(result ? 200 : 400).send(
                     result
                         ? {
                               msg: "correct",
-                              content: request,
+                              content: request[0],
                           }
                         : {
                               msg: "invalidPwd",
@@ -103,13 +105,16 @@ app.post("/register", jsonParser, (req, res) => {
     const userEmail = req.body.userEmail;
     const userPwd = req.body.userPwd;
     const userColor = req.body.userColor || "#F94144";
+    console.log("register", username, userEmail, userPwd, userColor);
     let request;
     bcrypt.genSalt(saltRounds, (err, salt) => {
         bcrypt.hash(userPwd, salt, async (error, hash) => {
+            console.log(error, hash);
             request = await dbRegister(username, hash, userEmail, userColor);
+            console.log(request);
+            res.status(200).send(request.ops[0]);
         });
     });
-    res.status(200).send(request);
 });
 
 app.post("/addLog", jsonParser, (req, res) => {

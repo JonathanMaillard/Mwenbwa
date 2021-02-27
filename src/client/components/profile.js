@@ -5,7 +5,7 @@ import {
     showDashboardModal,
     toggleProfile,
 } from "../display/show-modal";
-const md5 = require('md5');
+const md5 = require("md5");
 const Profile = ({user}) => (
     <div className={"containerProfile"}>
         <button
@@ -19,13 +19,15 @@ const Profile = ({user}) => (
             <i className={"fas fa-chevron-down"} />
         </button>
         <div className={"boxProfile"}>
-            <img className={"boxProfile__photo"} src={'http://www.gravatar.com/avatar/' + md5("bastienlafalize@gmail.com") + "?s=200"}></img>
-
+            <img
+                className={"boxProfile__photo"}
+                src={`http://www.gravatar.com/avatar/${md5(
+                    "bastienlafalize@gmail.com",
+                )}?s=200`}
+            />
 
             <div className={"boxProfile__Info"}>
-                <div className={"boxProfile__Info--name"}>
-                    {user.username}
-                </div>
+                <div className={"boxProfile__Info--name"}>{user.username}</div>
                 <div className={"boxProfile__Info--button"}>
                     <button type={"button"} onClick={showDashboardModal}>
                         <i className={"fas fa-user"} />
@@ -42,11 +44,11 @@ const Profile = ({user}) => (
             <div className={"boxProfile__score"}>
                 <div className={"boxProfile__score--leaves"}>
                     <i className={"fas fa-leaf"} />
-                    {user.userScore + " leaves"}
+                    {`${user.userScore} leaves`}
                 </div>
                 <div className={"boxProfile__score--trees"}>
                     <i className={"fas fa-tree"} />
-                    {user.userTrees.length + " trees"}
+                    {`${user.userTrees.length} trees`}
                 </div>
             </div>
         </div>
