@@ -66,5 +66,8 @@
         "hooks": {
             "pre-commit": "npx lint-staged"
         }
+    },
+    "engines": {
+      "node": "14.x"
     }
 }
