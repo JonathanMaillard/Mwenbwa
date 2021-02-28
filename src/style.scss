@@ -1,11 +1,11 @@
-// ----------------------VARIABLES-----------------
+// ----------------------VARIABLES----------------------------------------------
 $blue: #183C45;
 $green: greenyellow;
 $orange: #F7A325;
 $bg-modal: rgba(255, 255, 255, 0.75);
 
 
-//------------------------MIXIN-------------------
+//------------------------MIXIN-------------------------------------------------
 @mixin title($size) {
   display: inline-block;
   font-size: $size;
@@ -34,7 +34,6 @@ $bg-modal: rgba(255, 255, 255, 0.75);
   background-color: #183c45b2;
 }
 @mixin modal-content-background() {
-  width: 100%;
   height: 85%;
   margin: 3em;
   padding: 3em;
@@ -44,7 +43,7 @@ $bg-modal: rgba(255, 255, 255, 0.75);
 }
 
 
-//-------------------------GENERALS-----------------------
+//-------------------------GENERALS---------------------------------------------
 @font-face {
   font-family: "Roboto";
   src: url("./ressources/font/Roboto-Regular.ttf");
@@ -66,7 +65,7 @@ body {
 }
 
 
-// Map 
+//----------------------MAP-----------------------------------------------------
 #mapid {
   position: absolute;
   z-index: 0;
@@ -84,7 +83,7 @@ body {
 
 
 
-// Profile
+//----------------------PROFIL----------------------------------------------------
 #container {
   height: 100vh;
   width: 100%;
@@ -94,7 +93,8 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-#app {
+#profile {
+  position: relative;
   width: 100%;
   max-width: 1500px;
 }
@@ -103,6 +103,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  bottom: -9.4rem;
+  transition: all 0.3s ease-in-out;
 }
 
 .boxProfile {
@@ -121,6 +124,7 @@ body {
   &__button {
     position: relative;
     z-index: 1;
+    width: 10rem;
     margin-bottom: 0.3rem;
     background-color: $blue;
     padding: 0.5rem 0.8rem;
@@ -130,6 +134,7 @@ body {
     border: none;
     border-radius: 0.25rem;
     display: flex;
+    justify-content: space-between;
     cursor: pointer;
     outline: none;
     transition: all 0.3s ease-in-out;
@@ -141,8 +146,8 @@ body {
   &__photo {
     height: 102px;
     width: 102px;
+    min-width: 102px;
     border: 2px solid #0b242b;
-    background-color: #3e6974;
     border-radius: 100%;
   }
 
@@ -217,13 +222,20 @@ body {
   }
 }
 
+.containerToggleWord::before {
+  content: "Show ";
+  margin-right: 5px;
+}
+
 .fa-chevron-down {
+  transform: rotate(180deg);
   margin-left: 0.5rem;
+  transition: all 0.3s ease-in-out;
 }
 
 
 
-//button
+//----------------------BUTTON---------------------------------------------------
 .containerButton {
   width: 100%;
   display: flex;
@@ -275,16 +287,62 @@ body {
   }
 }
 
-//-------------------------SIGNIN/UP------------------------
+@media only screen and (max-width: 768px) {
+  .boxProfile__score {
+    width: 15rem;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .boxProfile__score {
+    width: 50%;
+  }
+  .boxProfile__photo {
+    display: none;
+  }
+  .boxProfile__Info {
+    margin: 0;
+    width: 50%;
+  }
+  .boxProfile__score--leaves > .fa-leaf {
+    width:auto;
+  }
+  .boxProfile__score--trees > .fa-tree {
+    width:auto;
+  }
+  .boxProfile__score--leaves {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+  .boxProfile__score--trees {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+}
+
+//------------------------ All Modals -----------------------
+#leaderboard, #gamelog, #dashboard {
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease-in-out;
+  position: absolute;
+  z-index: 80;
+  width: 100vw;
+  height: 100vh;
+}
 .rules, .disconnect, .leaderboard, .gamelog, .sign {
   z-index: 1000;
 }
 
+//-------------------------SIGNIN/UP------------------------
 .hide-sign-form {
   display: none;
 }
 .sign {
-  display: none; //A ENLVER A ENLEVER C JUSTE EN ATTENDANT QUE LE FORM SOIT PRET MAIS LE COMPONENT EST OKKKKKKKKKKKKKKKKKKKKK !!!!!!!!!!!!!!
+    opacity: 0;
+    pointer-events: none;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
@@ -372,10 +430,13 @@ body {
 //------------------------ RULES -----------------------
 
 .rules {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease-in-out;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
+    // width: 100%;
     @include flex(column, flex-start, center);
     &__title {
       @include title(2rem);
@@ -395,9 +456,11 @@ body {
 }
 
 
-//----------------------DISCONNECT -----------------------
+//----------------------DISCONNECT -------------------------------------------
 .disconnect {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease-in-out;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
@@ -435,6 +498,7 @@ body {
       border: 1px solid $blue;
       border-radius: 10px;
       background-color: transparent;
+      cursor: pointer;
       -webkit-appearance: none;
       &:hover {background-color: darken($bg-modal, 5);}
       &:focus {outline: none;}
@@ -442,9 +506,8 @@ body {
   }
 }
 
-// ------------------- LEADERBOARD --------------------
+// ------------------- LEADERBOARD ----------------------------------------------
 .leaderboard {
-  display: none;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
@@ -486,9 +549,8 @@ body {
 }
 
 
-// --------------------- GAMELOG ------------------
+// --------------------- GAMELOG ----------------------------------------------
 .gamelog {
-  display: none;
   @include modal-dark-background();
   &__content {
     @include modal-content-background();
@@ -530,6 +592,52 @@ body {
   cursor: pointer;
   width: 35px;
 }
+
+// -------------------- RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE -----------------------
+@media only screen and (max-width: 1250px) {
+  .leaderboard__content__title, .gamelog__content__title  {
+    font-size: 2.5rem;
+  }
+  .gamelog__content__subtitle, .leaderboard__content__subtitle {
+    font-size: 1.3rem;
+    padding: 1em;
+  }
+}
+  // --------------------LEADERBOARD---------------------------------------------
+  .leaderboard-ranking {
+    &__img {
+      width: 280px;
+    }
+    &__list {
+      width: 50%;
+      padding: 2em 0;
+      &__title {
+        font-size: 1.4rem;
+      }
+      &__item, &__title {
+        font-size: 1.2rem;
+        justify-content: space-between;
+      }
+      .name {
+        width: auto;
+      }
+    }
+  }
+  
+  // ------------------------GAMELOG---------------------------------------------
+  .gamelog-history {
+    @include flex(column, space-between, center);
+    &__img {
+      width: 200px;
+    }
+    &__list{
+      padding-left: 0;
+      padding-top: 1em;
+      &__item {
+        font-size: 1.1rem;
+      }
+    }
+  }
 
 
 // -------------------- RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE -----------------------
@@ -676,7 +784,367 @@ body {
 
 
 
+
+
+
+.dashContainer {
+  position: relative;
+  z-index: 80;
+  display: flex;
+  @include modal-dark-background();
+  transition: all 0.15s ease-in-out;
+}
+.dash__Box {
+  @include modal-content-background();
+  @include flex(column, space-between, center);
+  width: 100%;
+  height: 90%;
+}
+.dash__BoxBtn {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.dash__BoxContenu {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.dashBtn {
+  cursor: pointer;
+}
+.dash__BoxDroite {
+  height: 100%;
+  width: 70%;
+  padding: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid rgb(58, 58, 58);
+}
+.dash__BoxGauche {
+  height: 100%;
+  width: 30%;
+  padding: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-bottom: 6rem;
+  & > button {
+    background-color: transparent;
+    border: none;
+    color: $blue;
+    cursor: pointer;
+    & span {
+      margin-left: 1rem;
+    }
+  }
+}
+.dash__Photo {
+  width: 12rem;
+  height: 12rem;
+  border-radius: 100%;
+}
+.dash__NameAndBtn, .dash__MailAndBtn, .dash__Radio {
+  font-weight: 300;
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  & > button {
+    background-color: transparent;
+    border: none;
+    color: $blue;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    & span {
+      margin-left: 1rem;
+    }
+  }
+}
+.dashInput {
+  background-color: transparent;
+  border-radius: 0.3rem;
+  padding: 0 0.5rem;
+  font-family: "Roboto", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: $blue;
+  border: transparent;
+  font-size: 31.2px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+.inputBox > input {
+  margin-right: 1rem;
+  margin-top: 1rem;
+  width: 2rem;
+  height: 2rem;
+}
+.dash__InputAndBtn {
+  display: flex;
+}
+
+.dashInputBtn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 2rem;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  color: $blue;
+  margin-left: 0.2rem;
+  opacity: 0%;
+  transition: all 0.2s ease-in-out;
+}
+.dashInputBtnClick {
+  display: flex;
+  opacity: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.circle-picker {
+  display: flex;
+  align-items: center!important;
+  margin-top: 1rem!important;
+  width: 100%!important;
+}
+
+.dash__Input__File {
+  display: none;
+}
+
+.label-file {
+  cursor: pointer;
+  color: #164247;
+  font-weight: bold;
+}
+.label-file:hover {
+  color: #25a5c4;
+}
+
+@media only screen and (max-width: 768px) {
+  .dash__BoxContenu {
+    flex-direction: column;
+  }
+  .dash__BoxDroite {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid rgb(58, 58, 58);
+  }
+  .dash__BoxGauche {
+    width: 100%;
+    padding-bottom: 0;
+  }
+  .dash__NameAndBtn, .dash__MailAndBtn, .dash__Radio {
+    font-weight: 300;
+    font-size: 0.8rem;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .dashInput {
+    width: 100%;
+  }
+}
+
+.inputNameBorder {
+  border: 1px solid rgb(30, 54, 82);
+  transition: all 0.2s ease-in-out;
+}
+
+
+
+
+.navigation__button {
+  background-color: chartreuse;
+  width: 2rem;
+  height: 2rem;
+}
+
+
+
 // ---------------- SHOWING MODALS ---------------
 .show-modal {
+  // display: flex !important;
+  opacity: 100% !important;
+  pointer-events: all !important;
+}
+
+
+// ---------------- SHOWING PROFILE ---------------
+.show-profile {
+  transform: translate(0, -150px);
+  .containerToggleWord::before {
+    content: "Hide ";
+  }
+  .fa-chevron-down {
+    transform: rotate(0deg);
+  }
+  pointer-events: all;
+}
+
+@mixin tree__marker($color:rgba(128, 255, 0, 0.664)) {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  background-color: $color;
+  font-weight: 800;
+}
+
+.leaflet-marker-pane > div {
+  @include tree__marker();
+}
+
+.theme1 .leaflet-marker-pane > div {
+  @include tree__marker(#f94144bd);
+}
+
+.theme2 .leaflet-marker-pane > div {
+  @include tree__marker(#f3722cc9);
+}
+
+.theme3 .leaflet-marker-pane > div {
+  @include tree__marker(#f8961ec2);
+}
+
+.theme4 .leaflet-marker-pane > div {
+  @include tree__marker(#f9844abb);
+}
+
+.theme5 .leaflet-marker-pane > div {
+  @include tree__marker(#f9c64fb7);
+}
+
+.theme6 .leaflet-marker-pane > div {
+  @include tree__marker(#90be6dbd);
+}
+
+.theme7 .leaflet-marker-pane > div {
+  @include tree__marker(#43aa8bbd);
+}
+
+.theme8 .leaflet-marker-pane > div {
+  @include tree__marker(#4d908eb9);
+}
+
+.theme9 .leaflet-marker-pane > div {
+  @include tree__marker(#577590b7);
+}
+
+.theme10 .leaflet-marker-pane > div {
+  @include tree__marker(#277ca1b4);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.leaflet-interactive {
+  stroke-opacity: 0;
+  transition: all 0.5s ease-in-out;
+  animation-name: test;
+  animation-duration : 0.7s;
+  animation-fill-mode: forwards;
+}
+@keyframes test {
+  from {
+    stroke-opacity: 0;
+  }
+  to {
+    stroke-opacity: 0.5;
+  }
+}
+
+// ---------------- LEAFLET MARKERS -----------------
+.popup{
+  font-family: "Roboto", sans-serif;
+  color: $blue;
+  font-size: 0.9rem;
+  & img {
+    width: 20px;
+    margin-right: 5px;
+  }
+  &__owner, &__link, &__comment {
+    padding: 0.5em 0;
+  }
+  &__name{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+  }
+  &__link {
+    color: $blue !important;
+    text-decoration: none;
+  }
+  &__button-container {
+    @include flex(column, flex-start, flex-start);
+    &__buy, &__lock {
+      width: 100%;
+      font-family: "Roboto", sans-serif;
+      color: $blue;
+      margin: 0.3em 0;
+      padding: 0.3em;
+      border: 1px solid $blue;
+      border-radius: 10px;
+      cursor: pointer;
+      -webkit-appearance: none;
+      &:focus {outline: none;}
+    }
+    &__buy {
+      background-color: lighten($green, 15);
+      &:hover {background-color: lighten($green, 5);}
+    }
+    &__lock {
+      background-color: lighten($orange, 20);
+      &:hover {background-color: lighten($orange, 10);}
+    }
+  }
+}
+
+.popup__locked, .popup__no-leaves, .popup__tree-yours {
+  font-size: 0.9rem;
+  text-align: center;
+  width: 100%;
+  color: #183c45c7;
+  margin: 0.3em 0;
+  padding: 0.3em;
+  border: 1px solid $blue;
+  border-radius: 10px;
+}
+.popup__locked {background-color: #e04b3183;}
+.popup__no-leaves {background-color: #c2723d83;}
+.popup__tree-yours {background-color: lighten($green, 5);}
+
+// ---------------- LOADING ANIMATION -----------------
+.loader-animation {
+  height: 200px;
+  width: 250px;
+  @include flex(row, center, center);
+  animation: flip-vertical 2.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) infinite both;
+  & img {height: 100px;}
+}
+@keyframes flip-vertical {
+  0% {
+    transform: rotateY(0);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
 }

@@ -3,7 +3,7 @@ import DisconnectSvg from "../../ressources/images/undraw_through_the_park.svg";
 import CloseSvg from "../../ressources/images/cancel.svg";
 import {hideDisconnectModal} from "../display/hide-modal";
 
-const Disconnect = () => (
+const Disconnect = ({logout}) => (
     <div className={"disconnect"}>
         <div className={"disconnect__content"}>
             <p className={"disconnect__content__title"}>{"Disconnect ?"}</p>
@@ -23,10 +23,16 @@ const Disconnect = () => (
                 </div>
             </div>
             <div className={"disconnect__btns"}>
-                <button type={"button"} className={"disconnect__btns__button"}>
+                <button
+                    type={"button"}
+                    className={"disconnect__btns__button"}
+                    onClick={logout}>
                     {"Disconnect"}
                 </button>
-                <button type={"button"} className={"disconnect__btns__button"}>
+                <button
+                    type={"button"}
+                    className={"disconnect__btns__button"}
+                    onClick={hideDisconnectModal}>
                     {"Go back"}
                 </button>
             </div>

@@ -1,23 +1,21 @@
 import * as React from "react";
-import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
-// import {divIcon} from "leaflet";
-// import ReactDOMServer from "react-dom/server";
+import {Marker} from "react-leaflet";
 import L from "leaflet";
-import treesSvg from "../treesSvg";
+import treesSvg from "../scripts/trees-svg";
+import MyPopup from "./popup";
 
 const treeBank = {
-    "winter" : [
+    winter: [
         "007-eucalyptus",
         "010-tree",
         "025-pine",
         "027-cypress",
         "036-tree_branch",
-        "036-tree_branch",
         "038-tree",
         "046-pine",
-        "046-pine"
+        "046-pine",
     ],
-    "spring" : [
+    spring: [
         "002-tree",
         "005-almond_tree",
         "011-tree",
@@ -30,9 +28,9 @@ const treeBank = {
         "030-plant",
         "040-willow",
         "042-tree",
-        "049-lemon_tree"
+        "049-lemon_tree",
     ],
-    "summer" : [
+    summer: [
         "001-magnolia",
         "002-tree",
         "003-tree",
@@ -55,9 +53,9 @@ const treeBank = {
         "042-tree",
         "044-palm_tree",
         "045-olive",
-        "049-lemon_tree"
+        "049-lemon_tree",
     ],
-    "autumn" : [
+    autumn: [
         "003-tree",
         "004-tree",
         "009-tree",
@@ -74,14 +72,13 @@ const treeBank = {
         "039-sequoia",
         "041-maple",
         "043-tree",
-        "050-tree"
-    ]
-}
-const SVG_PATH = "../../ressources/trees-svg/svg/";
+        "050-tree",
+    ],
+};
 
-const getRandomTree = (month) => {
+const getRandomTree = month => {
     let season;
-    switch(month) {
+    switch (month) {
         case 11:
         case 0:
         case 1:
@@ -105,29 +102,30 @@ const getRandomTree = (month) => {
         default:
             season = "summer";
     }
-    const tree = treeBank[season][(Math.random()*treeBank[season].length)|0];
-    console.log(tree, season);
+    const tree =
+        treeBank[season][(Math.random() * treeBank[season].length) | 0];
     return tree;
-}
+};
 
 const newTree = () => {
     const month = new Date().getMonth();
-    // const path = `${SVG_PATH}${getRandomTree(month)}.svg`;
     const tree = treesSvg[getRandomTree(month)];
     const leafletIcon = L.icon({
         iconUrl: tree,
-        iconSize: [32,32],
+        iconSize: [32, 32],
         iconAnchor: [16, 32],
-        popupAnchor: null,
+        popupAnchor: [0, -32],
         shadowUrl: null,
         shadowSize: null,
-        shadowAnchor: null
+        shadowAnchor: null,
     });
     return leafletIcon;
-}
+};
 
-const MapMarker = ({position, arbotag}) => (
-    <Marker position={position} icon={newTree()} id={arbotag} />
-)
+const MapMarker = ({position, tree}) => (
+    <Marker position={position} icon={newTree()} key={tree}>
+        <MyPopup treeId={tree} />
+    </Marker>
+);
 
 export default MapMarker;

@@ -1,10 +1,9 @@
 import * as React from "react";
 import SignSVG from "../../ressources/images/undraw_nature.svg";
 import {showSignIn, showSignUp} from "../display/show-sign-form";
-import {hideSignForm} from "../display/hide-sign-form";
 
-const Sign = () => (
-    <div className={"sign"}>
+const Sign = ({signUp, signIn, state}) => (
+    <div className={state}>
         <div className={"sign__content"}>
             <div className={"sign__content__title"}>
                 <button
@@ -23,8 +22,8 @@ const Sign = () => (
 
             <div className={"sign-up sign-active"}>
                 <img className={"sign-up__img"} src={SignSVG} alt={"Sign up"} />
-                <form action={"????????"} className={"sign-up__form"}>
-                    <label htmlFor={"userimg"} className={"sign-up__form__img"}>
+                <div className={"sign-up__form"}>
+                    {/* <label htmlFor={"userimg"} className={"sign-up__form__img"}>
                         {"Profile picture:"}
                         <div className={"preview"}>
                             <span className={"choose-txt"}>
@@ -37,27 +36,39 @@ const Sign = () => (
                             accept={"image/*"}
                             name={"userimg"}
                         />
-                    </label>
+                    </label> */}
 
                     <div className={"sign-up__form__name"}>
-                        <label htmlFor={"username"} className={"label"}>
+                        <label htmlFor={"usernameUp"} className={"label"}>
                             {"Username:"}
                         </label>
-                        <input type={"text"} name={"username"} />
+                        <input
+                            type={"text"}
+                            name={"usernameUp"}
+                            id={"usernameUp"}
+                        />
                     </div>
 
                     <div className={"sign-up__form__email"}>
-                        <label htmlFor={"useremail"} className={"label"}>
+                        <label htmlFor={"useremailUp"} className={"label"}>
                             {"Email adress:"}
                         </label>
-                        <input type={"email"} name={"useremail"} />
+                        <input
+                            type={"email"}
+                            name={"useremailUp"}
+                            id={"userEmailUp"}
+                        />
                     </div>
 
                     <div className={"sign-up__form__pwd"}>
-                        <label htmlFor={"usepwd"} className={"label"}>
+                        <label htmlFor={"userpwdUp"} className={"label"}>
                             {"Password:"}
                         </label>
-                        <input type={"password"} name={"userpwd"} />
+                        <input
+                            type={"password"}
+                            name={"userpwdUp"}
+                            id={"userPwdUp"}
+                        />
                     </div>
 
                     <div className={"sign-up__form__color"}>
@@ -66,39 +77,51 @@ const Sign = () => (
                         </label>
                     </div>
 
-                    <input
+                    <button
                         className={"sign-up__form__btn"}
-                        type={"submit"}
+                        id={"signUpSubmit"}
+                        type={"button"}
                         value={"Sign Up"}
-                        onClick={hideSignForm}
-                    />
-                </form>
+                        onClick={signUp}>
+                        {"Sign up"}
+                    </button>
+                </div>
             </div>
 
             <div className={"sign-in"}>
                 <img className={"sign-in__img"} src={SignSVG} alt={"Sign up"} />
-                <form action={"????????"} className={"sign-in__form"}>
+                <div className={"sign-in__form"}>
                     <div className={"sign-in__form__name"}>
-                        <label htmlFor={"username"} className={"label"}>
+                        <label htmlFor={"userInfoIn"} className={"label"}>
                             {"Username:"}
                         </label>
-                        <input type={"text"} name={"username"} />
+                        <input
+                            type={"text"}
+                            name={"userInfoIn"}
+                            id={"userInfoIn"}
+                        />
                     </div>
 
                     <div className={"sign-in__form__pwd"}>
-                        <label htmlFor={"usepwd"} className={"label"}>
+                        <label htmlFor={"userPwdIn"} className={"label"}>
                             {"Password:"}
                         </label>
-                        <input type={"password"} name={"userpwd"} />
+                        <input
+                            type={"password"}
+                            name={"userPwdIn"}
+                            id={"userPwdIn"}
+                        />
                     </div>
 
-                    <input
+                    <button
                         className={"sign-in__form__btn"}
-                        type={"submit"}
+                        id={"signInSubmit"}
+                        type={"button"}
                         value={"Sign In"}
-                        onClick={hideSignForm}
-                    />
-                </form>
+                        onClick={signIn}>
+                        {"Sign In"}
+                    </button>
+                </div>
             </div>
         </div>
     </div>

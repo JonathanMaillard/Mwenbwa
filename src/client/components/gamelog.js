@@ -3,7 +3,7 @@ import GamelogSvg from "../../ressources/images/undraw_history.svg";
 import CloseSvg from "../../ressources/images/cancel.svg";
 import {hideGamelogModal} from "../display/hide-modal";
 
-const Gamelog = () => (
+const Gamelog = ({logs}) => (
     <div className={"modal gamelog"}>
         <div className={"gamelog__content"}>
             <p className={"gamelog__content__title"}>{"Gamelog"}</p>
@@ -17,72 +17,19 @@ const Gamelog = () => (
                     className={"gamelog-history__img"}
                 />
                 <ul className={"gamelog-history__list"}>
-                    <li className={"gamelog-history__list__item"}>
-                        <p>
-                            <span className={"italic"}>{"Jhonhathan "}</span>
-                            {"locked the tree named PasDinspi"}
-                        </p>
-                    </li>
-                    <li className={"gamelog-history__list__item"}>
-                        <p>
-                            <span className={"italic"}>
-                                {"Me, The wonderful "}
-                            </span>
-                            {"bought the tree named Grandiose"}
-                        </p>
-                    </li>
-                    <li className={"gamelog-history__list__item"}>
-                        <p>
-                            <span className={"italic"}>{"Jhonhathan "}</span>
-                            {"bought the tree named PasDinspi"}
-                        </p>
-                    </li>
-                    <li className={"gamelog-history__list__item"}>
-                        <p>
-                            <span className={"italic"}>
-                                {"Me, The wonderful "}
-                            </span>
-                            {"locked the tree named Grandiose"}
-                        </p>
-                    </li>
-                    <li className={"gamelog-history__list__item"}>
-                        <p>
-                            <span className={"italic"}>{"Jhonhathan "}</span>
-                            {"bought the tree named PasDinspi"}
-                        </p>
-                    </li>
-                    <li className={"gamelog-history__list__item"}>
-                        <p>
-                            <span className={"italic"}>
-                                {"Me, The wonderful "}
-                            </span>
-                            {"locked the tree named Grandiose"}
-                        </p>
-                    </li>
-                    <li className={"gamelog-history__list__item"}>
-                        <p>
-                            <span className={"italic"}>{"Jhonhathan "}</span>
-                            {"bought the tree named PasDinspi"}
-                        </p>
-                    </li>
-                    <li className={"gamelog-history__list__item"}>
-                        <p>
-                            <span className={"italic"}>{"Jhonhathan "}</span>
-                            {"bought the tree named PasDinspi"}
-                        </p>
-                    </li>
-                    <li className={"gamelog-history__list__item"}>
-                        <p>
-                            <span className={"italic"}>{"Jhonhathan "}</span>
-                            {"bought the tree named PasDinspi"}
-                        </p>
-                    </li>
-                    <li className={"gamelog-history__list__item"}>
-                        <p>
-                            <span className={"italic"}>{"Jhonhathan "}</span>
-                            {"bought the tree named PasDinspi"}
-                        </p>
-                    </li>
+                    {logs &&
+                        logs.map(log => (
+                            <li
+                                key={log.username}
+                                className={"gamelog-history__list__item"}>
+                                <p>
+                                    <span className={"italic"}>
+                                        {log.username}{" "}
+                                    </span>
+                                    {log.content}
+                                </p>
+                            </li>
+                        ))}
                 </ul>
             </div>
 
