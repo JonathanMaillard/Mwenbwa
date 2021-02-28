@@ -7,7 +7,7 @@ import LoadSVG from "../../ressources/trees-svg/svg/033-larch.svg";
 
 const axios = require("axios");
 
-const MyPopup = ({treeId, sessionInfo}) => {
+const MyPopup = ({treeId}) => {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [name, setName] = useState("");
     const [owner, setOwner] = useState("No one owns this tree yet !");
@@ -21,7 +21,6 @@ const MyPopup = ({treeId, sessionInfo}) => {
         axios
             .get(`/tree/${treeId}`)
             .then(response => {
-                console.log(sessionInfo);
                 setDataLoaded(true);
                 response.data.map(data => {
                     setName(data.nom_complet);

@@ -4,7 +4,7 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import MapMarker from "./map-marker";
 // import "react-leaflet-markercluster/dist/styles.min.css";
 
-const Map = ({trees, sessionInfo}) => {
+const Map = ({trees}) => {
     const groupRef = useRef();
     const clusterRef = useRef();
     return (
@@ -24,7 +24,6 @@ const Map = ({trees, sessionInfo}) => {
                                 position={tree.geometry.coordinates}
                                 tree={tree.id}
                                 key={tree.id}
-                                sessionInfo={sessionInfo}
                             />
                         ))}
                     </MarkerClusterGroup>

@@ -240,7 +240,7 @@ const App = () => {
     return (
         <div id={"container"}>
             <div id={"mapid"}>
-                <Map trees={[]} sessionInfo={session} />
+                <Map trees={[]} />
             </div>
 
             <Button />
