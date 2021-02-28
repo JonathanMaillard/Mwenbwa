@@ -38,7 +38,13 @@ import {
     dbModifyPassword,
     dbModifyPics,
     dbAddLog,
+    dbUpdate,
 } from "./db-calls";
+
+//Add leafs every 15 minutes to every player
+setInterval(() => {
+    dbUpdate();
+}, 1000 * 60 * 15);
 
 // GET REQUESTS
 app.get("/trees", async (req, res) => {

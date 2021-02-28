@@ -798,6 +798,44 @@ const dbModifyPics = (userId, newPics) => {
     return run();
 };
 
+//Get a user
+const dbUpdate = () => {
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    async function run() {
+        try {
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("players");
+
+            const cursor = collection.find();
+            let document;
+            while (document) {
+                collection.findOneAndUpdate(
+                    {
+                        _id: document._id,
+                    },
+                    {
+                        $inc: {
+                            score: 2000,
+                        },
+                    },
+                );
+                document = cursor.next();
+            }
+        } catch (err) {
+            console.error(`Something went wrong: ${err}`);
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+
+        return "done";
+    }
+    //run().catch(console.dir);
+    return run();
+};
+
 module.exports = {
     dbGetTrees,
     dbGetUser,
@@ -816,4 +854,5 @@ module.exports = {
     dbModifyPics,
     dbAddComment,
     dbAddLog,
+    dbUpdate,
 };
