@@ -18,9 +18,9 @@ const dbGetTrees = () => {
             const collection = database.collection("trees");
 
             const query = {
-                arbotag: {$ne: null},
-                circonf: {$ne: null},
-                hauteur_totale: {$ne: null},
+                arbotag: {$nin: [null, 0]},
+                circonf: {$nin: [null, 0]},
+                hauteur_totale: {$nin: [null, 0]},
             };
             const options = {
                 // Include only the arbotags and geoloc in each returned document
