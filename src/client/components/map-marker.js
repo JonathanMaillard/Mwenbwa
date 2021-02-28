@@ -124,7 +124,7 @@ const newTree = () => {
 
 const MapMarker = ({position, tree}) => (
     <Marker position={position} icon={newTree()} key={tree}>
-        <MyPopup treeId={tree}/>
+        <MyPopup treeId={tree} />
     </Marker>
 );
 

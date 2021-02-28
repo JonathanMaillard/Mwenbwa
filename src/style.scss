@@ -1076,7 +1076,7 @@ body {
 .popup{
   font-family: "Roboto", sans-serif;
   color: $blue;
-  font-size: 1rem;
+  font-size: 0.9rem;
   & img {
     width: 20px;
     margin-right: 5px;
@@ -1099,7 +1099,7 @@ body {
       width: 100%;
       font-family: "Roboto", sans-serif;
       color: $blue;
-      margin: 0.7em 0;
+      margin: 0.3em 0;
       padding: 0.3em;
       border: 1px solid $blue;
       border-radius: 10px;
@@ -1119,10 +1119,11 @@ body {
 }
 
 .popup__locked, .popup__no-leaves, .popup__tree-yours {
+  font-size: 0.9rem;
   text-align: center;
   width: 100%;
   color: #183c45c7;
-  margin: 0.7em 0;
+  margin: 0.3em 0;
   padding: 0.3em;
   border: 1px solid $blue;
   border-radius: 10px;

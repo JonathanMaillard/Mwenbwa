@@ -62,34 +62,42 @@ const MyPopup = ({treeId}) => {
     const BuyTree = () => {
         axios
             .post(`/buyTree`, {
-                userId: "6037b898fe778c8f96f2eb36", //user.id venant des cookies
+                userId: sessionStorage.getItem("userId"),
                 treeId,
                 treePrice: price,
             })
             .then(response => {
-                setOwner("username du cookiiiiie session");
+                setOwner(sessionStorage.getItem("username"));
                 console.log(response);
             })
             .catch(e => {
                 console.log("sad because :", e);
             });
+
+        const originalValueScore = sessionStorage.getItem("userScore");
+        const newValueScore = originalValueScore - price;
+        sessionStorage.setItem("userScore", newValueScore);
     };
 
     const LockTree = () => {
         axios
             .post(`/lockTree`, {
-                userId: "6037b898fe778c8f96f2eb36", //user.id venant des cookies
+                userId: sessionStorage.getItem("userId"),
                 treeId,
                 treeLockPrice: priceLock,
             })
             .then(response => {
-                setOwner("username du cookiiiiie session");
+                setOwner(sessionStorage.getItem("username"));
                 setIsLocked(true);
                 console.log(response);
             })
             .catch(e => {
                 console.log("sad because :", e);
             });
+
+        const originalValueScore = sessionStorage.getItem("userScore");
+        const newValueScore = originalValueScore - priceLock;
+        sessionStorage.setItem("userScore", newValueScore);
     };
 
     return (
@@ -131,23 +139,104 @@ const MyPopup = ({treeId}) => {
                         {"Comment : "}
                         <span>{comment}</span>
                     </div>
-                    {/* <SwitchDisplay /> */}
-
                     {(() => {
-                        if (isLocked) {
+                        if (
+                            sessionStorage.getItem("username") === owner &&
+                            isLocked
+                        ) {
+                            return (
+                                <p className={"popup__tree-yours"}>
+                                    {
+                                        "This tree is locked, but hey, it's yours..."
+                                    }
+                                </p>
+                            );
+                        } else if (isLocked) {
                             return (
                                 <p className={"popup__locked"}>
                                     {"Bouuuuh, This tree is locked"}
                                 </p>
                             );
+                        } else if (
+                            sessionStorage.getItem("username") === owner &&
+                            sessionStorage.getItem("userScore") > priceLock
+                        ) {
+                            return (
+                                <div className={"popup__button-container"}>
+                                    <p className={"popup__tree-yours"}>
+                                        {
+                                            "Come on, This tree is already yours..."
+                                        }
+                                    </p>
+                                    <button
+                                        className={
+                                            "popup__button-container__lock"
+                                        }
+                                        type={"button"}
+                                        onClick={LockTree}>
+                                        {"Lock for "}
+                                        {priceLock}
+                                        {" leaves"}
+                                    </button>
+                                </div>
+                            );
+                        } else if (
+                            sessionStorage.getItem("username") === owner &&
+                            sessionStorage.getItem("userScore") < priceLock
+                        ) {
+                            return (
+                                <div className={"popup__button-container"}>
+                                    <p className={"popup__tree-yours"}>
+                                        {
+                                            "Come on, This tree is already yours..."
+                                        }
+                                    </p>
+                                    <p className={"popup__no-leaves"}>
+                                        {
+                                            "You don't have enough leaves to lock this tree! "
+                                        }
+                                        {priceLock}
+                                        {" leaves"}
+                                    </p>
+                                </div>
+                            );
+                        } else if (
+                            sessionStorage.getItem("userScore") < price
+                        ) {
+                            return (
+                                <p className={"popup__no-leaves"}>
+                                    {
+                                        "You don't have enough leaves to buy or lock! "
+                                    }
+                                    {price}
+                                    {" leaves"}
+                                </p>
+                            );
+                        } else if (
+                            sessionStorage.getItem("userScore") < priceLock
+                        ) {
+                            return (
+                                <div className={"popup__button-container"}>
+                                    <button
+                                        className={
+                                            "popup__button-container__buy"
+                                        }
+                                        type={"button"}
+                                        onClick={BuyTree}>
+                                        {"Buy for "}
+                                        {price}
+                                        {" leaves"}
+                                    </button>
+                                    <p className={"popup__no-leaves"}>
+                                        {
+                                            "You don't have enough leaves to lock! "
+                                        }
+                                        {priceLock}
+                                        {" leaves"}
+                                    </p>
+                                </div>
+                            );
                         }
-                        // else if (user.score <= 0) {
-                        //     return (<p className={"popup__no-leaves"}>{"You don't have enough leaves !"}</p>)
-                        //     // si pas assez d'argent, ne pas afficher les boutons
-                        // } else if (user.id === userSession) {
-                        //     return (<p className={"popup__tree-yours"}>{"Come on, This tree is already yours..."}</p>)
-                        //     // si l'arbre est à l'utlisateur connecté, ne pas afficher les boutons
-                        // }
                         return (
                             <div className={"popup__button-container"}>
                                 <button
