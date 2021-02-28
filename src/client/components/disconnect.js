@@ -23,10 +23,16 @@ const Disconnect = ({logout}) => (
                 </div>
             </div>
             <div className={"disconnect__btns"}>
-                <button type={"button"} className={"disconnect__btns__button"} onClick={logout}>
+                <button
+                    type={"button"}
+                    className={"disconnect__btns__button"}
+                    onClick={logout}>
                     {"Disconnect"}
                 </button>
-                <button type={"button"} className={"disconnect__btns__button"} onClick={hideDisconnectModal}>
+                <button
+                    type={"button"}
+                    className={"disconnect__btns__button"}
+                    onClick={hideDisconnectModal}>
                     {"Go back"}
                 </button>
             </div>

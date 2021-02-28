@@ -6,7 +6,7 @@
  * started at 18/05/2020
  */
 
-import React, {useState} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "./../style.scss";
 const axios = require("axios");
@@ -23,7 +23,7 @@ import {showConnectModal, toggleProfile} from "./display/show-modal";
 import {hideDisconnectModal} from "./display/hide-modal";
 
 const defaultUser = {
-    userId: -1,
+    userId: 0,
     username: "guest",
     userEmail: "guest@BertrandleBG.com",
     userColor: "#F94144",
@@ -42,15 +42,29 @@ const addColorEvents = () => {
         });
     });
 };
-let startSession = defaultUser;
+const getSessionStorage = () => ({
+    userId: sessionStorage.getItem("userId"),
+    username: sessionStorage.getItem("username"),
+    userEmail: sessionStorage.getItem("userEmail"),
+    userColor: sessionStorage.getItem("userColor"),
+    userScore: sessionStorage.getItem("userScore"),
+    userTrees: sessionStorage.getItem("userTrees").split(","),
+});
+const setSessionStorage = newSession => {
+    sessionStorage.setItem("userId", newSession.userId);
+    sessionStorage.setItem("username", newSession.username);
+    sessionStorage.setItem("userEmail", newSession.userEmail);
+    sessionStorage.setItem("userColor", newSession.userColor);
+    sessionStorage.setItem("userScore", newSession.userScore);
+    sessionStorage.setItem("userTrees", newSession.userTrees.join(","));
+};
+setSessionStorage(defaultUser);
 
 const App = () => {
-    const [session, setSession] = useState(startSession);
     const changeNameValidation = () => {
-        console.log(session);
         axios
             .post("/changeUsername", {
-                userId: session.userId,
+                userId: sessionStorage.getItem("userId"),
                 username: document.querySelector("#usernameInput").value,
             })
             .then(result => {
@@ -80,7 +94,7 @@ const App = () => {
                     result.data.content._id
                 }; expires=${new Date(
                     new Date().getTime() + 1000 * 60 * 60 * 24 * 3,
-                ).toGMTString()}`;
+                ).toGMTString()}; SameSite=None; Secure`;
                 const newSession = {
                     userId: result.data.content._id,
                     username: result.data.content.username,
@@ -89,11 +103,8 @@ const App = () => {
                     userScore: result.data.content.score,
                     userTrees: result.data.content.trees || [],
                 };
-                setSession(newSession);
+                setSessionStorage(newSession);
                 hideSignForm();
-                console.log("result", result.data.content);
-                console.log("newSession", newSession);
-                setTimeout(() => console.log("session", session), 5000);
                 ReactDOM.render(
                     <Profile user={newSession} />,
                     document.querySelector("#profile"),
@@ -139,7 +150,7 @@ const App = () => {
                     result.data.content._id
                 }; expires=${new Date(
                     new Date().getTime() + 1000 * 60 * 60 * 24 * 3,
-                ).toGMTString()}`;
+                ).toGMTString()}; SameSite=None; Secure`;
                 const newSession = {
                     userId: result.data.content._id,
                     username: result.data.content.username,
@@ -148,11 +159,8 @@ const App = () => {
                     userScore: result.data.content.score,
                     userTrees: result.data.content.trees || [],
                 };
-                setSession(newSession);
+                setSessionStorage(newSession);
                 hideSignForm();
-                console.log("result", result.data.content);
-                console.log("newSession", newSession);
-                setTimeout(() => console.log("session", session), 5000);
                 ReactDOM.render(
                     <Profile user={newSession} />,
                     document.querySelector("#profile"),
@@ -186,7 +194,7 @@ const App = () => {
     };
     const logout = () => {
         document.cookie = "userId= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-        setSession(defaultUser);
+        setSessionStorage(defaultUser);
         hideDisconnectModal();
         showConnectModal();
         toggleProfile();
@@ -196,46 +204,39 @@ const App = () => {
         document.cookie &&
         document.cookie.split(";").find(x => x.trim().startsWith("userId"))
             ? document.cookie
-                    .split(";")
-                    .find(x => x.trim().startsWith("userId"))
-                    .split("=")[1]
-                    .trim()
+                  .split(";")
+                  .find(x => x.trim().startsWith("userId"))
+                  .split("=")[1]
+                  .trim()
             : 0;
-    console.log("cookieSessionId : ", cookieSessionId)
     cookieSessionId &&
-        axios
-            .get(`/user/${cookieSessionId}`)
-            .then(result => {
-                console.log("VOICI LE RESULTAT : ", result);
-                document.cookie = `userId=${
-                    result.data[0]._id
-                }; expires=${new Date(
-                    new Date().getTime() + 1000 * 60 * 60 * 24 * 3,
-                ).toGMTString()}`;
-                startSession = {
-                    userId: result.data[0]._id,
-                    username: result.data[0].username,
-                    userEmail: result.data[0].email,
-                    userColor: result.data[0].color,
-                    userScore: result.data[0].score,
-                    userTrees: result.data[0].trees || [],
-                };
-                console.log("result", result.data.content);
-                console.log("startSession", startSession);
-                ReactDOM.render(
-                    <Profile user={startSession} />,
-                    document.querySelector("#profile"),
-                );
-                ReactDOM.render(
-                    <Dashboard
-                        user={startSession}
-                        changeNameValidation={changeNameValidation}
-                    />,
-                    document.querySelector("#dashboard"),
-                );
-                addColorEvents();
-            });
-
+        axios.get(`/user/${cookieSessionId}`).then(result => {
+            console.log("VOICI LE RESULTAT : ", result);
+            document.cookie = `userId=${result.data[0]._id}; expires=${new Date(
+                new Date().getTime() + 1000 * 60 * 60 * 24 * 3,
+            ).toGMTString()}; SameSite=None; Secure`;
+            const startSession = {
+                userId: result.data[0]._id,
+                username: result.data[0].username,
+                userEmail: result.data[0].email,
+                userColor: result.data[0].color,
+                userScore: result.data[0].score,
+                userTrees: result.data[0].trees || [],
+            };
+            setSessionStorage(startSession);
+            ReactDOM.render(
+                <Profile user={startSession} />,
+                document.querySelector("#profile"),
+            );
+            ReactDOM.render(
+                <Dashboard
+                    user={startSession}
+                    changeNameValidation={changeNameValidation}
+                />,
+                document.querySelector("#dashboard"),
+            );
+            addColorEvents();
+        });
 
     return (
         <div id={"container"}>
@@ -246,7 +247,7 @@ const App = () => {
             <Button />
 
             <div id={"profile"}>
-                <Profile user={session} />
+                <Profile user={getSessionStorage()} />
             </div>
 
             <div id={"leaderboard"} />
@@ -260,7 +261,7 @@ const App = () => {
             <Disconnect logout={logout} />
             <div id={"dashboard"}>
                 <Dashboard
-                    user={session}
+                    user={getSessionStorage()}
                     changeNameValidation={changeNameValidation}
                 />
             </div>
@@ -291,7 +292,6 @@ const cookieColor =
               .split("=")[1]
               .trim()
         : "";
-console.log(cookieColor);
 document.querySelector("body").className = cookieColor ? cookieColor : "";
 
 addColorEvents();
