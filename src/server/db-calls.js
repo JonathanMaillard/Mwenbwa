@@ -808,21 +808,12 @@ const dbUpdate = () => {
             const database = client.db("mwenbwa");
             const collection = database.collection("players");
 
-            const cursor = collection.find();
-            let document;
-            while (document) {
-                collection.findOneAndUpdate(
-                    {
-                        _id: document._id,
-                    },
-                    {
-                        $inc: {
-                            score: 2000,
-                        },
-                    },
-                );
-                document = cursor.next();
-            }
+            const result = await collection.updateMany(
+                {},
+                {$inc: {score: 2000}},
+            );
+
+            return result;
         } catch (err) {
             console.error(`Something went wrong: ${err}`);
         } finally {
