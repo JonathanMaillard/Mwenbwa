@@ -13,6 +13,7 @@
         "work:client": "npx webpack --env=dev --progress",
         "build": "npm run build:server && npm run build:client",
         "start": "node bin/server/index.js"
+        
     },
     "lint-staged": {
         "*.js": [
