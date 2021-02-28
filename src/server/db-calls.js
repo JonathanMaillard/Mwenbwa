@@ -167,6 +167,38 @@ const dbGetUser = userId => {
     return run();
 };
 
+//Get a user
+const dbGetUserFromInfo = userInfo => {
+    const client = new MongoClient(uri, {useUnifiedTopology: true});
+
+    async function run() {
+        try {
+            await client.connect();
+            const database = client.db("mwenbwa");
+            const collection = database.collection("players");
+
+            const query = {
+                username: userInfo,
+            };
+
+            const cursor = await collection.find(query);
+            const result = await cursor.toArray();
+
+            //console.log(result);
+            return result;
+        } catch (err) {
+            console.error(`Something went wrong: ${err}`);
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+
+        return "done";
+    }
+    //run().catch(console.dir);
+    return run();
+};
+
 //Get the leaderboard
 const dbGetLeaderboard = () => {
     const client = new MongoClient(uri, {useUnifiedTopology: true});
@@ -769,6 +801,7 @@ const dbModifyPics = (userId, newPics) => {
 module.exports = {
     dbGetTrees,
     dbGetUser,
+    dbGetUserFromInfo,
     dbGetLeaderboard,
     dbGetLogs,
     dbLogin,

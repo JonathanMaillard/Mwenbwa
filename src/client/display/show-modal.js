@@ -19,7 +19,6 @@ function showGamelogModal() {
             console.log("sad because :", e);
         });
 }
-
 function showLeaderboardModal() {
     document.querySelector("#leaderboard").classList.add("show-modal");
     axios
@@ -41,7 +40,10 @@ function showDisconnectModal() {
     document.querySelector(".disconnect").classList.add("show-modal");
 }
 function showDashboardModal() {
-    document.querySelector(".dashContainer").classList.add("show-modal");
+    document.querySelector("#dashboard").classList.add("show-modal");
+}
+function showConnectModal() {
+    document.querySelector(".sign").classList.add("show-modal");
 }
 function toggleProfile() {
     document
@@ -54,4 +56,5 @@ export {showLeaderboardModal};
 export {showRulesModal};
 export {showDisconnectModal};
 export {showDashboardModal};
+export {showConnectModal};
 export {toggleProfile};
