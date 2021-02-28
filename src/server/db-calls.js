@@ -81,8 +81,6 @@ const dbGetTree = tree => {
             const cursor = await collection.find(query);
             const resultSearch = await cursor.toArray();
 
-            console.log(resultSearch[0].owner);
-
             if (resultSearch[0].owner) {
                 const aggCursor = await collection.aggregate([
                     {
@@ -105,8 +103,8 @@ const dbGetTree = tree => {
                         $project: {
                             _id: 1,
                             username: "$data.username",
-                            hauteur_total: 1,
                             nom_complet: 1,
+                            hauteur_totale: 1,
                             circonf: 1,
                             owner: 1,
                             locked: 1,
