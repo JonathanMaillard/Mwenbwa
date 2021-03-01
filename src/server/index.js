@@ -243,7 +243,10 @@ SERVER LAUNCH
 //         console.log("sad because :", e);
 //     });
 
+const server_port = process.env.PORT || 12345;
+const server_host = '0.0.0.0';
+
 // START SERVER
-app.listen(APP_PORT, () =>
-    console.log(`🚀 Server is listening on port ${APP_PORT}.`),
+app.listen(server_port, server_host, () =>
+    console.log(`🚀 Server is listening on port ${server_port}.`),
 );
