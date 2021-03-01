@@ -11,7 +11,7 @@ function showGamelogModal() {
         .get(`/logs`)
         .then(response => {
             ReactDOM.render(
-                <Gamelog logs={response.data.slice(5)} />,
+                <Gamelog logs={response.data.slice(0, 5)} />,
                 document.querySelector("#gamelog"),
             );
         })
@@ -25,7 +25,7 @@ function showLeaderboardModal() {
         .get(`/leaderboard`)
         .then(response => {
             ReactDOM.render(
-                <Leaderboard leaderboard={response.data.slice(10)} />,
+                <Leaderboard leaderboard={response.data.slice(0, 9)} />,
                 document.querySelector("#leaderboard"),
             );
         })
