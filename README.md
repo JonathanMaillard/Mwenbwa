@@ -13,7 +13,7 @@ What we also did:
 * Every user can change his/her color theme, that changes the color of the clusters.
 
 ### Design Specifications
-There was no design mockup, so the design is entirly by us.
+There was no design mockup, so the design is entierly by us.
 We used Fontawesome and FlatIcon icons, Undraw's SVG, and Gravatar's system for profile pics.
 
 ## Team Members
