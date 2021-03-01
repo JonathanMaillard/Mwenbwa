@@ -5,7 +5,7 @@
 > Based on external data, you will create a WebApp consisting of a REST-like API (back-end) and a React SPA (front-end). This WebApp will consist be an online IDLE Game, based in Liège.
 
 ### Technical Specifications
-See Projet's [README](https://github.com/becodeorg/LIE-Hamilton-4.25/tree/master/01-main-course/03-the-mountain/05-mwenbwa) on Becode's repository.
+See Project's [README](https://github.com/becodeorg/LIE-Hamilton-4.25/tree/master/01-main-course/03-the-mountain/05-mwenbwa) on Becode's repository.
 
 What we also did:
 * The trees SVG are changing with the seasons (firsts march, june, september, and december)
