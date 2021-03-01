@@ -22,7 +22,7 @@ const Profile = ({user}) => (
             <img
                 className={"boxProfile__photo"}
                 src={`http://www.gravatar.com/avatar/${md5(
-                    "bastienlafalize@gmail.com",
+                    sessionStorage.getItem("userEmail"),
                 )}?s=200`}
             />
 
@@ -44,11 +44,11 @@ const Profile = ({user}) => (
             <div className={"boxProfile__score"}>
                 <div className={"boxProfile__score--leaves"}>
                     <i className={"fas fa-leaf"} />
-                    {`${user.userScore} leaves`}
+                    {`${sessionStorage.getItem("userScore")} leaves`}
                 </div>
                 <div className={"boxProfile__score--trees"}>
                     <i className={"fas fa-tree"} />
-                    {`${user.userTrees.length} trees`}
+                    {`${sessionStorage.getItem("userTrees").length} trees`}
                 </div>
             </div>
         </div>
