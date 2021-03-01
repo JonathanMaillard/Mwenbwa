@@ -10,7 +10,7 @@
 import express from "express";
 import path from "path";
 import bodyParser from "body-parser";
-const {APP_PORT} = process.env;
+//const {APP_PORT} = process.env;
 const app = express();
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 const jsonParser = bodyParser.json();
@@ -244,9 +244,8 @@ SERVER LAUNCH
 //     });
 
 const server_port = process.env.PORT || 12345;
-const server_host = '0.0.0.0';
 
 // START SERVER
-app.listen(server_port, server_host, () =>
+app.listen(server_port, () =>
     console.log(`🚀 Server is listening on port ${server_port}.`),
 );

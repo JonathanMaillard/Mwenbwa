@@ -85,6 +85,11 @@ const Sign = ({signUp, signIn, state}) => (
                         onClick={signUp}>
                         {"Sign up"}
                     </button>
+
+                    <div
+                        className={"sign-up__error-holder"}
+                        id={"signUpErrorHolder"}
+                    />
                 </div>
             </div>
 
@@ -121,6 +126,11 @@ const Sign = ({signUp, signIn, state}) => (
                         onClick={signIn}>
                         {"Sign In"}
                     </button>
+
+                    <p
+                        className={"sign-in__error-holder"}
+                        id={"signInErrorHolder"}
+                    />
                 </div>
             </div>
         </div>

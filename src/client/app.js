@@ -122,19 +122,20 @@ const App = () => {
                 let displayMessage;
                 switch (error.msg) {
                     case "invalidPwd":
-                        displayMessage = "Le mot de passe est incorrect.";
+                        displayMessage = "The password is incorrect.";
                         break;
                     case "invalidInfo":
-                        displayMessage =
-                            "Un compte existe déjà pour l'adresse mail choisie.";
+                        displayMessage = "The username chosen already exists.";
                         break;
                     case "error":
                     default:
                         displayMessage =
-                            "Il y a eu une erreur lors de la création du compte.";
+                            "There was an unexpected error with the registering. Please try again.";
                         break;
                 }
-                //INTEGRER L'ERREUR DANS LE DOM
+                document.querySelector(
+                    "#signUpErrorHolder",
+                ).innerText = displayMessage;
             });
     };
     const signIn = () => {
@@ -178,18 +179,20 @@ const App = () => {
                 let displayMessage;
                 switch (error.msg) {
                     case "invalidPwd":
-                        displayMessage = "Le mot de passe est incorrect.";
+                        displayMessage = "The password is incorrect.";
                         break;
                     case "invalidInfo":
-                        displayMessage = "L'identifiant est incorrect.";
+                        displayMessage = "Your username is incorrect.";
                         break;
                     case "error":
                     default:
                         displayMessage =
-                            "Il y a eu une erreur lors de la connexion.";
+                            "There was an error while trying to connect.";
                         break;
                 }
-                //INTEGRER L'ERREUR DANS LE DOM
+                document.querySelector(
+                    "#signInErrorHolder",
+                ).innerText = displayMessage;
             });
     };
     const logout = () => {
