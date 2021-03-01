@@ -425,6 +425,9 @@ body {
       &:hover {background-color: darken($bg-modal, 5);}
     }
   }
+  &__error-holder {
+      color: rgb(119, 20, 20);
+  }
 }
 
 //------------------------ RULES -----------------------
